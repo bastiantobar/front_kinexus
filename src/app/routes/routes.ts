@@ -11,23 +11,11 @@ import { Error500Component } from './pages/error500/error500.component';
 
 export const routes: Routes = [
 
+    // Redirige la ruta vacía (raíz) directamente al componente de login
     {
         path: '',
-        component: LayoutComponent,
-        children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
-            { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-            { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
-            { path: 'elements', loadChildren: () => import('./elements/elements.module').then(m => m.ElementsModule) },
-            { path: 'forms', loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule) },
-            { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule) },
-            { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
-            { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) },
-            { path: 'blog', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) },
-            { path: 'ecommerce', loadChildren: () => import('./ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
-            { path: 'extras', loadChildren: () => import('./extras/extras.module').then(m => m.ExtrasModule) }
-        ]
+        redirectTo: 'login',
+        pathMatch: 'full'
     },
 
     // Not lazy-loaded routes
@@ -39,7 +27,19 @@ export const routes: Routes = [
     { path: '404', component: Error404Component },
     { path: '500', component: Error500Component },
 
-    // Not found
-    { path: '**', redirectTo: 'home' }
+    // Rutas protegidas que usarán el LayoutComponent
+    {
+        path: '',
+        component: LayoutComponent,
+        children: [
+            // { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Puedes redirigir a dashboard aquí
+            { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+            { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+            // ... (el resto de tus rutas lazy-loaded)
+        ]
+    },
+
+    // Not found (asegúrate de que esto sea lo último)
+    { path: '**', redirectTo: '404' }
 
 ];
