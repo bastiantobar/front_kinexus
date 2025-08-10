@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { Dashboardv1Component } from './dashboardv1/dashboardv1.component';
 import { Dashboardv2Component } from './dashboardv2/dashboardv2.component';
 import { Dashboardv3Component } from './dashboardv3/dashboardv3.component';
+import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard' },
@@ -16,7 +17,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        Ng2ChartsModule
     ],
     declarations: [
         Dashboardv1Component,
