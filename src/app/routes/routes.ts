@@ -2,18 +2,20 @@ import { Routes } from "@angular/router";
 import { LayoutComponent } from "../layout/layout.component";
 
 import { LoginComponent } from "./pages/login/login.component";
+import { InitComponent } from "./pages/init/init.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { RecoverComponent } from "./pages/recover/recover.component";
 import { LockComponent } from "./pages/lock/lock.component";
 import { MaintenanceComponent } from "./pages/maintenance/maintenance.component";
 import { Error404Component } from "./pages/error404/error404.component";
 import { Error500Component } from "./pages/error500/error500.component";
+import { HomeComponent } from "./home/home/home.component";
 
 export const routes: Routes = [
   // Redirige la ruta vacía (raíz) al componente de 'home' por defecto
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "init",
     pathMatch: "full",
   },
 
@@ -25,7 +27,7 @@ export const routes: Routes = [
   { path: "maintenance", component: MaintenanceComponent },
   { path: "404", component: Error404Component },
   { path: "500", component: Error500Component },
-
+  { path: "home", component: HomeComponent },
   // Rutas protegidas que usarán el LayoutComponent
   {
     path: "",

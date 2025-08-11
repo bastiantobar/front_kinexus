@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Importa el servicio Router
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    selector: 'app-init',
+    templateUrl: './init.component.html',
+    styleUrls: ['./init.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class InitComponent implements OnInit {
 
     // Inyecta el Router en el constructor del componente
     constructor(private router: Router) { }

@@ -28,31 +28,25 @@ export class LoginComponent implements OnInit {
     }
 
     submitForm($ev, value: any) {
-        $ev.preventDefault();
+        this.router.navigate(['/dashboard/v2']);
+        /*$ev.preventDefault();
         this.loginError = false; // Reinicia el estado del error
         for (let c in this.valForm.controls) {
             this.valForm.controls[c].markAsTouched();
         }
         
         if (this.valForm.valid) {
-            // Llama al método login del servicio
             this.loginService.login(value).subscribe({
                 next: (response) => {
                     console.log('Login exitoso!', response);
-                    // Aquí puedes guardar el token de autenticación
-                    // localStorage.setItem('token', response.token); 
-                    
-                    // Navega a la página principal o al dashboard
                     this.router.navigate(['/dashboard']);
                 },
                 error: (err) => {
                     console.error('Login fallido:', err);
                     this.loginError = true; // Establece el error para mostrarlo en la vista
-                    // También podrías mostrar un mensaje específico:
-                    // console.log(err.error.message);
                 }
             });
-        }
+        }*/
     }
 
     ngOnInit() {
