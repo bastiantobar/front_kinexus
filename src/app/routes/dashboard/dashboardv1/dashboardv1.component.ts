@@ -3,7 +3,10 @@ import { HttpClient } from "@angular/common/http";
 
 import { ColorsService } from "../../../shared/colors/colors.service";
 import { ChartDataSets, ChartOptions } from "chart.js";
-import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
+import { ChartsModule as Ng2ChartsModule } from "ng2-charts";
+import { CONST } from "../../../constant/constant";
+import { Router } from "@angular/router";
+
 @Component({
   selector: "app-dashboardv1",
   templateUrl: "./dashboardv1.component.html",
@@ -142,7 +145,11 @@ export class Dashboardv1Component implements OnInit {
     shadowSize: 0,
   };
 
-  constructor(public colors: ColorsService, public http: HttpClient) {
+  constructor(
+    public colors: ColorsService,
+    public http: HttpClient,
+    private router: Router
+  ) {
     http
       .get("assets/server/chart/spline.json")
       .subscribe((data) => (this.splineData = data));
@@ -157,5 +164,12 @@ export class Dashboardv1Component implements OnInit {
   // random values for demo
   rFactor() {
     return Math.round(Math.random() * 100);
+  }
+  goToListPlan() {
+    this.router.navigate([CONST.ROUTE.ECOMMERCE]);
+  }
+  
+  goToFileManager() {
+    this.router.navigate([CONST.ROUTE.FILE_MANAGER]);
   }
 }

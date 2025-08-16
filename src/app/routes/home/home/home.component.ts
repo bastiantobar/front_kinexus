@@ -1,25 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Importa el servicio Router
-
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router"; // Importa el servicio Router
+import { ColorsService } from "../../../shared/colors/colors.service";
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  sparkOptionsInfo = {
+    type: "pie",
+    sliceColors: [
+      this.colors.byName("gray-lighter"),
+      this.colors.byName("info"),
+    ],
+    height: 24,
+  };
 
-    // Inyecta el Router en el constructor del componente
-    constructor(private router: Router) { }
+  sparkOptionsWarning = {
+    type: "pie",
+    sliceColors: [
+      this.colors.byName("gray-lighter"),
+      this.colors.byName("warning"),
+    ],
+    height: 24,
+  };
 
-    ngOnInit() {
-    }
+  sparkOptionsSuccess = {
+    type: "pie",
+    sliceColors: [
+      this.colors.byName("gray-lighter"),
+      this.colors.byName("success"),
+    ],
+    height: 24,
+  };
 
-    /**
-     * Este método se encarga de la redirección a la ruta /dashboard/v3.
-     */
-    goToListPlan() {
-        // Utiliza el método navigate() del router para redirigir
-        // Se usa un array para la URL por si se necesitan pasar parámetros
-        this.router.navigate(['/login']);
-    }
+  constructor(private router: Router, public colors: ColorsService) {}
+
+  ngOnInit() {}
+
+  goToListPlan() {
+    this.router.navigate(["/login"]);
+  }
 }

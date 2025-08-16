@@ -1,25 +1,391 @@
-<div class="home-container">
-  <div class="row">
-    <div class="col-lg-4">
-      <!-- Agregamos un evento (click) para llamar al método -->
-      <div class="card b" (click)="goToListPlan()">
-        <div class="card-header">
-          <h3>Empresas</h3>
+<div class="row">
+  <div class="col-xl-12">
+    <article class="card card-default">
+      <header class="card-header">
+        <div class="bb">
+          <h2 class="text-lg">Bienvenido a Kinexus</h2>
+          <div class="clearfix">
+            <small class="float-left">
+              <span class="mr-sm"> Por <a href="#">Felipe Reyes</a> </span>
+              <span class="mr-sm"> Mayo 03, 2015 </span>
+              <span> <strong>56</strong> Comentarios </span>
+            </small>
+          </div>
         </div>
-        <div class="card-body">
-          A Webpack powered command line interface with tons of utilities. Serve
-          and build your project with a single command.
+      </header>
+      <div class="card-body text-md">
+        <p>
+          Praesent bibendum eros urna, in mattis est. Curabitur a purus urna,
+          sit amet auctor erat. Praesent pellentesque augue eu tellus facilisis
+          pretium. Aenean sollicitudin facilisis tortor eu mollis. Vivamus
+          feugiat faucibus enim. Sed ut semper leo. Etiam feugiat risus massa.
+          Nunc et magna in metus pharetra ultricies ac sit amet justo. Donec eu
+          dolor sem, non auctor sapien. Suspendisse nisl nulla, interdum at
+          fermentum eget, adipiscing in elit.
+        </p>
+        <p>
+          Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum.
+          Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum
+          magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam
+          sodales sollicitudin adipiscing.
+        </p>
+        <div class="row mt-4 mb-4">
+          <div class="col-3">
+            <a href="#">
+              <img
+                class="img-fluid"
+                src="assets/img/bg4.jpg"
+                alt="Descripción de la imagen 1"
+              />
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#">
+              <img
+                class="img-fluid"
+                src="assets/img/bg5.jpg"
+                alt="Descripción de la imagen 2"
+              />
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#">
+              <img
+                class="img-fluid"
+                src="assets/img/bg7.jpg"
+                alt="Descripción de la imagen 3"
+              />
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#">
+              <img
+                class="img-fluid"
+                src="assets/img/bg8.jpg"
+                alt="Descripción de la imagen 4"
+              />
+            </a>
+          </div>
+        </div>
+        <p>
+          Praesent tristique dui eu nunc fringilla et iaculis magna ornare.
+          Proin sed erat sit amet metus rhoncus tincidunt. Vivamus commodo,
+          tortor ut interdum posuere, urna risus aliquet purus, eu fringilla dui
+          neque quis nisi. Proin posuere gravida ipsum, a pretium augue commodo
+          eget. In id elit nulla. Donec nec magna a diam eleifend facilisis non
+          in urna. Nam enim libero, lacinia a tristique a, accumsan sed purus.
+          Phasellus ullamcorper rhoncus sagittis.
+        </p>
+        <p>
+          Sed eu rhoncus magna. Morbi non dui elementum nisl ultrices tincidunt.
+          Nullam sagittis hendrerit erat, sit amet gravida ante tristique non.
+          Nam arcu quam, aliquet eget varius sed, placerat et elit. Morbi nec
+          luctus eros. Cras rutrum scelerisque auctor. Praesent malesuada erat
+          ut tellus egestas sagittis. Etiam feugiat risus massa. Aliquam eget
+          turpis eget dui eleifend suscipit ac sed dolor. Sed accumsan
+          adipiscing enim. Sed auctor dignissim fringilla. Sed id turpis tellus.
+          Nam vel tristique dolor. Ut scelerisque ligula tellus. Duis accumsan,
+          est vel convallis dignissim, est massa pharetra ipsum, eu auctor nunc
+          mi ac libero. Integer fermentum molestie massa at congue. Vestibulum
+          congue tempus odio ac posuere. Integer lorem metus, rutrum non rhoncus
+          sed, fringilla interdum urna.
+        </p>
+        <hr />
+      </div>
+    </article>
+
+    <div class="card mt-4">
+      <div class="card-header">Accede a tu perfil</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card b" (click)="goToListPlan()">
+              <div class="card-header">
+                <h3>Empresas</h3>
+              </div>
+              <div class="card-body">
+                A Webpack powered command line interface with tons of utilities.
+                Serve and build your project with a single command.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card b">
+              <div class="card-header">
+                <h3>Usuarios</h3>
+              </div>
+              <div class="card-body">
+                Powerful and modern routes definitions. Easily declare routes
+                and nested routes with components association.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-4">
-      <div class="card b">
-        <div class="card-header">
-          <h3>Usuarios</h3>
-        </div>
-        <div class="card-body">
-          Powerful and modern routes definitions. Easily declare routes and
-          nested routes with components association.
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-8">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <div class="card b">
+              <div class="card-header">
+                <div class="float-right">
+                  <div class="badge badge-info">started</div>
+                </div>
+                <h4 class="m-0">Plan Empresas 1</h4>
+                <small class="text-muted">Sed amet lectus id.</small>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="w-100">
+                    <div tooltip="Health"></div>
+                  </div>
+                  <div class="wd-xxs text-right">
+                    <div class="text-bold text-muted">22%</div>
+                  </div>
+                </div>
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><strong>Start date</strong></td>
+                    <td>01/01/2016</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Members</strong></td>
+                    <td>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/02.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/04.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/05.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/06.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <strong>+5</strong>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Leader</strong></td>
+                    <td>
+                      <a tooltip="Team leader">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/03.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Metrics</strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card-footer text-center bt0">
+                <button class="btn btn-secondary" type="button">
+                  Manage project
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <div class="card b">
+              <div class="card-header">
+                <div class="float-right">
+                  <div class="badge badge-info">started</div>
+                </div>
+                <h4 class="m-0">Plan Empresa 2</h4>
+                <small class="text-muted">Sed amet lectus id.</small>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="w-100">
+                    <div tooltip="Health"></div>
+                  </div>
+                  <div class="wd-xxs text-right">
+                    <div class="text-bold text-muted">80%</div>
+                  </div>
+                </div>
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><strong>Start date</strong></td>
+                    <td>02/01/2016</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Members</strong></td>
+                    <td>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/02.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/04.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/05.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/06.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <strong>+6</strong>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Leader</strong></td>
+                    <td>
+                      <a tooltip="Team leader">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/03.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Metrics</strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card-footer text-center bt0">
+                <button class="btn btn-secondary" type="button">
+                  Manage project
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-12">
+            <div class="card b">
+              <div class="card-header">
+                <div class="float-right">
+                  <div class="badge badge-info">started</div>
+                </div>
+                <h4 class="m-0">Agenda tu sesion particular</h4>
+                <small class="text-muted">Sed amet lectus id.</small>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="w-100">
+                    <div tooltip="Health">
+                      <div class="progress progress-xs m-0"></div>
+                    </div>
+                  </div>
+                  <div class="wd-xxs text-right">
+                    <div class="text-bold text-muted">50%</div>
+                  </div>
+                </div>
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><strong>Start date</strong></td>
+                    <td>03/01/2016</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Members</strong></td>
+                    <td>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/02.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/04.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/05.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/06.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                      <a class="inline" href="#">
+                        <strong>+7</strong>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Leader</strong></td>
+                    <td>
+                      <a tooltip="Team leader">
+                        <img
+                          class="rounded-circle thumb24"
+                          src="assets/img/user/03.jpg"
+                          alt="project member"
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Metrics</strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card-footer text-center bt0">
+                <button class="btn btn-secondary" type="button">
+                  Manage project
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
