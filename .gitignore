@@ -1,0 +1,29 @@
+# Node modules
+/node_modules
+
+# Build output
+/dist
+/out-tsc
+
+# IDEs y editores
+/.idea
+/.vscode
+*.swp
+*.swo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Coverage (si usas tests)
+coverage/
+
+# Environment (si manejas configuraciones locales)
+.env
+.env.local
