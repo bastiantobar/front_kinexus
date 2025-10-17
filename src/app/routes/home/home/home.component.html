@@ -1,393 +1,467 @@
-<div class="row">
-  <div class="col-xl-12">
-    <article class="card card-default">
-      <header class="card-header">
-        <div class="bb">
-          <h2 class="text-lg">Bienvenido a Kinexus</h2>
-          <div class="clearfix">
-            <small class="float-left">
-              <span class="mr-sm"> Por <a href="#">Felipe Reyes</a> </span>
-              <span class="mr-sm"> Mayo 03, 2015 </span>
-              <span> <strong>56</strong> Comentarios </span>
-            </small>
-          </div>
-        </div>
-      </header>
-      <div class="card-body text-md">
-        <p>
-          Praesent bibendum eros urna, in mattis est. Curabitur a purus urna,
-          sit amet auctor erat. Praesent pellentesque augue eu tellus facilisis
-          pretium. Aenean sollicitudin facilisis tortor eu mollis. Vivamus
-          feugiat faucibus enim. Sed ut semper leo. Etiam feugiat risus massa.
-          Nunc et magna in metus pharetra ultricies ac sit amet justo. Donec eu
-          dolor sem, non auctor sapien. Suspendisse nisl nulla, interdum at
-          fermentum eget, adipiscing in elit.
-        </p>
-        <p>
-          Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum.
-          Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum
-          magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam
-          sodales sollicitudin adipiscing.
-        </p>
-        <div class="row mt-4 mb-4">
-          <div class="col-3">
-            <a href="#">
-              <img
-                class="img-fluid"
-                src="assets/img/bg4.jpg"
-                alt="Descripción de la imagen 1"
-              />
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="#">
-              <img
-                class="img-fluid"
-                src="assets/img/bg5.jpg"
-                alt="Descripción de la imagen 2"
-              />
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="#">
-              <img
-                class="img-fluid"
-                src="assets/img/bg7.jpg"
-                alt="Descripción de la imagen 3"
-              />
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="#">
-              <img
-                class="img-fluid"
-                src="assets/img/bg8.jpg"
-                alt="Descripción de la imagen 4"
-              />
-            </a>
-          </div>
-        </div>
-        <p>
-          Praesent tristique dui eu nunc fringilla et iaculis magna ornare.
-          Proin sed erat sit amet metus rhoncus tincidunt. Vivamus commodo,
-          tortor ut interdum posuere, urna risus aliquet purus, eu fringilla dui
-          neque quis nisi. Proin posuere gravida ipsum, a pretium augue commodo
-          eget. In id elit nulla. Donec nec magna a diam eleifend facilisis non
-          in urna. Nam enim libero, lacinia a tristique a, accumsan sed purus.
-          Phasellus ullamcorper rhoncus sagittis.
-        </p>
-        <p>
-          Sed eu rhoncus magna. Morbi non dui elementum nisl ultrices tincidunt.
-          Nullam sagittis hendrerit erat, sit amet gravida ante tristique non.
-          Nam arcu quam, aliquet eget varius sed, placerat et elit. Morbi nec
-          luctus eros. Cras rutrum scelerisque auctor. Praesent malesuada erat
-          ut tellus egestas sagittis. Etiam feugiat risus massa. Aliquam eget
-          turpis eget dui eleifend suscipit ac sed dolor. Sed accumsan
-          adipiscing enim. Sed auctor dignissim fringilla. Sed id turpis tellus.
-          Nam vel tristique dolor. Ut scelerisque ligula tellus. Duis accumsan,
-          est vel convallis dignissim, est massa pharetra ipsum, eu auctor nunc
-          mi ac libero. Integer fermentum molestie massa at congue. Vestibulum
-          congue tempus odio ac posuere. Integer lorem metus, rutrum non rhoncus
-          sed, fringilla interdum urna.
-        </p>
-        <hr />
-      </div>
-    </article>
+<div id="page" class="hfeed site">
+    <app-header></app-header>
 
-    <div class="card mt-4">
-      <div class="card-header">Accede a tu perfil</div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="card b" (click)="goToListPlan()">
-              <div class="card-header">
-                <h3>Empresas</h3>
-              </div>
-              <div class="card-body">
-                A Webpack powered command line interface with tons of utilities.
-                Serve and build your project with a single command.
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="card b">
-              <div class="card-header">
-                <h3>Usuarios</h3>
-              </div>
-              <div class="card-body">
-                Powerful and modern routes definitions. Easily declare routes
-                and nested routes with components association.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-10 col-xl-8">
-        <div class="row">
-          <div class="col-xl-4 col-lg-6">
-            <div class="card b">
-              <div class="card-header">
-                <div class="float-right">
-                  <div class="badge badge-info">started</div>
-                </div>
-                <h4 class="m-0">Plan Empresas 1</h4>
-                <small class="text-muted">Sed amet lectus id.</small>
-              </div>
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="w-100">
-                    <div tooltip="Health"></div>
-                  </div>
-                  <div class="wd-xxs text-right">
-                    <div class="text-bold text-muted">22%</div>
-                  </div>
-                </div>
-              </div>
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><strong>Start date</strong></td>
-                    <td>01/01/2016</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Members</strong></td>
-                    <td>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/02.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/04.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/05.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/06.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <strong>+5</strong>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Leader</strong></td>
-                    <td>
-                      <a tooltip="Team leader">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/03.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Metrics</strong></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="card-footer text-center bt0">
-                <button class="btn btn-secondary" type="button">
-                  Manage project
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-lg-6">
-            <div class="card b">
-              <div class="card-header">
-                <div class="float-right">
-                  <div class="badge badge-info">started</div>
-                </div>
-                <h4 class="m-0">Plan Empresa 2</h4>
-                <small class="text-muted">Sed amet lectus id.</small>
-              </div>
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="w-100">
-                    <div tooltip="Health"></div>
-                  </div>
-                  <div class="wd-xxs text-right">
-                    <div class="text-bold text-muted">80%</div>
-                  </div>
-                </div>
-              </div>
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><strong>Start date</strong></td>
-                    <td>02/01/2016</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Members</strong></td>
-                    <td>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/02.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/04.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/05.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/06.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <strong>+6</strong>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Leader</strong></td>
-                    <td>
-                      <a tooltip="Team leader">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/03.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Metrics</strong></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="card-footer text-center bt0">
-                <button class="btn btn-secondary" type="button">
-                  Manage project
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-lg-12">
-            <div class="card b">
-              <div class="card-header">
-                <div class="float-right">
-                  <div class="badge badge-info">started</div>
-                </div>
-                <h4 class="m-0">Agenda tu sesion particular</h4>
-                <small class="text-muted">Sed amet lectus id.</small>
-              </div>
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="w-100">
-                    <div tooltip="Health">
-                      <div class="progress progress-xs m-0"></div>
-                    </div>
-                  </div>
-                  <div class="wd-xxs text-right">
-                    <div class="text-bold text-muted">50%</div>
-                  </div>
-                </div>
-              </div>
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><strong>Start date</strong></td>
-                    <td>03/01/2016</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Members</strong></td>
-                    <td>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/02.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/04.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/05.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/06.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                      <a class="inline" href="#">
-                        <strong>+7</strong>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Leader</strong></td>
-                    <td>
-                      <a tooltip="Team leader">
-                        <img
-                          class="rounded-circle thumb24"
-                          src="assets/img/user/03.jpg"
-                          alt="project member"
-                        />
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Metrics</strong></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="card-footer text-center bt0">
-                <button class="btn btn-secondary" type="button">
-                  Manage project
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <app-footer></app-footer>
 </div>
+<!-- #page -->
+
+<script type="text/javascript">
+    window.RS_MODULES = window.RS_MODULES || {};
+    window.RS_MODULES.modules = window.RS_MODULES.modules || {};
+    window.RS_MODULES.waiting = window.RS_MODULES.waiting || [];
+    window.RS_MODULES.defered = true;
+    window.RS_MODULES.moduleWaiting = window.RS_MODULES.moduleWaiting || {};
+    window.RS_MODULES.type = "compiled";
+</script>
+<script type="speculationrules">
+  {
+    "prefetch": [
+      {
+        "source": "document",
+        "where": {
+          "and": [
+            { "href_matches": "\/*" },
+            {
+              "not": {
+                "href_matches": [
+                  "\/wp-*.php",
+                  "\/wp-admin\/*",
+                  "\/wp-content\/uploads\/*",
+                  "\/wp-content\/*",
+                  "\/wp-content\/plugins\/*",
+                  "\/wp-content\/themes\/chaai\/*",
+                  "\/*\\?(.+)"
+                ]
+              }
+            },
+            { "not": { "selector_matches": "a[rel~=\"nofollow\"]" } },
+            {
+              "not": { "selector_matches": ".no-prefetch, .no-prefetch a" }
+            }
+          ]
+        },
+        "eagerness": "conservative"
+      }
+    ]
+  }
+</script>
+<div id="flags" style="display: none" class="size18">
+    <ul id="sortable" class="ui-sortable">
+        <li id="English">
+            <a href="#" title="English" class="nturl notranslate en flag united-states" data-lang="English"></a>
+        </li>
+        <li id="Spanish">
+            <a href="#" title="Spanish" class="nturl notranslate es flag Spanish" data-lang="Spanish"></a>
+        </li>
+    </ul>
+</div>
+<div id="glt-footer">
+    <div id="google_language_translator" class="default-language-es">
+        <div class="skiptranslate goog-te-gadget" dir="ltr" style="">
+            <div id=":0.targetLanguage" style="display: inline">
+                <select class="goog-te-combo" aria-label="Widget de traducción de idiomas">
+                    <option value="">Seleccionar idioma</option>
+                    <option value="en">Inglés</option>
+                </select>
+            </div>
+            &nbsp;&nbsp;Con la tecnología de
+            <span style="white-space: nowrap"><a class="VIpgJd-ZVi9od-l4eHX-hSRGPd"
+                    href="https://translate.google.com" target="_blank"><img
+                        src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png"
+                        width="37px" height="14px" style="padding-right: 3px"
+                        alt="Google Traductor" />Traductor</a></span>
+        </div>
+    </div>
+</div>
+<script>
+    function GoogleLanguageTranslatorInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: "es",
+                includedLanguages: "en,es",
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+                autoDisplay: false,
+            },
+            "google_language_translator"
+        );
+    }
+</script>
+<style id="core-block-supports-inline-css" type="text/css">
+    .wp-container-core-buttons-is-layout-fdcfc74e {
+        justify-content: flex-start;
+    }
+</style>
+<link rel="stylesheet" id="e-animations-css"
+    href="https://yumcha.cl/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.7.3"
+    type="text/css" media="all" />
+<link rel="stylesheet" id="rs-plugin-settings-css"
+    href="https://yumcha.cl/wp-content/plugins/revslider/public/assets/css/rs6.css?ver=6.5.9" type="text/css"
+    media="all" />
+<style id="rs-plugin-settings-inline-css" type="text/css">
+    #rs-demo-id {}
+</style>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0"
+    id="wp-polyfill-js"></script>
+<script type="text/javascript" id="contact-form-7-js-extra">
+    /* <![CDATA[ */
+    var wpcf7 = {
+        api: {
+            root: "https:\/\/yumcha.cl\/wp-json\/",
+            namespace: "contact-form-7\/v1",
+        },
+        cached: "1",
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.6.2"
+    id="contact-form-7-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/google-language-translator/js/scripts.js?ver=6.0.15"
+    id="scripts-js"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=GoogleLanguageTranslatorInit"
+    id="scripts-google-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/revslider/public/assets/js/rbtools.min.js?ver=6.5.9" defer="" async=""
+    id="tp-tools-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/revslider/public/assets/js/rs6.min.js?ver=6.5.9" defer="" async=""
+    id="revmin-js"></script>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3"
+    id="jquery-ui-core-js"></script>
+<script type="text/javascript" id="qi-addons-for-elementor-script-js-extra">
+    /* <![CDATA[ */
+    var qodefQiAddonsGlobal = {
+        vars: {
+            adminBarHeight: 0,
+            iconArrowLeft:
+                '<svg  xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" x="0px" y="0px" viewBox="0 0 34.2 32.3" xml:space="preserve" style="stroke-width: 2;"><line x1="0.5" y1="16" x2="33.5" y2="16"\/><line x1="0.3" y1="16.5" x2="16.2" y2="0.7"\/><line x1="0" y1="15.4" x2="16.2" y2="31.6"\/><\/svg>',
+            iconArrowRight:
+                '<svg  xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" x="0px" y="0px" viewBox="0 0 34.2 32.3" xml:space="preserve" style="stroke-width: 2;"><line x1="0" y1="16" x2="33" y2="16"\/><line x1="17.3" y1="0.7" x2="33.2" y2="16.5"\/><line x1="17.3" y1="31.6" x2="33.5" y2="15.4"\/><\/svg>',
+            iconClose:
+                '<svg  xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" x="0px" y="0px" viewBox="0 0 9.1 9.1" xml:space="preserve"><g><path d="M8.5,0L9,0.6L5.1,4.5L9,8.5L8.5,9L4.5,5.1L0.6,9L0,8.5L4,4.5L0,0.6L0.6,0L4.5,4L8.5,0z"\/><\/g><\/svg>',
+        },
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/qi-addons-for-elementor/assets/js/main.min.js?ver=6.8.2"
+    id="qi-addons-for-elementor-script-js"></script>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/hoverIntent.min.js?ver=1.10.2"
+    id="hoverIntent-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/chaai-core/assets/plugins/modernizr/modernizr.js?ver=6.8.2"
+    id="modernizr-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/qi-addons-for-elementor/inc/shortcodes/parallax-images/assets/js/plugins/jquery.parallax-scroll.js?ver=1"
+    id="parallax-scroll-js"></script>
+<script type="text/javascript" id="chaai-main-js-js-extra">
+    /* <![CDATA[ */
+    var qodefGlobal = {
+        vars: {
+            adminBarHeight: 0,
+            iconArrowLeft:
+                '<svg class="qodef-svg--slider-arrow-left" x="0px" y="0px" width="24.83px" height="18.58px" viewBox="3.33 2.67 24.83 18.58" enable-background="new 3.33 2.67 24.83 18.58" xml:space="preserve"><line fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" x1="27.25" y1="12" x2="4.25" y2="12"\/><polyline fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" points="12.75,20.5 4.25,12 12.75,3.5 "\/><\/svg>',
+            iconArrowRight:
+                '<svg class="qodef-svg--slider-arrow-right" x="0px" y="0px" width="24.83px" height="18.58px" viewBox="3.33 2.67 24.83 18.58" enable-background="new 3.33 2.67 24.83 18.58" xml:space="preserve"><line fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" x1="4.25" y1="12" x2="27.25" y2="12"><\/line><polyline fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" points="18.75,3.5   27.25,12 18.75,20.5 "\/><\/svg>',
+            iconClose:
+                '<svg class="qodef-svg--close" xmlns="http:\/\/www.w3.org\/2000\/svg" xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink" width="32" height="32" viewBox="0 0 32 32"><g><path d="M 10.050,23.95c 0.39,0.39, 1.024,0.39, 1.414,0L 17,18.414l 5.536,5.536c 0.39,0.39, 1.024,0.39, 1.414,0 c 0.39-0.39, 0.39-1.024,0-1.414L 18.414,17l 5.536-5.536c 0.39-0.39, 0.39-1.024,0-1.414c-0.39-0.39-1.024-0.39-1.414,0 L 17,15.586L 11.464,10.050c-0.39-0.39-1.024-0.39-1.414,0c-0.39,0.39-0.39,1.024,0,1.414L 15.586,17l-5.536,5.536 C 9.66,22.926, 9.66,23.56, 10.050,23.95z"><\/path><\/g><\/svg>',
+            qodefStickyHeaderScrollAmount: 1000,
+            topAreaHeight: 0,
+            restUrl: "https:\/\/yumcha.cl\/wp-json\/",
+            restNonce: "945a85b548",
+            paginationRestRoute: "chaai\/v1\/get-posts",
+            headerHeight: 106,
+            mobileHeaderHeight: 70,
+        },
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript" src="https://yumcha.cl/wp-content/themes/chaai/assets/js/main.min.js?ver=6.8.2"
+    id="chaai-main-js-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/chaai-core/assets/js/chaai-core.min.js?ver=6.8.2"
+    id="chaai-core-script-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/qi-addons-for-elementor/assets/plugins/swiper/swiper.min.js?ver=6.8.2"
+    id="swiper-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.0.1"
+    id="smartmenus-js"></script>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/imagesloaded.min.js?ver=5.0.0"
+    id="imagesloaded-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.7.3"
+    id="elementor-webpack-runtime-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.7.3"
+    id="elementor-frontend-modules-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2"
+    id="elementor-waypoints-js"></script>
+<script type="text/javascript" id="elementor-frontend-js-before">
+    /* <![CDATA[ */
+    var elementorFrontendConfig = {
+        environmentMode: {
+            edit: false,
+            wpPreview: false,
+            isScriptDebug: false,
+        },
+        i18n: {
+            shareOnFacebook: "Compartir en Facebook",
+            shareOnTwitter: "Compartir en Twitter",
+            pinIt: "Pinear",
+            download: "Descargar",
+            downloadImage: "Descargar imagen",
+            fullscreen: "Pantalla completa",
+            zoom: "Zoom",
+            share: "Compartir",
+            playVideo: "Reproducir v\u00eddeo",
+            previous: "Anterior",
+            next: "Siguiente",
+            close: "Cerrar",
+        },
+        is_rtl: false,
+        breakpoints: { xs: 0, sm: 480, md: 768, lg: 1025, xl: 1440, xxl: 1600 },
+        responsive: {
+            breakpoints: {
+                mobile: {
+                    label: "M\u00f3vil",
+                    value: 767,
+                    default_value: 767,
+                    direction: "max",
+                    is_enabled: true,
+                },
+                mobile_extra: {
+                    label: "M\u00f3vil grande",
+                    value: 880,
+                    default_value: 880,
+                    direction: "max",
+                    is_enabled: false,
+                },
+                tablet: {
+                    label: "Tableta",
+                    value: 1024,
+                    default_value: 1024,
+                    direction: "max",
+                    is_enabled: true,
+                },
+                tablet_extra: {
+                    label: "Tableta grande",
+                    value: 1200,
+                    default_value: 1200,
+                    direction: "max",
+                    is_enabled: false,
+                },
+                laptop: {
+                    label: "Port\u00e1til",
+                    value: 1366,
+                    default_value: 1366,
+                    direction: "max",
+                    is_enabled: false,
+                },
+                widescreen: {
+                    label: "Pantalla grande",
+                    value: 2400,
+                    default_value: 2400,
+                    direction: "min",
+                    is_enabled: false,
+                },
+            },
+        },
+        version: "3.7.3",
+        is_static: false,
+        experimentalFeatures: {
+            e_dom_optimization: true,
+            e_optimized_assets_loading: true,
+            e_optimized_css_loading: true,
+            a11y_improvements: true,
+            additional_custom_breakpoints: true,
+            e_import_export: true,
+            e_hidden_wordpress_widgets: true,
+            theme_builder_v2: true,
+            "landing-pages": true,
+            "elements-color-picker": true,
+            "favorite-widgets": true,
+            "admin-top-bar": true,
+            "page-transitions": true,
+            "form-submissions": true,
+            e_scroll_snap: true,
+        },
+        urls: {
+            assets:
+                "https:\/\/yumcha.cl\/wp-content\/plugins\/elementor\/assets\/",
+        },
+        settings: { page: [], editorPreferences: [] },
+        kit: {
+            active_breakpoints: ["viewport_mobile", "viewport_tablet"],
+            global_image_lightbox: "yes",
+            lightbox_enable_counter: "yes",
+            lightbox_enable_fullscreen: "yes",
+            lightbox_enable_zoom: "yes",
+            lightbox_enable_share: "yes",
+            lightbox_title_src: "title",
+            lightbox_description_src: "description",
+        },
+        post: {
+            id: 3446,
+            title: "Yum%20Cha%20%E2%80%93%20La%20Casa%20del%20T%C3%A9",
+            excerpt: "",
+            featuredImage: false,
+        },
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.7.3"
+    id="elementor-frontend-js"></script>
+<span id="elementor-device-mode" class="elementor-screen-only"></span>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6"
+    id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://yumcha.cl/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6"
+    id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+    /* <![CDATA[ */
+    wp.i18n.setLocaleData({ "text direction\u0004ltr": ["ltr"] });
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/qi-addons-for-elementor/inc/plugins/elementor/assets/js/elementor.js?ver=6.8.2"
+    id="qi-addons-for-elementor-elementor-js"></script>
+<script type="text/javascript" id="chaai-core-elementor-js-extra">
+    /* <![CDATA[ */
+    var qodefElementorGlobal = {
+        vars: { elementorSectionHandler: [], elementorColumnHandler: [] },
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/chaai-core/inc/plugins/elementor/assets/js/elementor.min.js?ver=6.8.2"
+    id="chaai-core-elementor-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.6.1"
+    id="elementor-pro-webpack-runtime-js"></script>
+<script type="text/javascript" id="elementor-pro-frontend-js-before">
+    /* <![CDATA[ */
+    var ElementorProFrontendConfig = {
+        ajaxurl: "https:\/\/yumcha.cl\/wp-admin\/admin-ajax.php",
+        nonce: "32c304394d",
+        urls: {
+            assets:
+                "https:\/\/yumcha.cl\/wp-content\/plugins\/elementor-pro\/assets\/",
+            rest: "https:\/\/yumcha.cl\/wp-json\/",
+        },
+        shareButtonsNetworks: {
+            facebook: { title: "Facebook", has_counter: true },
+            twitter: { title: "Twitter" },
+            linkedin: { title: "LinkedIn", has_counter: true },
+            pinterest: { title: "Pinterest", has_counter: true },
+            reddit: { title: "Reddit", has_counter: true },
+            vk: { title: "VK", has_counter: true },
+            odnoklassniki: { title: "OK", has_counter: true },
+            tumblr: { title: "Tumblr" },
+            digg: { title: "Digg" },
+            skype: { title: "Skype" },
+            stumbleupon: { title: "StumbleUpon", has_counter: true },
+            mix: { title: "Mix" },
+            telegram: { title: "Telegram" },
+            pocket: { title: "Pocket", has_counter: true },
+            xing: { title: "XING", has_counter: true },
+            whatsapp: { title: "WhatsApp" },
+            email: { title: "Email" },
+            print: { title: "Print" },
+        },
+        facebook_sdk: { lang: "es_ES", app_id: "" },
+        lottie: {
+            defaultAnimationUrl:
+                "https:\/\/yumcha.cl\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json",
+        },
+    };
+    /* ]]> */
+</script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.6.1"
+    id="elementor-pro-frontend-js"></script>
+<script type="text/javascript"
+    src="https://yumcha.cl/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.6.1"
+    id="pro-elements-handlers-js"></script>
+<svg style="display: none" class="e-font-icon-svg-symbols"></svg>
+<div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="
+    border-radius: 12px;
+    margin: 0 0 0 -23px;
+    padding: 0;
+    font-family: &quot;Google Sans&quot;, Arial, sans-serif;
+  " data-id="">
+    <div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd">
+        <div class="VIpgJd-yAWNEb-hvhgNd-Ud7fr">
+            <img src="https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg" width="24" height="24"
+                alt="" />
+            <div class="VIpgJd-yAWNEb-hvhgNd-IuizWc-i3jM8c" dir="ltr">
+                Texto original
+            </div>
+        </div>
+        <div class="VIpgJd-yAWNEb-hvhgNd-k77Iif">
+            <div id="goog-gt-original-text" class="VIpgJd-yAWNEb-nVMfcd-fmcmS VIpgJd-yAWNEb-hvhgNd-axAV1"></div>
+        </div>
+        <div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr">
+            <div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr">
+                <div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">
+                    Califica esta traducción
+                </div>
+                <div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">
+                    Tus comentarios nos ayudarán a mejorar Google Traductor
+                </div>
+            </div>
+            <div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr">
+                <button id="goog-gt-thumbUpButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf"
+                    title="Buena traducción" aria-label="Buena traducción" aria-pressed="false">
+                    <span id="goog-gt-thumbUpIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false"
+                            class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M">
+                            <path
+                                d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7H2v13h16c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM7 18H4V9h3v9zm14-7l-3 7H9V8l4.34-4.34L12 9h9v2z">
+                            </path>
+                        </svg></span><span id="goog-gt-thumbUpIconFilled"><svg width="24" height="24"
+                            viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M">
+                            <path
+                                d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7v13h11c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM5 7H1v13h4V7z">
+                            </path>
+                        </svg></span></button><button id="goog-gt-thumbDownButton" type="button"
+                    class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Mala traducción" aria-label="Mala traducción"
+                    aria-pressed="false">
+                    <span id="goog-gt-thumbDownIcon"><svg width="24" height="24" viewBox="0 0 24 24"
+                            focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M">
+                            <path
+                                d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7h5V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zM17 6h3v9h-3V6zM3 13l3-7h9v10l-4.34 4.34L12 15H3v-2z">
+                            </path>
+                        </svg></span><span id="goog-gt-thumbDownIconFilled"><svg width="24" height="24"
+                            viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M">
+                            <path
+                                d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zm16 0h4V4h-4v13z">
+                            </path>
+                        </svg></span>
+                </button>
+            </div>
+        </div>
+        <div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce">
+            <form id="goog-gt-votingForm" action="//translate.googleapis.com/translate_voting?client=te"
+                method="post" target="votingFrame" class="VIpgJd-yAWNEb-hvhgNd-aXYTce">
+                <input type="text" name="sl" id="goog-gt-votingInputSrcLang" /><input type="text" name="tl"
+                    id="goog-gt-votingInputTrgLang" /><input type="text" name="query"
+                    id="goog-gt-votingInputSrcText" /><input type="text" name="gtrans"
+                    id="goog-gt-votingInputTrgText" /><input type="text" name="vote" id="goog-gt-votingInputVote" />
+            </form>
+            <iframe name="votingFrame" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="VIpgJd-ZVi9od-aZ2wEe-wOHMyf">
+    <div class="VIpgJd-ZVi9od-aZ2wEe-OiiCO">
+        <svg xmlns="http://www.w3.org/2000/svg" class="VIpgJd-ZVi9od-aZ2wEe" width="96px" height="96px"
+            viewBox="0 0 66 66">
+            <circle class="VIpgJd-ZVi9od-aZ2wEe-Jt5cK" fill="none" stroke-width="6" stroke-linecap="round" cx="33"
+                cy="33" r="30"></circle>
+        </svg>
+    </div>
+</div>
+<script src="https://yumcha.cl/wp-content/plugins/elementor/assets/lib/swiper/swiper.min.js?ver=5.3.6"></script>

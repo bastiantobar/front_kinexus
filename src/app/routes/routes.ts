@@ -12,10 +12,10 @@ import { Error500Component } from "./pages/error500/error500.component";
 import { HomeComponent } from "./home/home/home.component";
 
 export const routes: Routes = [
-  // Redirige la ruta vacía (raíz) al componente de 'home' por defecto
+  // Redirige la ruta vacía (raíz) a la página de presentación
   {
     path: "",
-    redirectTo: "init",
+    redirectTo: "presentation",
     pathMatch: "full",
   },
 
@@ -90,6 +90,13 @@ export const routes: Routes = [
           import("./extras/extras.module").then((m) => m.ExtrasModule),
       },
     ],
+  },
+
+  // Ruta de presentación fuera del layout
+  {
+    path: "presentation",
+    loadChildren: () =>
+      import("./presentation/presentation.module").then((m) => m.PresentationModule),
   },
 
   // Not found (asegúrate de que esto sea lo último)
