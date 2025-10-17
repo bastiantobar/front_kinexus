@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { ColorsService } from "../../../shared/colors/colors.service";
+import { EmpresaService } from "../../../../app/core/service/empresa.service"; // ¡Ajusta esta ruta según tu estructura!
+//import { Empresa } from "../empresa.model"; // ¡Ajusta esta ruta según tu estructura!
 
 @Component({
   selector: "app-dashboardv2",
@@ -9,6 +11,9 @@ import { ColorsService } from "../../../shared/colors/colors.service";
   styleUrls: ["./dashboardv2.component.scss"],
 })
 export class Dashboardv2Component implements OnInit {
+  // Propiedad para almacenar la lista de empresas obtenida del servicio
+  empresas: any[] = [];
+
   sparkOptions1 = {
     barColor: this.colors.byName("info"),
     height: 60,
@@ -172,7 +177,9 @@ export class Dashboardv2Component implements OnInit {
   constructor(
     public colors: ColorsService,
     public http: HttpClient,
-    private router: Router
+    private router: Router,
+    // Inyectamos el servicio
+    private empresaService: EmpresaService
   ) {
     http
       .get("assets/server/chart/barstackedv2.json")
@@ -182,7 +189,26 @@ export class Dashboardv2Component implements OnInit {
       .subscribe((data) => (this.splineData = data));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Llamamos al método de carga al inicializar el componente
+    this.cargarEmpresas();
+  }
+
+  /**
+   * Carga la lista de empresas usando el servicio y maneja la suscripción.
+   */
+  private cargarEmpresas() {
+    this.empresaService.getEmpresas().subscribe({
+      next: (data) => {
+        this.empresas = data;
+        console.log("¡Empresas cargadas exitosamente!", this.empresas);
+      },
+      error: (err) => {
+        console.error("Error al obtener las empresas:", err);
+        // Aquí podrías agregar lógica para mostrar un mensaje de error en la UI
+      },
+    });
+  }
 
   goToPlan() {
     // Utiliza el método navigate() del router para redirigir
