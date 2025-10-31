@@ -27,3 +27,5 @@ coverage/
 # Environment (si manejas configuraciones locales)
 .env
 .env.local
+
+src/assets/kinexus/

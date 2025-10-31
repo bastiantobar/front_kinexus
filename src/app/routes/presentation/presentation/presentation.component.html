@@ -1,14 +1,181 @@
-<section class="presentation-hero">
-  <h1>Bienvenido a Nuestra Empresa</h1>
-  <p>Somos expertos en ...</p>
+<!-- Presentation page inspired by yumcha.cl: minimal, dark, focused sections -->
+<section class="hero" id="inicio">
+  <!-- Background carousel -->
+  <div class="hero-bg" aria-hidden="true">
+    <div
+      class="slide"
+      *ngFor="let img of heroImages; let i = index"
+      [class.active]="i === currentHero"
+      [style.background-image]="'url(' + img + ')'"
+    ></div>
+    <div class="overlay"></div>
+  </div>
+  <div class="nav-top container">
+    <div class="brand">Kinexus</div>
+    <div class="spacer"></div>
+    <nav class="actions">
+      <a class="action" (click)="scrollTo('contacto')">Cotiza</a>
+      <a class="action" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda</a>
+      <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <div class="hero-content container">
+    <h1 class="title">Bienestar que impulsa resultados</h1>
+    <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos accionables para tu organización.</p>
+    <div class="cta">
+      <button class="btn" (click)="scrollTo('servicios')">Ver servicios</button>
+      <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
+    </div>
+    <div class="hero-dots" *ngIf="heroImages.length > 1">
+      <button
+        type="button"
+        *ngFor="let _ of heroImages; let i = index"
+        class="dot"
+        [class.active]="i === currentHero"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Ir a imagen ' + (i + 1)"
+      ></button>
+    </div>
+  </div>
 </section>
-<section class="presentation-about">
-  <h2>Quiénes Somos</h2>
-  <p>Descripción de la empresa...</p>
+
+<section class="concepto section" id="concepto">
+  <div class="container grid two">
+    <div>
+      <h2 class="section-title">Misión</h2>
+      <p>
+        Potenciar la salud y el rendimiento de personas y equipos a través de pausas activas,
+        kinesiología basada en evidencia y datos útiles para la toma de decisiones.
+      </p>
+    </div>
+    <div>
+      <h2 class="section-title">Visión</h2>
+      <p>
+        Ser el aliado estratégico de bienestar laboral en Latinoamérica, integrando hábitos
+        saludables a la cultura de las organizaciones.
+      </p>
+    </div>
+  </div>
 </section>
-<section class="presentation-contact">
-  <h2>Contáctanos</h2>
-  <form>
-    <!-- Campos de formulario aquí -->
-  </form>
+
+<section class="servicios section" id="servicios">
+  <div class="container">
+    <h2 class="section-title">Servicios destacados</h2>
+    <div class="service-cards">
+      <article class="service">
+        <div
+          class="img"
+          aria-hidden="true"
+          [style.backgroundImage]="'url(' + serviceImgEmpresas + ')'"
+        >
+          <div class="holo" aria-hidden="true"></div>
+        </div>
+        <div class="content">
+          <h3>Pausas activas para empresas</h3>
+          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia.</p>
+          <div class="actions">
+            <button class="btn" (click)="scrollTo('contacto')">Conocer servicio</button>
+            <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda demo</a>
+          </div>
+        </div>
+      </article>
+      <article class="service">
+        <div
+          class="img"
+          aria-hidden="true"
+          [style.backgroundImage]="'url(' + serviceImgPersonas + ')'"
+        >
+          <div class="holo" aria-hidden="true"></div>
+        </div>
+        <div class="content">
+          <h3>Kinesioterapia para personas</h3>
+          <p>Planes personalizados con agendamiento online y material de ejercicios en tu perfil.</p>
+          <div class="actions">
+            <button class="btn" (click)="scrollTo('contacto')">Ver planes</button>
+            <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda evaluación</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
+
+<section class="galeria section" id="galeria">
+  <div class="container">
+    <h2 class="section-title">Galería</h2>
+    <div class="gallery-grid">
+      <figure class="thumb" *ngFor="let img of galleryImages; let i = index">
+        <img [src]="img" [attr.alt]="'Galería Kinexus ' + (i + 1)" loading="lazy" />
+      </figure>
+    </div>
+  </div>
+  
+</section>
+
+<section class="cta-final section accent" id="cta">
+  <div class="container cta-inline">
+    <h2 class="section-title">Cotiza o agenda tu evaluación</h2>
+    <div class="cta-buttons">
+      <button class="btn" (click)="scrollTo('contacto')">Cotizar con nosotros</button>
+      <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
+    </div>
+  </div>
+</section>
+
+<section class="contacto section" id="contacto">
+  <div class="container grid two">
+    <div>
+      <h2 class="section-title">Contacto</h2>
+      <ul class="contact-list">
+  <li><strong>Email:</strong> contacto@kinexus.cl</li>
+        <li><strong>Dirección:</strong> 612 Av. Apóstol Santiago, Quinta Normal, Región Metropolitana</li>
+        <li><strong>Teléfono:</strong> +56 9 1234 5678</li>
+      </ul>
+      <div class="horarios">
+        <h3>Horario de apertura</h3>
+        <p>Martes - Sábado • 18:30 - 21:00</p>
+      </div>
+      <div class="socials">
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div>
+      <div class="map-embed has-iframe" id="mapa" aria-label="Mapa de ubicación">
+        <iframe
+          title="Ubicación Kinexus"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=612%20Av.%20Ap%C3%B3stol%20Santiago,%20Quinta%20Normal,%20Regi%C3%B3n%20Metropolitana&output=embed"
+        ></iframe>
+      </div>
+      <div class="map-link-wrap">
+        <a
+          class="map-link"
+          href="https://www.google.com/maps?q=612%20Av.%20Ap%C3%B3stol%20Santiago,%20Quinta%20Normal,%20Regi%C3%B3n%20Metropolitana"
+          target="_blank" rel="noopener"
+        >Abrir en Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container small">
+    <span>Todos los derechos reservados © {{ currentYear }} Kinexus</span>
+  </div>
+</footer>
+
+<!-- Side menu overlay -->
+<div class="side-menu" [class.open]="menuOpen" (click)="closeMenu()">
+  <div class="panel" (click)="$event.stopPropagation()">
+    <button class="close" (click)="closeMenu()" aria-label="Cerrar menú">×</button>
+    <ul>
+      <li><a routerLink="/login" (click)="closeMenu()">Perfil Usuario</a></li>
+      <li><a [routerLink]="['/login']" [queryParams]="{ type: 'empresa' }" (click)="closeMenu()">Perfil Empresas</a></li>
+      <li><a (click)="scrollTo('contacto'); closeMenu()">Cotiza con nosotros</a></li>
+      <li><a [href]="whatsAppUrl" target="_blank" rel="noopener" (click)="closeMenu()">Agenda tu evaluación</a></li>
+    </ul>
+  </div>
+</div>
