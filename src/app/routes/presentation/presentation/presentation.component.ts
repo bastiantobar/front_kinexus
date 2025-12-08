@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-presentation',
@@ -7,10 +7,8 @@ import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angu
 })
 export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   currentYear = new Date().getFullYear();
-  menuOpen = false;
-
   // WhatsApp configuration (replace number as needed)
-  whatsAppNumber = '56912345678';
+  whatsAppNumber = '56963691898';
   whatsAppMessage = 'Hola, me gustaría agendar una evaluación inicial con Kinexus.';
 
   constructor() {}
@@ -63,18 +61,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  @HostListener('document:keydown.escape', ['$event'])
-  onEsc(_e: KeyboardEvent) {
-    this.closeMenu();
-  }
+  // side-menu removed for presentation-only page; no menu state required
 
   private nextSlide() {
     this.currentHero = (this.currentHero + 1) % this.heroImages.length;
@@ -87,6 +74,44 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
       clearInterval(this.slideTimer);
       this.slideTimer = setInterval(() => this.nextSlide(), 6000);
     }
+  }
+
+  // UI status for contact submissions
+  contactStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
+
+  // Simple contact form handler: prevents default, logs the values and resets the form.
+  submitContact(e: Event) {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    if (!form) return;
+    const fd = new FormData(form);
+    const payload: any = {};
+    fd.forEach((v, k) => (payload[k] = v));
+    // For now, just log the submission. Replace with API call as needed.
+    // eslint-disable-next-line no-console
+    // Show pending state
+    this.contactStatus = { state: 'pending', message: 'Enviando...' };
+
+    // Post to server-side script (deploy contact.php to your hosting root)
+    fetch('/contact.php', {
+      method: 'POST',
+      body: fd,
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error('Network response not ok');
+        const json = await res.json();
+        if (json && json.success) {
+          this.contactStatus = { state: 'success', message: json.message || 'Gracias — tu consulta ha sido enviada.' };
+          form.reset();
+        } else {
+          throw new Error((json && json.message) || 'Error al enviar');
+        }
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('Error enviando contacto', err);
+        this.contactStatus = { state: 'error', message: 'No se pudo enviar la consulta. Intenta nuevamente.' };
+      });
   }
 
 }

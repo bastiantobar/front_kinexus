@@ -32,31 +32,34 @@ $surface: #161617;
 }
 
 // Hero background carousel
+// Hero background carousel
 .hero-bg {
 	position: absolute;
 	inset: 0;
 	z-index: 0;
-	overflow: hidden;
 
+	// Slides (background images)
 	.slide {
 		position: absolute;
 		inset: 0;
 		background-size: cover;
-		background-position: center;
+		background-position: center center;
 		background-repeat: no-repeat;
 		opacity: 0;
+		transition: opacity 800ms ease, transform 800ms ease;
 		transform: scale(1.02);
-		transition: opacity 800ms ease, transform 4000ms ease;
-		filter: saturate(0.9) contrast(1) brightness(0.9);
-		&.active {
-			opacity: 1;
-			transform: scale(1);
-		}
+		will-change: opacity, transform;
+	}
+	.slide.active {
+		opacity: 1;
+		transform: scale(1);
+		z-index: 0;
 	}
 
 	.overlay {
 		position: absolute;
 		inset: 0;
+		z-index: 1;
 		background:
 			linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.65) 100%),
 			radial-gradient(1200px 600px at 80% 10%, rgba(100, 140, 52, 0.14), transparent 60%),
@@ -65,12 +68,24 @@ $surface: #161617;
 	}
 }
 
+/* Larger centered service card */
+.servicios .service.large {
+	width: 100%;
+	max-width: 980px;
+}
+@media (min-width: 900px) {
+    .servicios .service.large { max-width: 1100px; }
+    /* Make the featured large card span the full grid so it can be centered */
+    .servicios .service-cards .service.large { grid-column: 1 / -1; }
+}
+.servicios .service.centered { margin: 0 auto; }
+
 .nav-top {
 	display: flex;
 	align-items: center;
 	padding: 20px 0;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	.brand {
 		font-weight: 600;
 		letter-spacing: 0.08em;
@@ -112,7 +127,7 @@ $surface: #161617;
 	padding: 60px 0 80px;
 	text-align: center;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	.title {
 		font-size: clamp(2rem, 5vw, 4rem);
 		line-height: 1.05;
@@ -310,6 +325,29 @@ $surface: #161617;
 
 .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
 
+.contact-form {
+	.contact-card {
+		max-width: 760px;
+		margin: 18px auto 0;
+		background: $surface;
+		border: 1px solid rgba(255,255,255,0.04);
+		padding: 20px;
+		border-radius: 12px;
+		h3 { margin: 0 0 12px; }
+		.fields { display: grid; gap: 10px; grid-template-columns: 1fr;
+			@media (min-width: 700px) { grid-template-columns: 1fr 1fr; }
+			input[type="text"], input[type="email"], input[type="tel"] { padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #eaeaea; }
+			textarea { grid-column: 1 / -1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #eaeaea; resize: vertical; }
+		}
+		.form-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
+	}
+}
+
+.contact-status { max-width: 760px; margin: 12px auto; text-align: center; }
+.contact-status .status-success { color: #d7f0d2; background: rgba(100,140,52,0.12); padding: 10px; border-radius: 8px; }
+.contact-status .status-error { color: #ffd6d6; background: rgba(255,0,0,0.06); padding: 10px; border-radius: 8px; }
+.contact-status .status-pending { color: #faf7d6; background: rgba(255,255,0,0.06); padding: 10px; border-radius: 8px; }
+
 .contact-list {
 	list-style: none;
 	padding: 0;
@@ -317,6 +355,15 @@ $surface: #161617;
 	li {
 		margin-bottom: 6px;
 	}
+}
+
+.contact-center {
+	max-width: 720px;
+	margin: 0 auto;
+	text-align: center;
+	.contact-list { margin: 12px 0 18px; }
+	.horarios { margin: 8px 0 12px; }
+	.socials { margin-top: 12px; }
 }
 
 .horarios {
