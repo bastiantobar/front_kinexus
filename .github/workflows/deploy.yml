@@ -29,10 +29,10 @@ jobs:
         id: target
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "deploy_dir=/public_html" >> $GITHUB_OUTPUT
+            echo "deploy_dir=/public_html/" >> $GITHUB_OUTPUT
             echo "environment=PRODUCCIÓN" >> $GITHUB_OUTPUT
           else
-            echo "deploy_dir=/public_html/dev" >> $GITHUB_OUTPUT
+            echo "deploy_dir=/public_html/dev/" >> $GITHUB_OUTPUT
             echo "environment=DESARROLLO" >> $GITHUB_OUTPUT
           fi
 
