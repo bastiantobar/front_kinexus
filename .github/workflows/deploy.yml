@@ -1,0 +1,50 @@
+name: Deploy Angular to Bluehosting
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular
+        run: npm run build -- --configuration production
+
+      - name: Determine deployment target
+        id: target
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "deploy_dir=/public_html" >> $GITHUB_OUTPUT
+            echo "environment=PRODUCCIÓN" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_dir=/public_html/dev" >> $GITHUB_OUTPUT
+            echo "environment=DESARROLLO" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy via FTP (${{ steps.target.outputs.environment }})
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ steps.target.outputs.deploy_dir }}
+          dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            **/node_modules/**
