@@ -14,11 +14,8 @@
     <div class="brand">Kinexus</div>
     <div class="spacer"></div>
     <nav class="actions">
-      <a class="action" (click)="scrollTo('contacto')">Cotiza</a>
+      <a class="action" (click)="scrollTo('cta')">Cotiza</a>
       <a class="action" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda</a>
-      <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir menú">
-        <span></span><span></span><span></span>
-      </button>
     </nav>
   </div>
   <div class="hero-content container">
@@ -64,7 +61,7 @@
   <div class="container">
     <h2 class="section-title">Servicios destacados</h2>
     <div class="service-cards">
-      <article class="service">
+      <article class="service large centered">
         <div
           class="img"
           aria-hidden="true"
@@ -74,27 +71,10 @@
         </div>
         <div class="content">
           <h3>Pausas activas para empresas</h3>
-          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia.</p>
+          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia. Diseñamos pausas activas centradas en productividad y bienestar, con reportes para gerencia y seguimiento de asistencia.</p>
           <div class="actions">
             <button class="btn" (click)="scrollTo('contacto')">Conocer servicio</button>
             <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda demo</a>
-          </div>
-        </div>
-      </article>
-      <article class="service">
-        <div
-          class="img"
-          aria-hidden="true"
-          [style.backgroundImage]="'url(' + serviceImgPersonas + ')'"
-        >
-          <div class="holo" aria-hidden="true"></div>
-        </div>
-        <div class="content">
-          <h3>Kinesioterapia para personas</h3>
-          <p>Planes personalizados con agendamiento online y material de ejercicios en tu perfil.</p>
-          <div class="actions">
-            <button class="btn" (click)="scrollTo('contacto')">Ver planes</button>
-            <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda evaluación</a>
           </div>
         </div>
       </article>
@@ -118,46 +98,42 @@
   <div class="container cta-inline">
     <h2 class="section-title">Cotiza o agenda tu evaluación</h2>
     <div class="cta-buttons">
-      <button class="btn" (click)="scrollTo('contacto')">Cotizar con nosotros</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
     </div>
   </div>
 </section>
 
+<!-- Contact form directly under CTA -->
+<section class="contact-form section">
+  <div class="container">
+    <form class="contact-card" (submit)="submitContact($event)">
+      <h3>Enviar consulta</h3>
+      <div class="fields">
+        <input type="text" name="name" placeholder="Nombre" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="tel" name="phone" placeholder="Teléfono" />
+        <textarea name="message" rows="4" placeholder="Cuentanos brevemente como te podemos ayudar"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-accent" type="submit">Enviar consulta</button>
+      </div>
+    </form>
+  </div>
+</section>
+<div class="container">
+  <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
+    <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
+  </div>
+</div>
+
 <section class="contacto section" id="contacto">
-  <div class="container grid two">
-    <div>
-      <h2 class="section-title">Contacto</h2>
-      <ul class="contact-list">
-  <li><strong>Email:</strong> contacto@kinexus.cl</li>
-        <li><strong>Dirección:</strong> 612 Av. Apóstol Santiago, Quinta Normal, Región Metropolitana</li>
-        <li><strong>Teléfono:</strong> +56 9 1234 5678</li>
-      </ul>
-      <div class="horarios">
-        <h3>Horario de apertura</h3>
-        <p>Martes - Sábado • 18:30 - 21:00</p>
-      </div>
-      <div class="socials">
-        <a href="#" target="_blank" rel="noopener">Instagram</a>
-      </div>
-    </div>
-    <div>
-      <div class="map-embed has-iframe" id="mapa" aria-label="Mapa de ubicación">
-        <iframe
-          title="Ubicación Kinexus"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=612%20Av.%20Ap%C3%B3stol%20Santiago,%20Quinta%20Normal,%20Regi%C3%B3n%20Metropolitana&output=embed"
-        ></iframe>
-      </div>
-      <div class="map-link-wrap">
-        <a
-          class="map-link"
-          href="https://www.google.com/maps?q=612%20Av.%20Ap%C3%B3stol%20Santiago,%20Quinta%20Normal,%20Regi%C3%B3n%20Metropolitana"
-          target="_blank" rel="noopener"
-        >Abrir en Google Maps</a>
-      </div>
-    </div>
+  <div class="container contact-center">
+    <h2 class="section-title">Contacto</h2>
+    <ul class="contact-list">
+      <li><strong>Email:</strong> felipe.reyes@ki-nexus.cl</li>
+      <li><strong>Teléfono:</strong> +56963691898</li>
+    </ul>
+    <!-- horarios and socials removed per request; only email and phone remain -->
   </div>
 </section>
 
@@ -167,15 +143,4 @@
   </div>
 </footer>
 
-<!-- Side menu overlay -->
-<div class="side-menu" [class.open]="menuOpen" (click)="closeMenu()">
-  <div class="panel" (click)="$event.stopPropagation()">
-    <button class="close" (click)="closeMenu()" aria-label="Cerrar menú">×</button>
-    <ul>
-      <li><a routerLink="/login" (click)="closeMenu()">Perfil Usuario</a></li>
-      <li><a [routerLink]="['/login']" [queryParams]="{ type: 'empresa' }" (click)="closeMenu()">Perfil Empresas</a></li>
-      <li><a (click)="scrollTo('contacto'); closeMenu()">Cotiza con nosotros</a></li>
-      <li><a [href]="whatsAppUrl" target="_blank" rel="noopener" (click)="closeMenu()">Agenda tu evaluación</a></li>
-    </ul>
-  </div>
-</div>
+<!-- Side menu removed for presentation-only page -->
