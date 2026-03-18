@@ -37,3 +37,143 @@
 @import "./app/shared/styles/bootstrap.scss";
 //== Application
 @import "./app/shared/styles/app.scss";
+
+// Fuente global
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* ========================================================================
+   Theme CSS Variables — light (default) & dark
+ ========================================================================== */
+
+// Tema claro (valores por defecto)
+body {
+  --bg-primary:        #faf8f3;
+  --bg-secondary:      #f0ece3;
+  --bg-card:           #f0ece3;
+  --text-primary:      #2c2416;
+  --text-secondary:    #555e70;
+  --text-muted:        #7a6e5f;
+  --border-color:      rgba(0,0,0,0.09);
+  --navbar-bg:         #648C34;
+  --navbar-text:       #ffffff;
+  --sidebar-bg:        #1a2235;
+  --sidebar-text:      #c8d0dc;
+  --sidebar-active:    #648C34;
+  --input-bg:          #ffffff;
+  --input-border:      #d0d7e2;
+  --shadow:            0 2px 12px rgba(0,0,0,0.08);
+  --transition:        0.25s ease;
+
+  /* ── Glass — tema claro ── */
+  --glass-bg:          rgba(250, 248, 243, 0.55);
+  --glass-bg-md:       rgba(250, 248, 243, 0.72);
+  --glass-border:      rgba(255, 255, 255, 0.70);
+  --glass-border-subtle: rgba(255,255,255,0.40);
+  --glass-shadow:      0 8px 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.80);
+  --glass-reflection:  linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 50%);
+  --blur-sm:           blur(8px);
+  --blur-md:           blur(18px);
+  --blur-lg:           blur(32px);
+}
+
+// Tema oscuro — se activa cuando ThemeService agrega `.dark-theme` al body
+body.dark-theme {
+  --bg-primary:        #111827;
+  --bg-secondary:      #1f2937;
+  --bg-card:           #1f2937;
+  --text-primary:      #f0f4f8;
+  --text-secondary:    #9ca3b0;
+  --text-muted:        #6b7280;
+  --border-color:      #374151;
+  --navbar-bg:         #1a2235;
+  --navbar-text:       #e2e8f0;
+  --sidebar-bg:        #0f172a;
+  --sidebar-text:      #94a3b8;
+  --sidebar-active:    #648C34;
+  --input-bg:          #374151;
+  --input-border:      #4b5563;
+  --shadow:            0 2px 12px rgba(0,0,0,0.35);
+
+  /* ── Glass — tema oscuro (extraído del CodePen) ── */
+  --glass-bg:          rgba(255, 255, 255, 0.08);
+  --glass-bg-md:       rgba(255, 255, 255, 0.14);
+  --glass-border:      rgba(255, 255, 255, 0.22);
+  --glass-border-subtle: rgba(255,255,255,0.10);
+  --glass-shadow:      0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.20);
+  --glass-reflection:  linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%);
+  --blur-sm:           blur(8px);
+  --blur-md:           blur(18px);
+  --blur-lg:           blur(32px);
+
+
+  // Aplicar automáticamente sobre elementos de Bootstrap/Angle
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  .wrapper > section,
+  .content-wrapper {
+    background-color: var(--bg-primary);
+  }
+
+  .card, .panel {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .card-header, .panel-heading {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .table {
+    color: var(--text-primary);
+    td, th { border-color: var(--border-color); }
+    thead th { background-color: var(--bg-secondary); }
+  }
+
+  .form-control {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-primary);
+    &:focus { border-color: #648C34; box-shadow: 0 0 0 3px rgba(100,140,52,0.25); }
+  }
+
+  .dropdown-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    .dropdown-item {
+      color: var(--text-primary);
+      &:hover { background-color: var(--bg-primary); }
+    }
+  }
+
+  .modal-content {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .list-group-item {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .topnavbar {
+    background-color: var(--navbar-bg) !important;
+    .navbar-header, .nav-link { color: var(--navbar-text) !important; }
+  }
+
+  .aside-container {
+    background-color: var(--sidebar-bg) !important;
+    .nav-item .nav-link { color: var(--sidebar-text); }
+  }
+
+  hr { border-color: var(--border-color); }
+  .text-muted { color: var(--text-muted) !important; }
+}
+
