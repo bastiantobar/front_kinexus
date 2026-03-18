@@ -30,4 +30,4 @@ coverage/
 
 # src/assets/kinexus/ — assets rastreados por Git para deploy automático
 
-assets/kinexus/*
+src/assets/kinexus/*
