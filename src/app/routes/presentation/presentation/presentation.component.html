@@ -13,11 +13,24 @@
   <div class="nav-top container">
     <div class="brand">Kinexus</div>
     <div class="spacer"></div>
+    <!-- Theme toggle -->
+    <button
+      class="pres-theme-btn"
+      (click)="toggleTheme()"
+      [title]="isDarkTheme() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+      id="pres-theme-toggle">
+      <span class="pres-theme-track">
+        <span class="pres-theme-thumb" [class.dark]="isDarkTheme()">
+          <em [class]="isDarkTheme() ? 'fa fa-moon' : 'fa fa-sun'"></em>
+        </span>
+      </span>
+    </button>
     <nav class="actions">
       <a class="action" (click)="scrollTo('cta')">Cotiza</a>
       <a class="action" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda</a>
     </nav>
   </div>
+
   <div class="hero-content container">
     <h1 class="title">Bienestar que impulsa resultados</h1>
     <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos accionables para tu organización.</p>
@@ -83,16 +96,23 @@
 </section>
 
 <section class="galeria section" id="galeria">
-  <div class="container">
-    <h2 class="section-title">Galería</h2>
-    <div class="gallery-grid">
-      <figure class="thumb" *ngFor="let img of galleryImages; let i = index">
-        <img [src]="img" [attr.alt]="'Galería Kinexus ' + (i + 1)" loading="lazy" />
-      </figure>
+  <div class="prlx-outer">
+    <div class="prlx-scroll">
+      <div
+        *ngFor="let img of galleryImages"
+        class="prlx-item"
+        [ngClass]="img.cls">
+        <div class="prlx-frame">
+          <img [src]="img.src" [attr.alt]="'Galería Kinexus'" loading="lazy" />
+        </div>
+      </div>
     </div>
+    <p class="prlx-hint">
+      <span>↓</span> Desplázate para explorar
+    </p>
   </div>
-  
 </section>
+
 
 <section class="cta-final section accent" id="cta">
   <div class="container cta-inline">

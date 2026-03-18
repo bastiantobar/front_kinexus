@@ -5,6 +5,7 @@ const screenfull = require('screenfull');
 import { UserblockService } from '../sidebar/userblock/userblock.service';
 import { SettingsService } from '../../core/settings/settings.service';
 import { MenuService } from '../../core/menu/menu.service';
+import { ThemeService } from '../../core/service/theme.service';
 
 @Component({
     selector: 'app-header',
@@ -20,11 +21,15 @@ export class HeaderComponent implements OnInit {
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton', { static: true }) fsbutton;  // the fullscreen button
 
-    constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, public injector: Injector) {
-
+    constructor(
+        public menu: MenuService,
+        public userblockService: UserblockService,
+        public settings: SettingsService,
+        public injector: Injector,
+        public themeService: ThemeService
+    ) {
         // show only a few items on demo
         this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
-
     }
 
     ngOnInit() {
@@ -90,5 +95,13 @@ export class HeaderComponent implements OnInit {
         if (screenfull.enabled) {
             screenfull.toggle();
         }
+    }
+
+    toggleTheme() {
+        this.themeService.toggle();
+    }
+
+    isDarkTheme(): boolean {
+        return this.themeService.isDark();
     }
 }

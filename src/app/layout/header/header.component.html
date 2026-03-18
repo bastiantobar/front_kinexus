@@ -49,12 +49,28 @@
                 <em class="icon-magnifier"></em>
             </a>
         </li>
+        <!-- Theme toggle switch -->
+        <li class="nav-item d-none d-md-flex align-items-center px-2">
+            <button
+                class="theme-toggle-btn"
+                (click)="toggleTheme()"
+                [title]="isDarkTheme() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+                [attr.aria-label]="isDarkTheme() ? 'Activar tema claro' : 'Activar tema oscuro'"
+                id="theme-toggle-btn">
+                <span class="theme-toggle-track">
+                    <span class="theme-toggle-thumb" [class.dark]="isDarkTheme()">
+                        <em [class]="isDarkTheme() ? 'fa fa-moon' : 'fa fa-sun'"></em>
+                    </span>
+                </span>
+            </button>
+        </li>
         <!-- Fullscreen (only desktops)-->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)">
                 <em class="fa fa-expand"></em>
             </a>
         </li>
+
         <!-- START Alert menu-->
         <li class="nav-item dropdown dropdown-list" dropdown>
             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>

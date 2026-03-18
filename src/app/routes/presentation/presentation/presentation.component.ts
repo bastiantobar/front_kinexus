@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ThemeService } from '../../../core/service/theme.service';
 
 @Component({
   selector: 'app-presentation',
@@ -11,7 +12,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   whatsAppNumber = '56963691898';
   whatsAppMessage = 'Hola, me gustaría agendar una evaluación inicial con Kinexus.';
 
-  constructor() {}
+  constructor(private themeService: ThemeService) {}
+
 
   ngOnInit(): void {}
 
@@ -25,14 +27,14 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   serviceImgEmpresas = 'assets/kinexus/services/empresas.webp';
   serviceImgPersonas = 'assets/kinexus/services/personas.webp';
 
-  // Gallery images (6 suggested)
-  galleryImages: string[] = [
-    'assets/kinexus/gallery/gal-1.webp',
-    'assets/kinexus/gallery/gal-2.webp',
-    'assets/kinexus/gallery/gal-3.webp',
-    'assets/kinexus/gallery/gal-4.webp',
-    'assets/kinexus/gallery/gal-5.webp',
-    'assets/kinexus/gallery/gal-6.webp',
+  // Gallery images — cada una con su clase de velocidad parallax
+  galleryImages = [
+    { src: 'assets/kinexus/gallery/gal-1.webp', cls: '' },
+    { src: 'assets/kinexus/gallery/gal-2.webp', cls: 'slower' },
+    { src: 'assets/kinexus/gallery/gal-3.webp', cls: 'faster' },
+    { src: 'assets/kinexus/gallery/gal-4.webp', cls: 'slower slower-down' },
+    { src: 'assets/kinexus/gallery/gal-5.webp', cls: 'slower' },
+    { src: 'assets/kinexus/gallery/gal-6.webp', cls: 'last' },
   ];
   currentHero = 0;
   private slideTimer: any;
@@ -69,11 +71,18 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goToSlide(i: number) {
     this.currentHero = i % this.heroImages.length;
-    // Optional: reset timer to give user a full interval after manual change
     if (this.slideTimer) {
       clearInterval(this.slideTimer);
       this.slideTimer = setInterval(() => this.nextSlide(), 6000);
     }
+  }
+
+  toggleTheme() {
+    this.themeService.toggle();
+  }
+
+  isDarkTheme(): boolean {
+    return this.themeService.isDark();
   }
 
   // UI status for contact submissions

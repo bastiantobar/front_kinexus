@@ -78,3 +78,37 @@ $preloader-hg: 30px;
     color: #0f0f0f; // elegant black
     text-rendering: optimizeLegibility;
 }
+
+/* ========================================================================
+   Custom Scrollbar (WebKit: Chrome, Edge, Safari)
+ ========================================================================== */
+
+// Ancho y alto de la barra
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+// Pista (fondo de la barra)
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+}
+
+// Thumb (parte que se arrastra)
+::-webkit-scrollbar-thumb {
+    background: $preloader-bg; // verde Kinexus
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+
+    &:hover {
+        background: darken(#648C34, 10%);
+        background-clip: content-box;
+    }
+}
+
+// Esquina entre scrollbars horizontal y vertical
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

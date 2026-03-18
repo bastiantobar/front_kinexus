@@ -1,0 +1,64 @@
+/* ========================================================================
+   Header — Theme Toggle Switch
+ ========================================================================== */
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    outline: none;
+
+    &:focus-visible .theme-toggle-track {
+        box-shadow: 0 0 0 3px rgba(100, 140, 52, 0.5);
+    }
+}
+
+.theme-toggle-track {
+    display: flex;
+    align-items: center;
+    width: 52px;
+    height: 28px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    position: relative;
+    transition: background 0.3s ease, border-color 0.3s ease;
+
+    .dark-theme & {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.theme-toggle-thumb {
+    position: absolute;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+
+    em {
+        font-size: 10px;
+        color: #f59e0b; // sol dorado
+        transition: color 0.3s ease;
+    }
+
+    &.dark {
+        transform: translateX(24px);
+        background: #1f2937;
+
+        em {
+            color: #818cf8; // luna violeta
+        }
+    }
+}
