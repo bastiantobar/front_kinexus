@@ -35,7 +35,7 @@
     <h1 class="title">Bienestar que impulsa resultados</h1>
     <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos accionables para tu organización.</p>
     <div class="cta">
-      <button class="btn" (click)="scrollTo('servicios')">Ver servicios</button>
+      <button class="btn btn-solid" (click)="scrollTo('servicios')">Ver servicios</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
     </div>
     <div class="hero-dots" *ngIf="heroImages.length > 1">
@@ -51,16 +51,16 @@
   </div>
 </section>
 
-<section class="concepto section" id="concepto">
+<section class="concepto section centered-concepto" id="concepto">
   <div class="container grid two">
-    <div>
+    <div class="concepto-item">
       <h2 class="section-title">Misión</h2>
       <p>
         Potenciar la salud y el rendimiento de personas y equipos a través de pausas activas,
         kinesiología basada en evidencia y datos útiles para la toma de decisiones.
       </p>
     </div>
-    <div>
+    <div class="concepto-item">
       <h2 class="section-title">Visión</h2>
       <p>
         Ser el aliado estratégico de bienestar laboral en Latinoamérica, integrando hábitos
@@ -86,7 +86,7 @@
           <h3>Pausas activas para empresas</h3>
           <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia. Diseñamos pausas activas centradas en productividad y bienestar, con reportes para gerencia y seguimiento de asistencia.</p>
           <div class="actions">
-            <button class="btn" (click)="scrollTo('contacto')">Conocer servicio</button>
+            <button class="btn" (click)="triggerContactAnimation()">Conocer servicio</button>
             <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda demo</a>
           </div>
         </div>
@@ -148,19 +148,43 @@
 </div>
 </ng-container> -->
 
-<section class="contacto section" id="contacto">
-  <div class="container contact-center">
-    <h2 class="section-title">Contacto</h2>
-    <ul class="contact-list">
-      <li><strong>Email:</strong> felipe.reyes@ki-nexus.cl</li>
-      <li><strong>Teléfono:</strong> +56963691898</li>
-    </ul>
-    <!-- horarios and socials removed per request; only email and phone remain -->
+<section class="contacto section" id="contacto" #contactoRef>
+  <div class="contact-bg-puff" [class.active]="contactActive"></div>
+  <div class="container contact-center" style="position: relative; z-index: 5; min-height: 500px;">
+    
+    <aside class="profile-card" [class.active]="contactActive">
+      <header>
+        <a target="_blank" [href]="whatsAppUrl" class="img-link">
+          <img src="assets/kinexus/card/felipe.png" alt="Felipe Reyes" (error)="handleImageError($event)">
+        </a>
+        <h1>Felipe Reyes</h1>
+        <h2>Kinesiólogo</h2>
+        
+        <div class="header-contact">
+          <a [href]="whatsAppUrl" target="_blank" title="Contactar" class="contact-icon-link">
+            <i class="fa fa-phone"></i>
+          </a>
+          <a class="email-link" [href]="'mailto:felipe.reyes@ki-nexus.cl'" title="Email">
+            <i class="fa fa-envelope"></i>
+            <span>felipe.reyes@ki-nexus.cl</span>
+          </a>
+        </div>
+      </header>
+
+      <div class="profile-content-right">
+        <div class="profile-bio">
+          <p>
+            Potenciamos el bienestar laboral y el rendimiento a través de la kinesiología basada en evidencia.
+          </p>
+        </div>
+      </div>
+    </aside>
+
   </div>
 </section>
 
 <footer class="site-footer">
-  <div class="container small">
+  <div class="container footer-bottom">
     <span>Todos los derechos reservados © {{ currentYear }} Kinexus</span>
   </div>
 </footer>

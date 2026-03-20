@@ -283,6 +283,28 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 
   &:hover { border-color: $accent; transform: translateY(-1px); }
 
+  &.btn-solid {
+    background: #ffffff;
+    border-color: rgba($accent, 0.3);
+    color: $accent;
+    font-weight: 600;
+
+    :host-context(body.dark-theme) & {
+      background: #000000;
+      border-color: rgba($accent, 0.4);
+      color: $accent;
+    }
+
+    &:hover {
+      background: #ffffff;
+      border-color: $accent;
+      box-shadow: 0 4px 12px rgba($accent, 0.15);
+      :host-context(body.dark-theme) & {
+        background: #000000;
+      }
+    }
+  }
+
   &.btn-accent {
     border-color: transparent;
     background: linear-gradient(180deg, lighten($accent, 5%) 0%, $accent 100%);
@@ -401,10 +423,7 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 // ── Gallery Parallax ─────────────────────────────────────────────
 .galeria {
   padding: 0; // sin padding, ocupa full height
-
-  // Fondo cambia según tema
-  background: $bg;
-  :host-context(body.dark-theme) & { background: $bg-dk; }
+  background: #1a2414; // Verde oscuro profundo
 }
 
 // Contenedor externo: oculta el overflow del truco 3D
@@ -490,20 +509,20 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 // Hint de scroll
 .prlx-hint {
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  color: $muted;
-  font-size: 0.8rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   pointer-events: none;
   animation: hint-bounce 2s ease-in-out infinite;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 
-  :host-context(body.dark-theme) & { color: $muted-dk; }
-
-  span { font-size: 1.2rem; }
+  span { font-size: 1.4rem; }
 }
 
 @keyframes hint-bounce {
@@ -606,32 +625,284 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 .contact-status .status-error   { color: #8b1e1e; background: rgba(255,0,0,0.06); padding: 10px; border-radius: 8px; }
 .contact-status .status-pending { color: #6b5800; background: rgba(255,200,0,0.10); padding: 10px; border-radius: 8px; }
 
-// ── Contact info ─────────────────────────────────────────────────
+// ── Animated Contact Card (Material Design Adaptation) ──────────
 .contacto {
+  position: relative;
   background: $bg-surface;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   :host-context(body.dark-theme) & { background: $bg-surf-dk; }
 }
 
-.contact-list {
-  list-style: none; padding: 0; margin: 0 0 16px;
-  li { margin-bottom: 6px; color: $muted; :host-context(body.dark-theme) & { color: $muted-dk; } }
+.contact-bg-puff {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border: 0 solid $text;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+
+  &.active {
+    opacity: 1;
+    animation: 
+      puff 0.5s 1.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards,
+      borderRadius 0.2s 1.7s linear forwards;
+  }
 }
 
-.contact-center {
-  max-width: 720px; margin: 0 auto; text-align: center;
-  .contact-list { margin: 12px 0 18px; }
+.centered-concepto {
+  .grid.two {
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  
+  .concepto-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    
+    .section-title {
+      margin-bottom: 20px;
+      &:after { left: 50%; transform: translateX(-50%); }
+    }
+    
+    p {
+      max-width: 450px;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.profile-card {
+  background: $accent;
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+  
+  &.active {
+    animation: 
+      init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, 
+      moveDown 0.8s 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, 
+      moveUp 0.8s 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+      materia 0.5s 2.1s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    header, .profile-content-right {
+      animation: moveIn 0.8s 2.4s ease forwards;
+    }
+  }
+
+  header {
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px dashed $border;
+    background: $bg;
+    color: $text;
+    opacity: 0;
+    text-align: center;
+
+    h1 { font-size: 1.4rem; color: $accent; margin: 0 0 4px; font-weight: 700; }
+    h2 { font-size: 1rem; color: $muted; margin: 0; font-weight: 500; }
+    
+    .header-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed rgba($accent, 0.2);
+      width: 100%;
+
+      .contact-icon-link {
+        color: $accent;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: transform 0.2s;
+        &:hover { transform: scale(1.1); }
+      }
+
+      .email-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        transition: color 0.2s;
+        
+        i {
+          font-size: 1.2rem;
+          color: $accent;
+          margin-bottom: 2px;
+        }
+        
+        span {
+          font-size: 0.75rem;
+          color: $muted;
+          font-weight: 500;
+        }
+
+        &:hover {
+          i, span { color: $accent; }
+        }
+      }
+    }
+    
+    a.img-link {
+      display: inline-block;
+      margin: 10px 0;
+      position: relative;
+      img {
+        width: 100px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.04);
+        transition: box-shadow 0.3s ease;
+      }
+      &:hover img { box-shadow: 0px 0px 0px 12px rgba(0, 0, 0, 0.08); }
+    }
+  }
+
+  .profile-content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: $bg;
+    opacity: 0;
+  }
+
+  .profile-bio {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: $accent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.6;
+    max-width: 260px;
+  }
+}
+
+// Responsive profile card
+@media screen and (max-width: 480px) {
+  .profile-card.active {
+    animation: 
+      init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, 
+      moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, 
+      moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+      materiaMobile 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+  }
+  .profile-card {
+    flex-direction: column;
+    height: auto !important;
+    header, .profile-content-right {
+      width: 100% !important;
+      float: none !important;
+      padding: 30px 20px !important;
+      border: none !important;
+    }
+    .profile-content-right { border-top: 1px dashed $border !important; }
+  }
+}
+
+// Animations Keyframes
+@keyframes init {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes puff {
+  0% { top: 100%; height: 0; padding: 0; width: 0; }
+  100% { top: 50%; height: 100%; width: 100%; padding: 0 100%; border-width: 130em; }
+}
+
+@keyframes borderRadius {
+  0% { border-radius: 50%; }
+  100% { border-radius: 0; }
+}
+
+@keyframes moveDown {
+  0% { top: 50%; }
+  50% { top: 40%; }
+  100% { top: 100%; }
+}
+
+@keyframes moveUp {
+  0% { background: $accent; top: 100%; }
+  50% { top: 40%; }
+  100% { top: 50%; background: $bg-surface; }
+}
+
+@keyframes materia {
+  0% { background: $bg-surface; }
+  100% { width: 440px; height: 380px; background: $bg; border-radius: 12px; }
+}
+
+@keyframes materiaMobile {
+  0% { background: $bg-surface; }
+  100% { width: 280px; height: 550px; background: $bg; border-radius: 12px; }
+}
+
+@keyframes moveIn {
+  0% { margin-top: 50px; opacity: 0; }
+  100% { opacity: 1; margin-top: -10px; }
+}
+
+// Override for contact section to reduce space towards footer
+.contact-form.section {
+  padding-bottom: 20px;
 }
 
 // ── Footer ───────────────────────────────────────────────────────
 .site-footer {
-  padding: 28px 0;
-  color: $muted;
-  border-top: 1px solid $border;
+  padding: 30px 0;
   background: $bg;
+  border-top: 1px solid $border;
+  color: $text;
+
+  .footer-bottom {
+    text-align: center;
+    color: $muted;
+    font-size: 0.9rem;
+  }
 
   :host-context(body.dark-theme) & {
-    border-color: $border-dk;
     background: $bg-dk;
-    color: $muted-dk;
+    border-color: $border-dk;
+    color: $text-dk;
+    
+    .footer-bottom { border-color: $border-dk; color: $muted-dk; }
   }
 }

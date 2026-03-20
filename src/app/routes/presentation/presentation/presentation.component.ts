@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ThemeService } from '../../../core/service/theme.service';
 
 @Component({
@@ -39,12 +39,31 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   currentHero = 0;
   private slideTimer: any;
 
+  @ViewChild('contactoRef') contactSection!: ElementRef;
+
   ngAfterViewInit(): void {
     // Start auto-rotation if we have more than one image
     if (this.heroImages.length > 1) {
       this.slideTimer = setInterval(() => {
         this.nextSlide();
       }, 6000);
+    }
+
+    // Scroll-triggered contact card animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.contactActive) {
+          this.contactActive = true;
+          // After activating, we can stop observing if we only want it to trigger once
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1 // Trigger when 10% of the section is visible
+    });
+
+    if (this.contactSection) {
+      observer.observe(this.contactSection.nativeElement);
     }
   }
 
@@ -85,8 +104,20 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.themeService.isDark();
   }
 
+  // UI status for contact card animation
+  contactActive = false;
+
   // UI status for contact submissions
   contactStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
+
+  triggerContactAnimation() {
+    this.contactActive = true;
+    this.scrollTo('contacto');
+  }
+
+  handleImageError(event: any) {
+    event.target.src = 'https://ui-avatars.com/api/?name=Kinexus&background=648C34&color=fff';
+  }
 
   // Simple contact form handler: prevents default, logs the values and resets the form.
   submitContact(e: Event) {
