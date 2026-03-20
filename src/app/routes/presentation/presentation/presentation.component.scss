@@ -705,17 +705,15 @@ $border-dk:   rgba(255, 255, 255, 0.07);
   
   &.active {
     animation: 
-      init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, 
-      moveDown 0.8s 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, 
-      moveUp 0.8s 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
-      materia 0.5s 2.1s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+      init 0.4s 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards, 
+      materia 0.5s 0.6s cubic-bezier(0.86, 0, 0.07, 1) forwards;
       
     display: flex;
     align-items: center;
     justify-content: center;
 
     header, .profile-content-right {
-      animation: moveIn 0.8s 2.4s ease forwards;
+      animation: moveIn 0.8s 1.0s ease forwards;
     }
   }
 
@@ -819,14 +817,12 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 @media screen and (max-width: 480px) {
   .profile-card.active {
     animation: 
-      init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, 
-      moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, 
-      moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
-      materiaMobile 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+      init 0.4s 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards, 
+      materiaMobile 0.5s 0.6s cubic-bezier(0.86, 0, 0.07, 1) forwards;
   }
   .profile-card {
     flex-direction: column;
-    height: auto !important;
+    // Se elimina el height: auto que causaba distorsión inicial
     header, .profile-content-right {
       width: 100% !important;
       float: none !important;
@@ -866,13 +862,13 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 }
 
 @keyframes materia {
-  0% { background: $bg-surface; }
+  0% { background: $bg-surface; width: 56px; height: 56px; }
   100% { width: 440px; height: 380px; background: $bg; border-radius: 12px; }
 }
 
 @keyframes materiaMobile {
-  0% { background: $bg-surface; }
-  100% { width: 280px; height: 550px; background: $bg; border-radius: 12px; }
+  0% { background: $bg-surface; width: 56px; height: 56px; }
+  100% { width: 280px; height: 580px; background: $bg; border-radius: 12px; }
 }
 
 @keyframes moveIn {
