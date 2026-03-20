@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Redirect to HTTPS if needed (optional, depends on host)
+  # RewriteCond % {HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # If the requested resource doesn't exist as a file or directory, 
+  # redirect all requests to index.html for Angular routing.
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+  RewriteRule ^ - [L]
+
+  # Fallback all other routes to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>

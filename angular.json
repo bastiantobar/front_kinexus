@@ -30,7 +30,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": ["lodash", "chart.js"],
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/favicon.ico", "src/assets", "src/.htaccess"],
             "styles": [
               "src/app/core/preloader/preloader.scss",
               "src/styles.scss"
@@ -123,7 +123,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/favicon.ico", "src/assets", "src/.htaccess"],
             "styles": [
               "src/app/core/preloader/preloader.scss",
               "src/styles.scss"
