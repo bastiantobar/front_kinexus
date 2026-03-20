@@ -115,15 +115,16 @@
 
 
 <section class="cta-final section accent" id="cta">
-  <div class="container cta-inline">
-    <h2 class="section-title">Cotiza o agenda tu evaluación</h2>
+  <div class="container cta-centered">
+    <h2 class="cta-heading">Cotiza o agenda tu evaluación</h2>
     <div class="cta-buttons">
-      <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
+      <a class="btn btn-accent btn-lg" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
     </div>
   </div>
 </section>
 
-<!-- Contact form directly under CTA -->
+<!-- Contact form: temporarily disabled (mail backend not yet implemented) -->
+<!-- <ng-container *ngIf="false">
 <section class="contact-form section">
   <div class="container">
     <form class="contact-card" (submit)="submitContact($event)">
@@ -145,6 +146,7 @@
     <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
   </div>
 </div>
+</ng-container> -->
 
 <section class="contacto section" id="contacto">
   <div class="container contact-center">

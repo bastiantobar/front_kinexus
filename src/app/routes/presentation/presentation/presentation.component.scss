@@ -25,12 +25,12 @@
 $accent:      #648C34;   // Kinexus green
 $accent-dark: #4e6e28;
 
-// Light (default)
-$bg:          #faf8f3;   // warm cream
-$bg-surface:  #f0ece3;
-$text:        #2c2416;   // warm dark brown
-$muted:       #7a6e5f;
-$border:      rgba(0, 0, 0, 0.09);
+// Light (default) — warm sage-green tones + warm yellowish whites
+$bg:          #f5f8f0;   // warm white with a soft green-yellow tint
+$bg-surface:  #e8f0de;   // light sage green surface
+$text:        #263320;   // deep forest green, readable
+$muted:       #5e7250;   // muted sage/olive
+$border:      rgba(62, 90, 38, 0.12);
 
 // Dark overrides (applied via :host-context below)
 $bg-dk:       #0e0e0f;
@@ -99,8 +99,8 @@ $border-dk:   rgba(255, 255, 255, 0.07);
     z-index: 1;
     // Light mode: softer overlay preserving brightness
     background:
-      linear-gradient(180deg, rgba(250,248,243,0.45) 0%, rgba(250,248,243,0.2) 40%, rgba(250,248,243,0.6) 100%),
-      radial-gradient(1200px 600px at 80% 10%, rgba(100,140,52,0.10), transparent 60%);
+      linear-gradient(180deg, rgba(245,248,240,0.45) 0%, rgba(245,248,240,0.2) 40%, rgba(245,248,240,0.6) 100%),
+      radial-gradient(1200px 600px at 80% 10%, rgba(100,140,52,0.15), transparent 60%);
     pointer-events: none;
     transition: background 0.25s linear;
 
@@ -236,8 +236,8 @@ $border-dk:   rgba(255, 255, 255, 0.07);
     line-height: 1.6;
     // Sombra suave para legibilidad sobre imágenes de fondo
     text-shadow:
-      0 1px 8px rgba(250, 248, 243, 0.85),
-      0 0px 20px rgba(250, 248, 243, 0.6);
+      0 1px 8px rgba(245, 248, 240, 0.85),
+      0 0px 20px rgba(245, 248, 240, 0.6);
 
     :host-context(body.dark-theme) & {
       color: #e8e4dc;
@@ -528,12 +528,32 @@ $border-dk:   rgba(255, 255, 255, 0.07);
   }
 }
 
-.cta-inline {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px;
-  @media (max-width: 700px) { flex-direction: column; align-items: flex-start; }
+.cta-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+  padding: 16px 0 8px;
 }
-.cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.cta-heading {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  color: $text;
+  :host-context(body.dark-theme) & { color: $text-dk; }
+}
+
+.cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+.btn.btn-lg {
+  padding: 16px 40px;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+}
 
 // ── Contact form ─────────────────────────────────────────────────
 .contact-form {
