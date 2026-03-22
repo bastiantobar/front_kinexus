@@ -14,3 +14,14 @@
   # Fallback all other routes to index.html
   RewriteRule ^ index.html [L]
 </IfModule>
+
+# --- EVITAR CACHÉ EN INDEX.HTML ---
+# Esto obliga al navegador a descargar el nuevo index.html en cada visita.
+# Como Angular renombra los JS y CSS en cada build (hash), esto soluciona el problema de caché.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
