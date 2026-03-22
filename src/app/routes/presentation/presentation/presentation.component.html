@@ -2,23 +2,16 @@
 <section class="hero" id="inicio">
   <!-- Background carousel -->
   <div class="hero-bg" aria-hidden="true">
-    <div
-      class="slide"
-      *ngFor="let img of heroImages; let i = index"
-      [class.active]="i === currentHero"
-      [style.background-image]="'url(' + img + ')'"
-    ></div>
+    <div class="slide" *ngFor="let img of heroImages; let i = index" [class.active]="i === currentHero"
+      [style.background-image]="'url(' + img + ')'"></div>
     <div class="overlay"></div>
   </div>
   <div class="nav-top container">
-    <div class="brand">Kinexus</div>
+    <div class="brand">KI-NEXUS</div>
     <div class="spacer"></div>
     <!-- Theme toggle -->
-    <button
-      class="pres-theme-btn"
-      (click)="toggleTheme()"
-      [title]="isDarkTheme() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
-      id="pres-theme-toggle">
+    <button class="pres-theme-btn" (click)="toggleTheme()"
+      [title]="isDarkTheme() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'" id="pres-theme-toggle">
       <span class="pres-theme-track">
         <span class="pres-theme-thumb" [class.dark]="isDarkTheme()">
           <em [class]="isDarkTheme() ? 'fa fa-moon' : 'fa fa-sun'"></em>
@@ -27,27 +20,61 @@
     </button>
     <nav class="actions">
       <a class="action" (click)="scrollTo('cta')">Cotiza</a>
-      <a class="action" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda</a>
     </nav>
   </div>
 
   <div class="hero-content container">
     <h1 class="title">Bienestar que impulsa resultados</h1>
-    <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos accionables para tu organización.</p>
+    <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos
+      accionables para tu organización.</p>
     <div class="cta">
       <button class="btn btn-solid" (click)="scrollTo('servicios')">Ver servicios</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
     </div>
     <div class="hero-dots" *ngIf="heroImages.length > 1">
-      <button
-        type="button"
-        *ngFor="let _ of heroImages; let i = index"
-        class="dot"
-        [class.active]="i === currentHero"
-        (click)="goToSlide(i)"
-        [attr.aria-label]="'Ir a imagen ' + (i + 1)"
-      ></button>
+      <button type="button" *ngFor="let _ of heroImages; let i = index" class="dot" [class.active]="i === currentHero"
+        (click)="goToSlide(i)" [attr.aria-label]="'Ir a imagen ' + (i + 1)"></button>
     </div>
+  </div>
+</section>
+
+<section class="quienes-somos section" id="quienes-somos">
+  <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <h2 class="section-title" style="margin-bottom: 10px;">¿Quiénes Somos?</h2>
+
+    <ul class="accordion single-accordion">
+      <li>
+        <input type="checkbox" checked>
+        <i class="centered-arrow"></i>
+        <div class="acc-content">
+          <p>Somos una consultora de salud organizacional dedicada a transformar la cultura del trabajo a través del
+            movimiento inteligente. En Ki-Nexus, aplicamos nuestra experiencia clínica en neurorrehabilitación y
+            ciencias del deporte para ofrecer soluciones preventivas que van más allá de lo convencional.</p>
+          <p>Nos especializamos en servicios de salud laboral, desde pausas activas personalizadas hasta consultoría
+            estratégica en bienestar. Nuestro enfoque es técnico, humano y escalable, garantizando que cada intervención
+            reduzca el riesgo biomecánico y potencie el compromiso de los colaboradores.</p>
+          <p>El propósito de Ki-Nexus es conectar el potencial de las personas con la eficiencia de las organizaciones
+            porque creemos que el talento de una empresa florece cuando el cuerpo y la mente están en equilibrio.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="galeria section" id="galeria">
+  <div class="gallery-outer">
+    <div class="gallery-scroll" #galleryScroll (mouseenter)="isHovered = true" (mouseleave)="onMouseLeaveGallery()"
+      (mousedown)="onMouseDownGallery($event)" (mouseup)="onMouseUpGallery()" (mousemove)="onMouseMoveGallery($event)"
+      (touchstart)="isHovered = true" (touchend)="isHovered = false" (scroll)="onGalleryScroll()">
+      <div *ngFor="let img of infiniteGalleryImages" class="gallery-item" [ngClass]="img.cls">
+        <div class="gallery-frame">
+          <img [src]="img.src" [attr.alt]="'Galería Kinexus'" loading="lazy" draggable="false" />
+        </div>
+      </div>
+    </div>
+    <p class="gallery-hint">
+      <span>↔</span> Arrastra para explorar
+    </p>
   </div>
 </section>
 
@@ -56,15 +83,16 @@
     <div class="concepto-item">
       <h2 class="section-title">Misión</h2>
       <p>
-        Potenciar la salud y el rendimiento de personas y equipos a través de pausas activas,
-        kinesiología basada en evidencia y datos útiles para la toma de decisiones.
+        Transformar la salud de las organizaciones mediante intervenciones kinésicas especializadas y estrategias de
+        bienestar que integren el movimiento inteligente en la jornada laboral, previniendo el desgaste físico y
+        potenciando el compromiso de los equipos.
       </p>
     </div>
     <div class="concepto-item">
       <h2 class="section-title">Visión</h2>
       <p>
-        Ser el aliado estratégico de bienestar laboral en Latinoamérica, integrando hábitos
-        saludables a la cultura de las organizaciones.
+        Ser el nexo líder en innovación para la salud organizacional, donde cada entorno laboral deje de ser un espacio
+        de desgaste para convertirse en un motor de vitalidad, bienestar y desarrollo humano a nivel global.
       </p>
     </div>
   </div>
@@ -75,16 +103,13 @@
     <h2 class="section-title">Servicios destacados</h2>
     <div class="service-cards">
       <article class="service large centered">
-        <div
-          class="img"
-          aria-hidden="true"
-          [style.backgroundImage]="'url(' + serviceImgEmpresas + ')'"
-        >
+        <div class="img" aria-hidden="true" [style.backgroundImage]="'url(' + serviceImgEmpresas + ')'">
           <div class="holo" aria-hidden="true"></div>
         </div>
         <div class="content">
           <h3>Pausas activas para empresas</h3>
-          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia. Diseñamos pausas activas centradas en productividad y bienestar, con reportes para gerencia y seguimiento de asistencia.</p>
+          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia. Diseñamos pausas
+            activas centradas en productividad y bienestar, con reportes para gerencia y seguimiento de asistencia.</p>
           <div class="actions">
             <button class="btn" (click)="triggerContactAnimation()">Conocer servicio</button>
             <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda demo</a>
@@ -95,26 +120,7 @@
   </div>
 </section>
 
-<section class="galeria section" id="galeria">
-  <div class="prlx-outer">
-    <div class="prlx-scroll">
-      <div
-        *ngFor="let img of galleryImages"
-        class="prlx-item"
-        [ngClass]="img.cls">
-        <div class="prlx-frame">
-          <img [src]="img.src" [attr.alt]="'Galería Kinexus'" loading="lazy" />
-        </div>
-      </div>
-    </div>
-    <p class="prlx-hint">
-      <span>↓</span> Desplázate para explorar
-    </p>
-  </div>
-</section>
-
-
-<section class="cta-final section accent" id="cta">
+<section class="concepto section centered-concepto" id="concepto">
   <div class="container cta-centered">
     <h2 class="cta-heading">Cotiza o agenda tu evaluación</h2>
     <div class="cta-buttons">
@@ -123,32 +129,10 @@
   </div>
 </section>
 
-<section class="contact-form section">
-  <div class="container">
-    <form class="contact-card" (submit)="submitContact($event)">
-      <h3>Enviar consulta</h3>
-      <div class="fields">
-        <input type="text" name="name" placeholder="Nombre" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="tel" name="phone" placeholder="Teléfono" />
-        <textarea name="message" rows="4" placeholder="Cuentanos brevemente como te podemos ayudar" required></textarea>
-      </div>
-      <div class="form-actions">
-        <button class="btn btn-accent" type="submit">Enviar consulta</button>
-      </div>
-    </form>
-  </div>
-</section>
-<div class="container">
-  <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
-    <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
-  </div>
-</div>
-
 <section class="contacto section" id="contacto" #contactoRef>
   <div class="contact-bg-puff" [class.active]="contactActive"></div>
   <div class="container contact-center" style="position: relative; z-index: 5; min-height: 500px;">
-    
+
     <aside class="profile-card" [class.active]="contactActive">
       <header>
         <a target="_blank" [href]="whatsAppUrl" class="img-link">
@@ -156,7 +140,7 @@
         </a>
         <h1>Felipe Reyes</h1>
         <h2>Kinesiólogo</h2>
-        
+
         <div class="header-contact">
           <a [href]="whatsAppUrl" target="_blank" title="Contactar" class="contact-icon-link">
             <i class="fa fa-phone"></i>
@@ -179,6 +163,30 @@
 
   </div>
 </section>
+
+<section class="contact-form section" id="cotizacion">
+  <div class="container">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 8px;">Cotización por email</h2>
+    <form class="contact-card" (submit)="submitContact($event)">
+      <h3>Enviar consulta</h3>
+      <div class="fields">
+        <input type="text" name="name" placeholder="Nombre" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="tel" name="phone" placeholder="Teléfono" />
+        <textarea name="message" rows="4" placeholder="Cuentanos brevemente como te podemos ayudar" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-accent" type="submit">Enviar consulta</button>
+      </div>
+    </form>
+  </div>
+</section>
+<div class="container">
+  <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
+    <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
+  </div>
+</div>
+
 
 <footer class="site-footer">
   <div class="container footer-bottom">

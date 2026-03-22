@@ -420,94 +420,97 @@ $border-dk:   rgba(255, 255, 255, 0.07);
   }
 }
 
-// ── Gallery Parallax ─────────────────────────────────────────────
+// ── Drag & Scroll Gallery ─────────────────────────────────────────────
 .galeria {
-  padding: 0; // sin padding, ocupa full height
-  background: #1a2414; // Verde oscuro profundo
-}
-
-// Contenedor externo: oculta el overflow del truco 3D
-.prlx-outer {
-  overflow: hidden;
-  height: 85vh;
+  padding: 0;
+  background: #1a2414;
   position: relative;
 }
 
-// Pista de scroll: rotada -90deg para convertir scroll vertical → horizontal
-.prlx-scroll {
+.gallery-outer {
+  position: relative;
+  height: 85vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 100vh;             // ancho = altura de la ventana (por la rotación)
-  height: 100vw;            // altura = ancho de la ventana
-  transform: rotate(-90deg) translate3d(0, -100vh, 0);
-  transform-origin: right top;
-  overflow-y: auto;
-  overflow-x: hidden;
-  perspective: 1px;
-  transform-style: preserve-3d;
-  padding-bottom: 8rem;
-
-  // Scrollbar delgado
-  &::-webkit-scrollbar { width: 1px; height: 1px; }
-  &::-webkit-scrollbar-button { width: 1px; height: 1px; }
+  overflow: hidden;
 }
 
-// Cada item de la galería
-.prlx-item {
-  transform: rotate(90deg) translateZ(0.1px) scale(0.9) translateY(-3vh);
-  transform-origin: 50% 50%;
+.gallery-scroll {
+  display: flex;
+  gap: 5vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 40px 10vw;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  cursor: grab;
+  /* Hide scrollbar */
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  &.active {
+    cursor: grabbing;
+    
+    // Prevent image dragging issues
+    .gallery-frame {
+      pointer-events: none;
+    }
+  }
+}
+
+.gallery-item {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40vh;
-  transition: min-height 0.6s ease;
+  transition: transform 0.4s ease;
+  
+  // Staggered variations mimicking the old parallax spacing
+  &.slower { transform: translateY(-3vh); }
+  &.slower-down { transform: translateY(8vh); }
+  &.faster { transform: translateY(6vh); }
+  &.last { transform: translateY(-2vh); }
 
-  &:hover { min-height: 65vh; }
-
-  // Velocidades parallax (diferentes translateZ = efecto parallax)
-  &.slower       { transform: rotate(90deg) translateZ(-0.2px) scale(1.1) translateY(-10vh); }
-  &.slower-down  { transform: rotate(90deg) translateZ(-0.2px) scale(1.1) translateY(16vh);  }
-  &.faster       { transform: rotate(90deg) translateZ(0.15px) scale(0.8) translateY(14vh);  }
-  &.last         { transform: rotate(90deg) translateZ(-0.2px) scale(1.1) translateX(25vh) translateY(-8vh); }
+  &:hover {
+    transform: scale(1.05) translateY(0);
+    z-index: 10;
+  }
 }
 
-// Marco de la imagen (efecto foto polaroid vintage)
-.prlx-frame {
+.gallery-frame {
   overflow: hidden;
   display: block;
-  padding: 10px 10px 28px;  // padding extra abajo = marco polaroid
+  padding: 10px 10px 28px;
   box-shadow: 0 10px 50px rgba(95, 47, 17, 0.35);
-
-  // Claro: fondo crema papel fotográfico
   background: $bg;
+  
   :host-context(body.dark-theme) & {
     background: $bg-surf-dk;
     box-shadow: 0 10px 50px rgba(0, 0, 0, 0.55);
   }
-}
 
-// Imágenes con filtro vintage por defecto, color pleno al hover
-.prlx-frame img {
-  max-width: 42vh;
-  max-height: 48vh;
-  display: block;
-  transition: filter 0.4s ease;
-  filter: saturate(40%) sepia(25%) hue-rotate(5deg);
-
-  :host-context(body.dark-theme) & {
-    filter: saturate(30%) sepia(40%) hue-rotate(200deg) brightness(0.85);
+  img {
+    height: 48vh;
+    max-width: 80vw;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.4s ease;
+    filter: saturate(40%) sepia(25%) hue-rotate(5deg);
+    user-select: none;
+    
+    :host-context(body.dark-theme) & {
+      filter: saturate(30%) sepia(40%) hue-rotate(200deg) brightness(0.85);
+    }
   }
 }
-// Doble selector: desde el frame Y desde el item padre (los transforms 3D
-// pueden bloquear el hover area del frame en algunos navegadores)
-.prlx-frame:hover img,
-.prlx-item:hover .prlx-frame img {
+
+.gallery-item:hover .gallery-frame img {
   filter: none !important;
 }
 
-// Hint de scroll
-.prlx-hint {
+.gallery-hint {
   position: absolute;
   bottom: 2rem;
   left: 50%;
@@ -519,15 +522,15 @@ $border-dk:   rgba(255, 255, 255, 0.07);
   align-items: center;
   gap: 8px;
   pointer-events: none;
-  animation: hint-bounce 2s ease-in-out infinite;
+  animation: hint-bounce-horizontal 2s ease-in-out infinite;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 
   span { font-size: 1.4rem; }
 }
 
-@keyframes hint-bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(4px); }
+@keyframes hint-bounce-horizontal {
+  0%, 100% { transform: translateX(-50%); }
+  50%       { transform: translateX(calc(-50% - 10px)); }
 }
 
 
@@ -576,8 +579,8 @@ $border-dk:   rgba(255, 255, 255, 0.07);
 
 // ── Contact form ─────────────────────────────────────────────────
 .contact-form {
-  background: $bg;
-  :host-context(body.dark-theme) & { background: $bg-dk; }
+  background: $bg-surface;
+  :host-context(body.dark-theme) & { background: $bg-surf-dk; }
 
   .contact-card {
     max-width: 760px;
@@ -672,7 +675,7 @@ $border-dk:   rgba(255, 255, 255, 0.07);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0 20px;
     
     .section-title {
@@ -686,6 +689,117 @@ $border-dk:   rgba(255, 255, 255, 0.07);
       line-height: 1.8;
       font-size: 1.1rem;
     }
+  }
+}
+
+// ── Quienes Somos Accordion ──────────────────────────────────────
+.quienes-somos {
+  background: $bg;
+  :host-context(body.dark-theme) & { background: $bg-dk; }
+
+  .accordion.single-accordion {
+    list-style: none;
+    perspective: 900px;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      padding: 0;
+      margin: 0;
+      padding-top: 40px; // space for the centered arrow
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: flipdown 0.5s ease both;
+
+      i.centered-arrow {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 5px;
+
+        &:before, &:after {
+          content: "";
+          transition: all 0.25s ease-in-out;
+          position: absolute;
+          background-color: $accent;
+          width: 3px;
+          height: 12px;
+          border-radius: 2px;
+        }
+        &:before { transform: translate(-4px, 0) rotate(45deg); }
+        &:after  { transform: translate(4px, 0) rotate(-45deg); }
+      }
+
+      input[type=checkbox] {
+        position: absolute;
+        cursor: pointer;
+        width: 150px;
+        height: 50px;
+        z-index: 3;
+        opacity: 0;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        &:checked {
+          & ~ .acc-content {
+            margin-top: 0;
+            max-height: 0;
+            opacity: 0;
+            transform: translate(0, 30%);
+            padding-bottom: 0;
+          }
+          & ~ i.centered-arrow {
+            &:before { transform: translate(4px, 0) rotate(45deg); }
+            &:after  { transform: translate(-4px, 0) rotate(-45deg); }
+          }
+        }
+      }
+
+      .acc-content {
+        overflow: hidden;
+        max-height: 1200px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 1;
+        transform: translate(0, 0);
+        margin-top: 10px;
+        width: 100%;
+
+        p {
+          color: $muted;
+          font-size: 1.1rem;
+          line-height: 1.7;
+          margin-bottom: 16px;
+          text-align: center;
+          
+          :host-context(body.dark-theme) & { color: $muted-dk; }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes flipdown {
+  0% {
+    opacity: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg);
+  }
+  5% { opacity: 1; }
+  80% { transform: rotateX(8deg); }
+  83% { transform: rotateX(6deg); }
+  92% { transform: rotateX(-3deg); }
+  100% {
+    transform-origin: top center;
+    transform: rotateX(0deg);
   }
 }
 

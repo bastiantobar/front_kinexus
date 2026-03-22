@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ThemeService } from '../../../core/service/theme.service';
 
 @Component({
@@ -12,10 +12,17 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   whatsAppNumber = '56963691898';
   whatsAppMessage = 'Hola, me gustaría agendar una evaluación inicial con Kinexus.';
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private ngZone: NgZone) {}
 
 
-  ngOnInit(): void {}
+  infiniteGalleryImages: any[] = [];
+
+  ngOnInit(): void {
+    // Create 20 copies of the gallery for an infinite loop effect
+    for (let i = 0; i < 20; i++) {
+        this.infiniteGalleryImages.push(...this.galleryImages);
+    }
+  }
 
   // Hero carousel state
   heroImages: string[] = [
@@ -40,6 +47,14 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   private slideTimer: any;
 
   @ViewChild('contactoRef') contactSection!: ElementRef;
+  @ViewChild('galleryScroll') galleryScroll!: ElementRef;
+
+  // Drag gallery state
+  isDraggingGallery = false;
+  startXGallery = 0;
+  scrollLeftGallery = 0;
+  isHovered = false;
+  private autoScrollTimer: any;
 
   ngAfterViewInit(): void {
     // Start auto-rotation if we have more than one image
@@ -48,6 +63,15 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
         this.nextSlide();
       }, 6000);
     }
+
+    // Set initial scroll to the middle of the infinite gallery
+    setTimeout(() => {
+      if (this.galleryScroll) {
+        const el = this.galleryScroll.nativeElement;
+        el.scrollLeft = el.scrollWidth / 2;
+        this.startAutoScroll();
+      }
+    }, 600);
 
     // Scroll-triggered contact card animation
     const observer = new IntersectionObserver((entries) => {
@@ -69,6 +93,25 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.slideTimer) clearInterval(this.slideTimer);
+    this.stopAutoScroll();
+  }
+
+  startAutoScroll() {
+    this.stopAutoScroll();
+    this.ngZone.runOutsideAngular(() => {
+      this.autoScrollTimer = setInterval(() => {
+        if (!this.isDraggingGallery && !this.isHovered && this.galleryScroll) {
+          this.galleryScroll.nativeElement.scrollLeft += 1;
+        }
+      }, 30); // Approx 33px per second
+    });
+  }
+
+  stopAutoScroll() {
+    if (this.autoScrollTimer) {
+      clearInterval(this.autoScrollTimer);
+      this.autoScrollTimer = null;
+    }
   }
 
   get whatsAppUrl(): string {
@@ -109,6 +152,57 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // UI status for contact submissions
   contactStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
+
+  // Gallery Drag Handlers
+  onMouseDownGallery(e: MouseEvent) {
+    this.isDraggingGallery = true;
+    if (this.galleryScroll) {
+      const el = this.galleryScroll.nativeElement;
+      el.classList.add('active');
+      this.startXGallery = e.pageX - el.offsetLeft;
+      this.scrollLeftGallery = el.scrollLeft;
+    }
+  }
+
+  onMouseLeaveGallery() {
+    this.isDraggingGallery = false;
+    this.isHovered = false;
+    if (this.galleryScroll) {
+      this.galleryScroll.nativeElement.classList.remove('active');
+    }
+  }
+
+  onMouseUpGallery() {
+    this.isDraggingGallery = false;
+    if (this.galleryScroll) {
+      this.galleryScroll.nativeElement.classList.remove('active');
+    }
+  }
+
+  onMouseMoveGallery(e: MouseEvent) {
+    if (!this.isDraggingGallery) return;
+    e.preventDefault();
+    if (this.galleryScroll) {
+      const el = this.galleryScroll.nativeElement;
+      const x = e.pageX - el.offsetLeft;
+      const walk = (x - this.startXGallery) * 1.5; // Drag speed multiplier
+      el.scrollLeft = this.scrollLeftGallery - walk;
+    }
+  }
+
+  onGalleryScroll() {
+    if (!this.galleryScroll) return;
+    const el = this.galleryScroll.nativeElement;
+    
+    const blockWidth = el.scrollWidth / 20;
+    
+    // Infinite loop logic: jump backwards or forwards seamlessly when reaching borders
+    if (el.scrollLeft < blockWidth) {
+      el.scrollLeft += blockWidth * 10;
+    } else if (el.scrollLeft > el.scrollWidth - blockWidth * 2) {
+      el.scrollLeft -= blockWidth * 10;
+    }
+  }
 
   triggerContactAnimation() {
     this.contactActive = true;
