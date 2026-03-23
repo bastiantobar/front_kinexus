@@ -635,9 +635,16 @@ $border-dk:   rgba(255, 255, 255, 0.07);
       /* Make intl-tel-input integration look good */
       .iti { width: 100%; }
       .iti__country-list {
-        background: $bg-surface; border-radius: 8px; border: 1px solid $border;
+        background: #ffffff !important;
+        border-radius: 8px; border: 1px solid $border;
+        color: #000000 !important;
         :host-context(body.dark-theme) & {
-          background: #161617; border-color: $border-dk; color: $text-dk;
+          background: #ffffff !important;
+          border-color: #cccccc !important;
+          color: #000000 !important;
+        }
+        .iti__country-name, .iti__dial-code {
+          color: #000000 !important;
         }
       }
       .iti__search-input {

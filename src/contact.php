@@ -42,36 +42,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $recipient = "felipe.reyes@ki-nexus.cl";
     $subject = "Ha ingresado una cotización de: $company";
 
-    // Contenido del email
-    $email_content = "Has recibido una nueva cotización desde el sitio web de Kinexus.\n\n";
-    $email_content .= "========================\n";
-    $email_content .= "DETALLES DEL CLIENTE\n";
-    $email_content .= "========================\n";
-    $email_content .= "Nombre: $name\n";
-    $email_content .= "Empresa: $company\n";
-    $email_content .= "Cargo: $role\n";
-    $email_content .= "Email: $email\n";
-    $email_content .= "Teléfono: $phone\n";
-    $email_content .= "Región: $region\n\n";
-    
-    $email_content .= "========================\n";
-    $email_content .= "DETALLES DEL SERVICIO\n";
-    $email_content .= "========================\n";
-    $email_content .= "Servicio de interés: $service\n";
-    $email_content .= "Número de sucursales: $branches\n";
-    $email_content .= "Número de beneficiarios / trabajadores: $workers\n\n";
+    // Contenido HTML del email
+    $email_content = "
+    <!DOCTYPE html>
+    <html lang='es'>
+    <head>
+      <meta charset='UTF-8'>
+      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+      <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f5f8f0; color: #263320; margin: 0; padding: 20px; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .header { background: #648C34; color: #ffffff; padding: 24px; text-align: center; }
+        .header h1 { margin: 0; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; }
+        .content { padding: 30px; }
+        .section-title { color: #4e6e28; font-size: 16px; border-bottom: 2px solid #e8f0de; padding-bottom: 8px; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .grid-full { grid-column: 1 / -1; margin-bottom: 15px; }
+        .label { font-weight: bold; color: #5e7250; font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .value { font-size: 15px; color: #263320; margin: 0; background: #fdfdfd; padding: 10px 14px; border-radius: 6px; border: 1px solid #e8f0de; }
+        .message-box { font-size: 15px; color: #263320; margin: 0; background: #f9fbf4; padding: 15px; border-radius: 8px; border: 1px solid #dce8ce; white-space: pre-wrap; line-height: 1.5; }
+        .footer { background: #263320; text-align: center; padding: 20px; font-size: 13px; color: #e8f0de; }
+      </style>
+    </head>
+    <body>
+      <div class='email-container'>
+        <div class='header'>
+          <h1>Nueva Cotización - Ki-Nexus</h1>
+        </div>
+        <div class='content'>
+          <h2 class='section-title'>Detalles del Cliente</h2>
+          
+          <div class='grid-full'>
+            <span class='label'>Empresa</span>
+            <p class='value'><strong>$company</strong></p>
+          </div>
+          
+          <table width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 30px;'>
+            <tr>
+              <td width='50%' style='padding-right: 10px; padding-bottom: 15px;'>
+                <span class='label'>Nombre Contacto</span>
+                <p class='value'>$name</p>
+              </td>
+              <td width='50%' style='padding-left: 10px; padding-bottom: 15px;'>
+                <span class='label'>Cargo</span>
+                <p class='value'>$role</p>
+              </td>
+            </tr>
+            <tr>
+              <td width='50%' style='padding-right: 10px; padding-bottom: 15px;'>
+                <span class='label'>Email</span>
+                <p class='value'>$email</p>
+              </td>
+              <td width='50%' style='padding-left: 10px; padding-bottom: 15px;'>
+                <span class='label'>Teléfono</span>
+                <p class='value'>$phone</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan='2' style='padding-bottom: 15px;'>
+                <span class='label'>Región</span>
+                <p class='value'>$region</p>
+              </td>
+            </tr>
+          </table>
+
+          <h2 class='section-title'>Detalles del Servicio</h2>
+          
+          <div class='grid-full'>
+            <span class='label'>Servicio de Interés</span>
+            <p class='value' style='border-left: 4px solid #648C34; font-weight: bold;'>$service</p>
+          </div>
+          
+          <table width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 30px;'>
+            <tr>
+              <td width='50%' style='padding-right: 10px;'>
+                <span class='label'>Número de Sucursales</span>
+                <p class='value'>$branches</p>
+              </td>
+              <td width='50%' style='padding-left: 10px;'>
+                <span class='label'>Beneficiarios / Trabajadores</span>
+                <p class='value'>$workers</p>
+              </td>
+            </tr>
+          </table>";
 
     if (!empty($message)) {
-        $email_content .= "========================\n";
-        $email_content .= "MENSAJE / CÓMO PODEMOS AYUDAR\n";
-        $email_content .= "========================\n";
-        $email_content .= "$message\n\n";
+        $email_content .= "
+          <h2 class='section-title'>Mensaje / Cómo podemos ayudar</h2>
+          <div class='message-box'>$message</div>";
     }
 
-    // Cabeceras del email
+    $email_content .= "
+        </div>
+        <div class='footer'>
+          Este correo ha sido generado automáticamente desde el formulario web.
+        </div>
+      </div>
+    </body>
+    </html>";
+
+    // Cabeceras del email para HTML
     $email_headers = "From: $name <$email>\r\n";
     $email_headers .= "Reply-To: $email\r\n";
-    $email_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $email_headers .= "MIME-Version: 1.0\r\n";
+    $email_headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
     // Enviar el correo
     if (mail($recipient, $subject, $email_content, $email_headers)) {
