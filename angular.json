@@ -32,6 +32,7 @@
             "allowedCommonJsDependencies": ["lodash", "chart.js"],
             "assets": ["src/favicon.ico", "src/assets", "src/.htaccess", "src/contact.php"],
             "styles": [
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/app/core/preloader/preloader.scss",
               "src/styles.scss"
             ],
@@ -57,7 +58,8 @@
               "node_modules/moment/min/moment-with-locales.min.js",
               "node_modules/ika.jvectormap/jquery-jvectormap-1.2.2.min.js",
               "node_modules/ika.jvectormap/jquery-jvectormap-world-mill-en.js",
-              "node_modules/ika.jvectormap/jquery-jvectormap-us-mill-en.js"
+              "node_modules/ika.jvectormap/jquery-jvectormap-us-mill-en.js",
+              "node_modules/intl-tel-input/build/js/intlTelInputWithUtils.min.js"
             ]
           },
           "configurations": {
@@ -125,6 +127,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets", "src/.htaccess", "src/contact.php"],
             "styles": [
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/app/core/preloader/preloader.scss",
               "src/styles.scss"
             ],
@@ -150,7 +153,8 @@
               "node_modules/moment/min/moment-with-locales.min.js",
               "node_modules/ika.jvectormap/jquery-jvectormap-1.2.2.min.js",
               "node_modules/ika.jvectormap/jquery-jvectormap-world-mill-en.js",
-              "node_modules/ika.jvectormap/jquery-jvectormap-us-mill-en.js"
+              "node_modules/ika.jvectormap/jquery-jvectormap-us-mill-en.js",
+              "node_modules/intl-tel-input/build/js/intlTelInputWithUtils.min.js"
             ]
           }
         }

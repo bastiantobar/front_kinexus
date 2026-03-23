@@ -16,12 +16,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = isset($_POST['name']) ? strip_tags(trim($_POST['name'])) : '';
     $email = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : '';
     $phone = isset($_POST['phone']) ? strip_tags(trim($_POST['phone'])) : '';
+    
+    $service = isset($_POST['service']) ? strip_tags(trim($_POST['service'])) : '';
+    $region = isset($_POST['region']) ? strip_tags(trim($_POST['region'])) : '';
+    $company = isset($_POST['company']) ? strip_tags(trim($_POST['company'])) : '';
+    $role = isset($_POST['role']) ? strip_tags(trim($_POST['role'])) : '';
+    $branches = isset($_POST['branches']) ? strip_tags(trim($_POST['branches'])) : '';
+    $workers = isset($_POST['workers']) ? strip_tags(trim($_POST['workers'])) : '';
     $message = isset($_POST['message']) ? strip_tags(trim($_POST['message'])) : '';
 
     // Validaciones básicas
-    if (empty($name) || empty($email) || empty($message)) {
+    if (empty($name) || empty($email) || empty($phone) || empty($service) || empty($region) || empty($company) || empty($role) || empty($branches) || empty($workers)) {
         http_response_code(400);
-        echo json_encode(["success" => false, "message" => "Por favor, completa todos los campos obligatorios (Nombre, Email, Mensaje)."]);
+        echo json_encode(["success" => false, "message" => "Por favor, completa todos los campos obligatorios."]);
         exit;
     }
 
@@ -33,15 +40,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Configuración del correo
     $recipient = "felipe.reyes@ki-nexus.cl";
-    $subject = "Nueva consulta web de: $name";
+    $subject = "Ha ingresado una cotización de: $company";
 
     // Contenido del email
-    $email_content = "Has recibido un nuevo mensaje desde el sitio web de Kinexus.\n\n";
-    $email_content .= "Detalles del contacto:\n";
+    $email_content = "Has recibido una nueva cotización desde el sitio web de Kinexus.\n\n";
+    $email_content .= "========================\n";
+    $email_content .= "DETALLES DEL CLIENTE\n";
+    $email_content .= "========================\n";
     $email_content .= "Nombre: $name\n";
+    $email_content .= "Empresa: $company\n";
+    $email_content .= "Cargo: $role\n";
     $email_content .= "Email: $email\n";
-    $email_content .= "Teléfono: $phone\n\n";
-    $email_content .= "Mensaje:\n$message\n";
+    $email_content .= "Teléfono: $phone\n";
+    $email_content .= "Región: $region\n\n";
+    
+    $email_content .= "========================\n";
+    $email_content .= "DETALLES DEL SERVICIO\n";
+    $email_content .= "========================\n";
+    $email_content .= "Servicio de interés: $service\n";
+    $email_content .= "Número de sucursales: $branches\n";
+    $email_content .= "Número de beneficiarios / trabajadores: $workers\n\n";
+
+    if (!empty($message)) {
+        $email_content .= "========================\n";
+        $email_content .= "MENSAJE / CÓMO PODEMOS AYUDAR\n";
+        $email_content .= "========================\n";
+        $email_content .= "$message\n\n";
+    }
 
     // Cabeceras del email
     $email_headers = "From: $name <$email>\r\n";
@@ -51,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Enviar el correo
     if (mail($recipient, $subject, $email_content, $email_headers)) {
         http_response_code(200);
-        echo json_encode(["success" => true, "message" => "Gracias — tu consulta ha sido enviada exitosamente."]);
+        echo json_encode(["success" => true, "message" => "Gracias por cotizar con nosotros, la propuesta llegará a tu correo en las próximas 72 horas."]);
     } else {
         http_response_code(500);
         echo json_encode(["success" => false, "message" => "Ocurrió un error en el servidor al intentar enviar el mensaje."]);

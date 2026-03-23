@@ -597,11 +597,20 @@ $border-dk:   rgba(255, 255, 255, 0.07);
       :host-context(body.dark-theme) & { color: $text-dk; }
     }
 
-    .fields {
-      display: grid; gap: 10px; grid-template-columns: 1fr;
+    .form-grid-fields {
+      display: grid; gap: 15px; grid-template-columns: 1fr;
       @media (min-width: 700px) { grid-template-columns: 1fr 1fr; }
 
-      input, textarea {
+      .form-group {
+        display: flex; flex-direction: column; gap: 6px;
+        label {
+          font-size: 0.9rem; font-weight: 600; color: $text;
+          :host-context(body.dark-theme) & { color: $text-dk; }
+        }
+      }
+      .full-width { grid-column: 1 / -1; }
+
+      input, textarea, select {
         padding: 10px 14px; border-radius: 10px;
         border: 1px solid var(--glass-border-subtle);
         background: var(--glass-bg);
@@ -615,9 +624,25 @@ $border-dk:   rgba(255, 255, 255, 0.07);
           border-color: $accent;
           box-shadow: 0 0 0 3px rgba(100,140,52,0.2);
         }
-        :host-context(body.dark-theme) & { color: $text-dk; }
+        :host-context(body.dark-theme) & { 
+          color: $text-dk;
+          option { background: #161617; color: #eaeaea; } 
+        }
       }
-      textarea { grid-column: 1 / -1; resize: vertical; }
+      select { appearance: auto; cursor: pointer; }
+      textarea { resize: vertical; }
+      
+      /* Make intl-tel-input integration look good */
+      .iti { width: 100%; }
+      .iti__country-list {
+        background: $bg-surface; border-radius: 8px; border: 1px solid $border;
+        :host-context(body.dark-theme) & {
+          background: #161617; border-color: $border-dk; color: $text-dk;
+        }
+      }
+      .iti__search-input {
+        background: transparent; color: inherit; padding: 8px; border: 1px solid rgba(100,140,52,0.4);
+      }
     }
     .form-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
   }

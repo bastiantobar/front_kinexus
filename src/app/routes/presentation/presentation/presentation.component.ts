@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ThemeService } from '../../../core/service/theme.service';
 
+declare var intlTelInput: any;
+
 @Component({
   selector: 'app-presentation',
   templateUrl: './presentation.component.html',
@@ -13,6 +15,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   whatsAppMessage = 'Hola, me gustaría agendar una evaluación inicial con Kinexus.';
 
   constructor(private themeService: ThemeService, private ngZone: NgZone) {}
+
+  iti: any;
 
 
   infiniteGalleryImages: any[] = [];
@@ -89,6 +93,18 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.contactSection) {
       observer.observe(this.contactSection.nativeElement);
     }
+
+    // Initialize intl-tel-input
+    setTimeout(() => {
+      const phoneInput = document.querySelector("#phone_input");
+      if (phoneInput && typeof intlTelInput !== 'undefined') {
+        this.iti = intlTelInput(phoneInput, {
+          initialCountry: "cl",
+          separateDialCode: true,
+          utilsScript: "node_modules/intl-tel-input/build/js/utils.js" // ensures formatting/validation works
+        });
+      }
+    }, 100);
   }
 
   ngOnDestroy(): void {
@@ -221,6 +237,14 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     const fd = new FormData(form);
     const payload: any = {};
     fd.forEach((v, k) => (payload[k] = v));
+    
+    if (this.iti) {
+      const fullNumber = this.iti.getNumber();
+      if (fullNumber) {
+        fd.set('phone', fullNumber);
+        payload['phone'] = fullNumber;
+      }
+    }
     // For now, just log the submission. Replace with API call as needed.
     // eslint-disable-next-line no-console
     // Show pending state

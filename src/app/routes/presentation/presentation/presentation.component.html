@@ -169,13 +169,73 @@
     <h2 class="section-title" style="text-align: center; margin-bottom: 8px;">Cotización por email</h2>
     <form class="contact-card" (submit)="submitContact($event)">
       <h3>Enviar consulta</h3>
-      <div class="fields">
-        <input type="text" name="name" placeholder="Nombre" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="tel" name="phone" placeholder="Teléfono" />
-        <textarea name="message" rows="4" placeholder="Cuentanos brevemente como te podemos ayudar" required></textarea>
+      <div class="fields form-grid-fields">
+        <div class="form-group">
+          <label>Nombre *</label>
+          <input type="text" name="name" placeholder="Nombre completo" required />
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico *</label>
+          <input type="email" name="email" placeholder="ejemplo@empresa.com" required />
+        </div>
+        <div class="form-group">
+          <label>Teléfono *</label>
+          <input type="tel" id="phone_input" name="phone" required style="width: 100%;" />
+        </div>
+        <div class="form-group">
+          <label>Servicio de interés *</label>
+          <select name="service" required>
+            <option value="" disabled selected>Seleccione un servicio</option>
+            <option value="KI-NEXUS VITALITY">KI-NEXUS VITALITY</option>
+            <option value="CBE">CBE (CHECK-OUT BIOMECÁNICO EXPRESS)</option>
+            <option value="Focus time">Focus time</option>
+            <option value="KI-NEXUS GAME">KI-NEXUS GAME: Wellness league</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Región *</label>
+          <select name="region" required>
+            <option value="" disabled selected>Seleccione una región</option>
+            <option value="Arica y Parinacota">Arica y Parinacota</option>
+            <option value="Tarapacá">Tarapacá</option>
+            <option value="Antofagasta">Antofagasta</option>
+            <option value="Atacama">Atacama</option>
+            <option value="Coquimbo">Coquimbo</option>
+            <option value="Valparaíso">Valparaíso</option>
+            <option value="Metropolitana">Metropolitana de Santiago</option>
+            <option value="O'Higgins">Libertador General Bernardo O'Higgins</option>
+            <option value="Maule">Maule</option>
+            <option value="Ñuble">Ñuble</option>
+            <option value="Biobío">Biobío</option>
+            <option value="La Araucanía">La Araucanía</option>
+            <option value="Los Ríos">Los Ríos</option>
+            <option value="Los Lagos">Los Lagos</option>
+            <option value="Aysén">Aysén del Gral. Carlos Ibáñez del Campo</option>
+            <option value="Magallanes">Magallanes y de la Antártica Chilena</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nombre de la empresa *</label>
+          <input type="text" name="company" placeholder="Empresa" required />
+        </div>
+        <div class="form-group">
+          <label>Cargo *</label>
+          <input type="text" name="role" placeholder="Tu cargo" required />
+        </div>
+        <div class="form-group">
+          <label>Número de sucursales *</label>
+          <input type="number" name="branches" placeholder="Ej: 3" min="1" required />
+        </div>
+        <div class="form-group">
+          <label>Trabajadores *</label>
+          <input type="number" name="workers" placeholder="Ej: 50" min="1" required />
+        </div>
+        <div class="form-group full-width">
+          <label>¿Cómo te podemos ayudar? (Opcional)</label>
+          <textarea name="message" rows="4" placeholder="Cuéntanos brevemente cómo te podemos ayudar..."></textarea>
+        </div>
       </div>
-      <div class="form-actions">
+      <div class="form-actions" style="margin-top: 20px;">
         <button class="btn btn-accent" type="submit">Enviar consulta</button>
       </div>
     </form>
