@@ -2,8 +2,8 @@
 <section class="hero" id="inicio">
   <!-- Background carousel -->
   <div class="hero-bg" aria-hidden="true">
-    <div class="slide" *ngFor="let img of heroImages; let i = index" [class.active]="i === currentHero"
-      [style.background-image]="'url(' + img + ')'"></div>
+    <video #heroVideo class="slide" *ngFor="let vid of heroVideos; let i = index" [src]="vid"
+      [class.active]="i === currentHero" [muted]="true" playsinline (ended)="onVideoEnded(i)"></video>
     <div class="overlay"></div>
   </div>
   <div class="nav-top container">
@@ -31,9 +31,9 @@
       <button class="btn btn-solid" (click)="scrollTo('servicios')">Ver servicios</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
     </div>
-    <div class="hero-dots" *ngIf="heroImages.length > 1">
-      <button type="button" *ngFor="let _ of heroImages; let i = index" class="dot" [class.active]="i === currentHero"
-        (click)="goToSlide(i)" [attr.aria-label]="'Ir a imagen ' + (i + 1)"></button>
+    <div class="hero-dots" *ngIf="heroVideos.length > 1">
+      <button type="button" *ngFor="let _ of heroVideos; let i = index" class="dot" [class.active]="i === currentHero"
+        (click)="goToSlide(i)" [attr.aria-label]="'Ir a video ' + (i + 1)"></button>
     </div>
   </div>
 </section>

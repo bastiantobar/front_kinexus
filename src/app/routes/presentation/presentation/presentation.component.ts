@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { ThemeService } from '../../../core/service/theme.service';
 
 declare var intlTelInput: any;
@@ -29,10 +29,10 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Hero carousel state
-  heroImages: string[] = [
-    'assets/kinexus/hero/hero-1.webp',
-    'assets/kinexus/hero/hero-2.webp',
-    'assets/kinexus/hero/hero-3.webp'
+  heroVideos: string[] = [
+    'assets/kinexus/hero/video1_muted.mp4',
+    'assets/kinexus/hero/video2_muted.mp4',
+    'assets/kinexus/hero/video3_muted.mp4'
   ];
   // Service images
   serviceImgEmpresas = 'assets/kinexus/services/empresas.webp';
@@ -48,10 +48,10 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     { src: 'assets/kinexus/gallery/gal-6.webp', cls: 'last' },
   ];
   currentHero = 0;
-  private slideTimer: any;
 
   @ViewChild('contactoRef') contactSection!: ElementRef;
   @ViewChild('galleryScroll') galleryScroll!: ElementRef;
+  @ViewChildren('heroVideo') heroVideoElements!: QueryList<ElementRef<HTMLVideoElement>>;
 
   // Drag gallery state
   isDraggingGallery = false;
@@ -61,12 +61,10 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   private autoScrollTimer: any;
 
   ngAfterViewInit(): void {
-    // Start auto-rotation if we have more than one image
-    if (this.heroImages.length > 1) {
-      this.slideTimer = setInterval(() => {
-        this.nextSlide();
-      }, 6000);
-    }
+    // Start auto-rotation by playing the first video
+    setTimeout(() => {
+      this.playCurrentVideo();
+    }, 100);
 
     // Set initial scroll to the middle of the infinite gallery
     setTimeout(() => {
@@ -108,7 +106,6 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.slideTimer) clearInterval(this.slideTimer);
     this.stopAutoScroll();
   }
 
@@ -144,14 +141,33 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   // side-menu removed for presentation-only page; no menu state required
 
   private nextSlide() {
-    this.currentHero = (this.currentHero + 1) % this.heroImages.length;
+    this.currentHero = (this.currentHero + 1) % this.heroVideos.length;
+    this.playCurrentVideo();
   }
 
   goToSlide(i: number) {
-    this.currentHero = i % this.heroImages.length;
-    if (this.slideTimer) {
-      clearInterval(this.slideTimer);
-      this.slideTimer = setInterval(() => this.nextSlide(), 6000);
+    this.currentHero = i % this.heroVideos.length;
+    this.playCurrentVideo();
+  }
+
+  onVideoEnded(index: number) {
+    if (index === this.currentHero) {
+      this.nextSlide();
+    }
+  }
+
+  playCurrentVideo() {
+    if (this.heroVideoElements) {
+      const videos = this.heroVideoElements.toArray();
+      videos.forEach((vidRef, index) => {
+        const vid = vidRef.nativeElement;
+        if (index === this.currentHero) {
+          vid.currentTime = 0;
+          vid.play().catch(e => console.warn('Autoplay blocked:', e));
+        } else {
+          vid.pause();
+        }
+      });
     }
   }
 
