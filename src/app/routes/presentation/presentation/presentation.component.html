@@ -58,7 +58,14 @@
 </section>
 
 <section class="quienes-somos section" id="quienes-somos">
-  <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+  <!-- Parallax Stars Background -->
+  <div class="stars-bg">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+  </div>
+
+  <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 2;">
     <h2 class="section-title" style="margin-bottom: 10px;">¿Quiénes Somos?</h2>
 
     <ul class="accordion single-accordion">
@@ -97,8 +104,29 @@
   </div>
 </section>
 
-<section class="concepto section centered-concepto" id="concepto">
-  <div class="container grid two">
+<section class="concepto section centered-concepto" id="mision-vision">
+  <!-- Interactive Bubbles Background -->
+  <div class="gradient-bg">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="gradients-container">
+      <div class="g1"></div>
+      <div class="g2"></div>
+      <div class="g3"></div>
+      <div class="g4"></div>
+      <div class="g5"></div>
+      <div class="interactive"></div>
+    </div>
+  </div>
+
+  <div class="container grid two" style="position: relative; z-index: 2;">
     <div class="concepto-item">
       <h2 class="section-title">Misión</h2>
       <p>
@@ -139,8 +167,13 @@
   </div>
 </section>
 
-<section class="concepto section centered-concepto" id="concepto">
-  <div class="container cta-centered">
+<section class="concepto section centered-concepto cta-sliding-bg" id="concepto-cta">
+  <!-- Sliding Diagonals Background Effect -->
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+
+  <div class="container cta-centered content-layer">
     <h2 class="cta-heading">Cotiza o agenda tu evaluación</h2>
     <div class="cta-buttons">
       <a class="btn btn-accent btn-lg" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
@@ -183,12 +216,20 @@
   </div>
 </section>
 
+<!-- Blur Fade Divider separating sections -->
+<div class="fade-divider">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
 <section class="contact-form section" id="cotizacion">
   <div class="container">
     <h2 class="section-title" style="text-align: center; margin-bottom: 8px;">Cotización por email</h2>
     <form class="contact-card" (submit)="submitContact($event)">
       <h3>Enviar consulta</h3>
-      <div class="fields form-grid-fields">
+        <div class="fields form-grid-fields">
         <div class="form-group">
           <label>Nombre *</label>
           <input type="text" name="name" placeholder="Nombre completo" required />
@@ -259,12 +300,19 @@
       </div>
     </form>
   </div>
-</section>
-<div class="container">
-  <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
-    <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
+
+  <div class="container" style="position: relative; z-index: 20;">
+    <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
+      <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
+    </div>
   </div>
-</div>
+
+  <!-- Ocean Footer Divider -->
+  <div class="ocean">
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+</section>
 
 
 <footer class="site-footer">
