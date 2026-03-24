@@ -22,8 +22,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   infiniteGalleryImages: any[] = [];
 
   ngOnInit(): void {
-    // Create 20 copies of the gallery for an infinite loop effect
-    for (let i = 0; i < 20; i++) {
+    // Create 8 copies of the gallery for an infinite loop effect (reduced from 20)
+    for (let i = 0; i < 8; i++) {
         this.infiniteGalleryImages.push(...this.galleryImages);
     }
   }
@@ -68,7 +68,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   startXGallery = 0;
   scrollLeftGallery = 0;
   isHovered = false;
-  private autoScrollTimer: any;
+  private autoScrollId: number | null = null;
 
   ngAfterViewInit(): void {
     // Start auto-rotation by playing the first video
@@ -122,18 +122,20 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   startAutoScroll() {
     this.stopAutoScroll();
     this.ngZone.runOutsideAngular(() => {
-      this.autoScrollTimer = setInterval(() => {
+      const scroll = () => {
         if (!this.isDraggingGallery && !this.isHovered && this.galleryScroll) {
-          this.galleryScroll.nativeElement.scrollLeft += 1;
+          this.galleryScroll.nativeElement.scrollLeft += 0.6; // Smaller increment for sub-pixel smoothness
         }
-      }, 30); // Approx 33px per second
+        this.autoScrollId = requestAnimationFrame(scroll);
+      };
+      this.autoScrollId = requestAnimationFrame(scroll);
     });
   }
 
   stopAutoScroll() {
-    if (this.autoScrollTimer) {
-      clearInterval(this.autoScrollTimer);
-      this.autoScrollTimer = null;
+    if (this.autoScrollId !== null) {
+      cancelAnimationFrame(this.autoScrollId);
+      this.autoScrollId = null;
     }
   }
 

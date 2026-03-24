@@ -11,6 +11,11 @@
   -webkit-backdrop-filter: var(--blur-md);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+
+  @media (max-width: 768px) {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 @mixin glass-strong {
@@ -19,6 +24,11 @@
   -webkit-backdrop-filter: var(--blur-lg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+
+  @media (max-width: 768px) {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 // ── Variables ────────────────────────────────────────────────────
@@ -695,9 +705,10 @@ $border-dk: rgba(255, 255, 255, 0.07);
   }
 
   .gradients-container {
-    filter: url(#goo) blur(40px);
+    filter: url(#goo) blur(20px); // Reduced from 40px
     width: 100%;
     height: 100%;
+    contain: strict;
   }
 
   .g1,
@@ -708,6 +719,7 @@ $border-dk: rgba(255, 255, 255, 0.07);
   .interactive {
     position: absolute;
     mix-blend-mode: var(--blending);
+    will-change: transform; // Layer promotion
   }
 
   .g1 {
@@ -1165,6 +1177,10 @@ $border-dk: rgba(255, 255, 255, 0.07);
     padding: 28px;
     border-radius: 20px;
 
+    @media (max-width: 480px) {
+      padding: 18px 14px;
+    }
+
     // ← Glass fuerte en el formulario
     @include glass-strong;
     transition: box-shadow 0.25s ease;
@@ -1210,6 +1226,8 @@ $border-dk: rgba(255, 255, 255, 0.07);
       input,
       textarea,
       select {
+        width: 100%;
+        box-sizing: border-box;
         padding: 10px 14px;
         border-radius: 10px;
         border: 1px solid var(--glass-border-subtle);
@@ -1219,6 +1237,12 @@ $border-dk: rgba(255, 255, 255, 0.07);
         color: $text;
         font-family: inherit;
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &::placeholder {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
 
         &:focus {
           outline: none;
@@ -1243,6 +1267,11 @@ $border-dk: rgba(255, 255, 255, 0.07);
 
       textarea {
         resize: vertical;
+        min-height: 80px;
+
+        &::placeholder {
+          white-space: normal; // Allow wrapping in textarea placeholders if needed
+        }
       }
 
       /* Make intl-tel-input integration look good */
@@ -1392,9 +1421,9 @@ $border-dk: rgba(255, 255, 255, 0.07);
   @return unquote($value);
 }
 
-$shadows-small: multiple-box-shadow(300); 
-$shadows-medium: multiple-box-shadow(100);
-$shadows-big: multiple-box-shadow(50);
+$shadows-small: multiple-box-shadow(150); // Reduced from 300
+$shadows-medium: multiple-box-shadow(60);  // Reduced from 100
+$shadows-big: multiple-box-shadow(30);     // Reduced from 50
 
 @keyframes animStar {
   from {
@@ -1432,6 +1461,7 @@ $shadows-big: multiple-box-shadow(50);
       background: transparent;
       box-shadow: $shadows-small;
       animation: animStar 60s linear infinite;
+      will-change: transform;
 
       &:after {
         content: " ";
