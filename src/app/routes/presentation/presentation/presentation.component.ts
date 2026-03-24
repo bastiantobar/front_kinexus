@@ -53,6 +53,16 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('galleryScroll') galleryScroll!: ElementRef;
   @ViewChildren('heroVideo') heroVideoElements!: QueryList<ElementRef<HTMLVideoElement>>;
 
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
   // Drag gallery state
   isDraggingGallery = false;
   startXGallery = 0;
@@ -132,6 +142,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   scrollTo(id: string) {
+    this.closeMenu();
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });

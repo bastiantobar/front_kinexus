@@ -264,6 +264,113 @@ $border-dk:   rgba(255, 255, 255, 0.07);
   }
 }
 
+// ── Side Menu ────────────────────────────────────────────────────
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  color: $text;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  transition: color 0.2s ease;
+  :host-context(body.dark-theme) & { color: $text-dk; }
+  
+  &:hover { color: $accent; }
+}
+
+.hide-mobile {
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: var(--blur-sm, blur(4px));
+  -webkit-backdrop-filter: var(--blur-sm, blur(4px));
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  max-width: 80vw;
+  height: 100vh;
+  z-index: 100;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+
+  @include glass-strong;
+  border-radius: 20px 0 0 20px;
+  border-right: none;
+
+  &.open {
+    right: 0;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: $text;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    :host-context(body.dark-theme) & { color: $text-dk; }
+
+    &:hover {
+      color: $accent;
+      transform: scale(1.1);
+    }
+  }
+
+  .side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+
+    a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      :host-context(body.dark-theme) & { color: $text-dk; }
+
+      &:hover {
+        background: rgba(100, 140, 52, 0.15);
+        color: $accent;
+        transform: translateX(4px);
+      }
+    }
+  }
+}
+
 // ── Buttons ──────────────────────────────────────────────────────
 .btn {
   appearance: none;

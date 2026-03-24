@@ -18,10 +18,29 @@
         </span>
       </span>
     </button>
-    <nav class="actions">
-      <a class="action" (click)="scrollTo('cta')">Cotiza</a>
+    <nav class="actions hide-mobile">
+      <a class="action" (click)="scrollTo('cotizacion')">Cotiza</a>
     </nav>
+    <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Abrir menú">
+      <i class="fa fa-bars"></i>
+    </button>
   </div>
+
+  <!-- Side Menu Overlay -->
+  <div class="menu-overlay" [class.open]="isMenuOpen" (click)="closeMenu()"></div>
+  <aside class="side-menu" [class.open]="isMenuOpen">
+    <button class="close-btn" (click)="closeMenu()" aria-label="Cerrar menú">
+      <i class="fa fa-times"></i>
+    </button>
+    <nav class="side-nav">
+      <a (click)="scrollTo('inicio')">Inicio</a>
+      <a (click)="scrollTo('quienes-somos')">Nosotros</a>
+      <a (click)="scrollTo('servicios')">Servicios</a>
+      <a (click)="scrollTo('galeria')">Galería</a>
+      <a (click)="scrollTo('contacto')">Perfil Clínico</a>
+      <a (click)="scrollTo('cotizacion')">Cotización</a>
+    </nav>
+  </aside>
 
   <div class="hero-content container">
     <h1 class="title">Bienestar que impulsa resultados</h1>
