@@ -28,6 +28,4 @@ coverage/
 .env
 .env.local
 
-# src/assets/kinexus/ — assets rastreados por Git para deploy automático
 
-src/assets/kinexus/*
