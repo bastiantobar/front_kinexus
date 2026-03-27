@@ -30,7 +30,14 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": ["lodash", "chart.js"],
-            "assets": ["src/favicon.ico", "src/assets", "src/.htaccess", "src/contact.php"],
+                        "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/.htaccess",
+              "src/contact.php",
+              "src/robots.txt",
+              "src/sitemap.xml"
+            ],
             "styles": [
               "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/app/core/preloader/preloader.scss",
@@ -125,7 +132,14 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/.htaccess", "src/contact.php"],
+                        "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/.htaccess",
+              "src/contact.php",
+              "src/robots.txt",
+              "src/sitemap.xml"
+            ],
             "styles": [
               "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/app/core/preloader/preloader.scss",

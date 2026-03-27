@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ki-nexus.cl/sitemap.xml
