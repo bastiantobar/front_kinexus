@@ -869,120 +869,260 @@ $border-dk: rgba(255, 255, 255, 0.07);
     background: $bg-surf-dk;
   }
 
-  .service-cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .services-slider-container {
+    position: relative;
+    margin: 20px 0;
+  }
 
-    @media (min-width: 900px) {
-      grid-template-columns: repeat(2, 1fr);
+  .services-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 10px 10px 30px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
-  .service.large {
-    width: 100%;
-    max-width: 980px;
-  }
-
-  @media (min-width: 900px) {
-    .service.large {
-      max-width: 1100px;
-    }
-
-    .service-cards .service.large {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .service.centered {
-    margin: 0 auto;
-  }
-
-  .service {
-    display: grid;
-    grid-template-columns: 1fr;
-    border-radius: 18px;
+  .service-window {
+    flex: 0 0 320px;
+    scroll-snap-align: center;
+    border-radius: 20px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-
-    // ← Glass card
     @include glass;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 480px) {
+      flex: 0 0 280px;
+    }
 
     &:hover {
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      transform: translateY(-2px);
-
-      :host-context(body.dark-theme) & {
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      }
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
     }
 
-    .img {
-      position: relative;
-      aspect-ratio: 16/9;
-      background-color: $bg-surface;
-      background-position: center;
+    .service-img {
+      height: 180px;
       background-size: cover;
-      background-repeat: no-repeat;
-
-      :host-context(body.dark-theme) & {
-        background-color: #141415;
-      }
-
+      background-position: center;
+      position: relative;
+      
       &::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.30) 100%);
-        pointer-events: none;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
       }
 
       .holo {
         position: absolute;
         inset: 0;
-        background: conic-gradient(from 0deg, rgba(100, 140, 52, 0.0) 0deg, rgba(100, 140, 52, 0.35) 60deg, rgba(0, 200, 255, 0.25) 120deg, rgba(255, 0, 128, 0.25) 180deg, rgba(255, 255, 0, 0.25) 240deg, rgba(100, 140, 52, 0.35) 300deg, rgba(100, 140, 52, 0.0) 360deg);
+        background: conic-gradient(from 0deg, rgba(100, 140, 52, 0.0) 0deg, rgba(100, 140, 52, 0.2) 60deg, rgba(0, 200, 255, 0.1) 120deg, rgba(255, 0, 128, 0.1) 180deg, rgba(255, 255, 0, 0.1) 240deg, rgba(100, 140, 52, 0.2) 300deg, rgba(100, 140, 52, 0.0) 360deg);
         mix-blend-mode: screen;
-        opacity: 0.28;
-        background-size: 200% 200%;
-        transition: opacity .3s ease, background-position 2s ease;
-        pointer-events: none;
+        opacity: 0.2;
       }
     }
 
-    &:hover .img .holo {
-      opacity: 0.42;
-      background-position: 100% 50%;
-    }
-
-    .content {
-      padding: 16px;
-    }
-
-    h3 {
-      margin: 0 0 6px;
-      font-size: 1.2rem;
-      color: $text;
-
-      :host-context(body.dark-theme) & {
-        color: $text-dk;
-      }
-    }
-
-    p {
-      margin: 0 0 12px;
-      color: $muted;
-
-      :host-context(body.dark-theme) & {
-        color: $muted-dk;
-      }
-    }
-
-    .actions {
+    .service-content {
+      padding: 20px;
+      flex: 1;
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      flex-direction: column;
+
+      h3 {
+        font-size: 1.25rem;
+        margin: 0 0 10px;
+        color: $text;
+        :host-context(body.dark-theme) & { color: $text-dk; }
+      }
+
+      .brief {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: $muted;
+        margin-bottom: 20px;
+        flex: 1;
+        :host-context(body.dark-theme) & { color: $muted-dk; }
+      }
+
+      .service-actions {
+        display: flex;
+        gap: 10px;
+        
+        .btn-sm {
+          padding: 8px 16px;
+          font-size: 0.85rem;
+        }
+      }
     }
   }
+
+  .scroll-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: $muted;
+    opacity: 0.7;
+    margin-top: -10px;
+    animation: hint-bounce 2s infinite;
+    
+    span { font-size: 1.2rem; }
+  }
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+// ── Detail Modal ──────────────────────────────────────────────────
+.service-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.service-modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  background: $bg;
+  border-radius: 24px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  :host-context(body.dark-theme) & {
+    background: $bg-surf-dk;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s;
+    &:hover { background: rgba(0, 0, 0, 0.5); }
+  }
+
+  .modal-header {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+
+    h2 {
+      position: relative;
+      z-index: 1;
+      color: white;
+      margin: 0;
+      font-size: 1.8rem;
+    }
+  }
+
+  .modal-body {
+    padding: 30px;
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: $text;
+      margin-bottom: 25px;
+      :host-context(body.dark-theme) & { color: $text-dk; }
+    }
+
+    .info-block {
+      margin-bottom: 20px;
+      
+      h4 {
+        margin: 0 0 10px;
+        color: $accent;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          padding-left: 20px;
+          position: relative;
+          margin-bottom: 8px;
+          color: $muted;
+          :host-context(body.dark-theme) & { color: $muted-dk; }
+          &::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: $accent;
+          }
+        }
+      }
+    }
+
+    .full-info {
+      font-style: italic;
+      color: $muted;
+      margin-top: 20px;
+      border-left: 3px solid $accent;
+      padding-left: 15px;
+    }
+
+    .stats {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      color: $text;
+      :host-context(body.dark-theme) & { color: $text-dk; }
+    }
+
+    .modal-actions {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 // ── Drag & Scroll Gallery ─────────────────────────────────────────────

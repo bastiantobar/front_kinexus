@@ -147,25 +147,73 @@
 
 <section class="servicios section" id="servicios">
   <div class="container">
-    <h2 class="section-title">Servicios destacados</h2>
-    <div class="service-cards">
-      <article class="service large centered">
-        <div class="img" aria-hidden="true" [style.backgroundImage]="'url(' + serviceImgEmpresas + ')'">
-          <div class="holo" aria-hidden="true"></div>
-        </div>
-        <div class="content">
-          <h3>Pausas activas para empresas</h3>
-          <p>Programas a medida con seguimiento, métricas de asistencia y reportes para gerencia. Diseñamos pausas
-            activas centradas en productividad y bienestar, con reportes para gerencia y seguimiento de asistencia.</p>
-          <div class="actions">
-            <button class="btn" (click)="triggerContactAnimation()">Conocer servicio</button>
-            <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda demo</a>
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <div class="services-slider-container">
+      <div class="services-scroll" #servicesScroll>
+        <article class="service-window" *ngFor="let service of services">
+          <div class="service-img" [style.backgroundImage]="'url(' + service.image + ')'">
+            <div class="holo"></div>
           </div>
-        </div>
-      </article>
+          <div class="service-content">
+            <h3>{{ service.title }}</h3>
+            <p class="brief">{{ service.brief }}</p>
+            <div class="service-actions">
+              <button class="btn btn-sm" (click)="openServiceDetails(service)">Conoce el servicio</button>
+              <button class="btn btn-accent btn-sm" (click)="cotizarService(service.title)">Cotizar</button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="scroll-hint">
+        <span>↔</span> Desliza para explorar
+      </div>
     </div>
   </div>
 </section>
+
+<!-- Detail Modal -->
+<div class="service-modal-overlay" *ngIf="selectedService" (click)="closeServiceDetails()">
+  <div class="service-modal" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeServiceDetails()">
+      <i class="fa fa-times"></i>
+    </button>
+    <div class="modal-header" [style.backgroundImage]="'url(' + selectedService.image + ')'">
+      <div class="overlay"></div>
+      <h2>{{ selectedService.title }}</h2>
+    </div>
+    <div class="modal-body">
+      <p class="description">{{ selectedService.description }}</p>
+      
+      <div class="info-block" *ngIf="selectedService.features">
+        <h4>¿Qué incluye el programa?</h4>
+        <ul>
+          <li *ngFor="let item of selectedService.features">{{ item }}</li>
+        </ul>
+      </div>
+
+      <div class="info-block" *ngIf="selectedService.whyChoose">
+        <h4>¿Por qué elegirlo?</h4>
+        <ul>
+          <li *ngFor="let item of selectedService.whyChoose">{{ item }}</li>
+        </ul>
+      </div>
+
+      <div class="info-block" *ngIf="selectedService.content">
+        <h4>Contenido:</h4>
+        <ul>
+          <li *ngFor="let item of selectedService.content">{{ item }}</li>
+        </ul>
+      </div>
+
+      <p class="full-info" *ngIf="selectedService.fullInfo">{{ selectedService.fullInfo }}</p>
+      <p class="stats" *ngIf="selectedService.stats"><strong>{{ selectedService.stats }}</strong></p>
+      
+      <div class="modal-actions">
+        <button class="btn btn-accent" (click)="cotizarService(selectedService.title)">Cotizar ahora</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="concepto section centered-concepto cta-sliding-bg" id="concepto-cta">
   <!-- Sliding Diagonals Background Effect -->
@@ -247,9 +295,9 @@
           <select name="service" required>
             <option value="" disabled selected>Seleccione un servicio</option>
             <option value="KI-NEXUS VITALITY">KI-NEXUS VITALITY</option>
-            <option value="CBE">CBE (CHECK-OUT BIOMECÁNICO EXPRESS)</option>
+            <option value="CBE (CHECK-OUT BIOMECÁNICO EXPRESS)">CBE (CHECK-OUT BIOMECÁNICO EXPRESS)</option>
             <option value="Focus time">Focus time</option>
-            <option value="KI-NEXUS GAME">KI-NEXUS GAME: Wellness league</option>
+            <option value="KI-NEXUS GAME: Wellness league">KI-NEXUS GAME: Wellness league</option>
           </select>
         </div>
         <div class="form-group">
