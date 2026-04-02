@@ -38,4 +38,4 @@ jobs:
           exclude: |
             **/.git*
             **/node_modules/**
-            **/assets/**
+            **/assets/kinexus/hero/**
