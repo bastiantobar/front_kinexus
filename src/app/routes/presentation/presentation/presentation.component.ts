@@ -34,8 +34,17 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   isHovered = false;
   private autoScrollId: number | null = null;
 
+  // Drag state for Services
+  isDraggingServices = false;
+  startXServices = 0;
+  scrollLeftServices = 0;
+
+  // Modal Image Index
+  currentModalImage = 0;
+
   @ViewChild('contactoRef') contactSection!: ElementRef;
   @ViewChild('galleryScroll') galleryScroll!: ElementRef;
+  @ViewChild('servicesScroll') servicesScroll!: ElementRef;
   @ViewChildren('heroVideo') heroVideoElements!: QueryList<ElementRef<HTMLVideoElement>>;
 
   constructor(
@@ -116,12 +125,25 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openServiceDetails(service: KinexusService) {
     this.selectedService = service;
+    this.currentModalImage = 0;
     document.body.style.overflow = 'hidden';
   }
 
   closeServiceDetails() {
     this.selectedService = null;
     document.body.style.overflow = '';
+  }
+
+  nextModalImage() {
+    if (this.selectedService?.images) {
+      this.currentModalImage = (this.currentModalImage + 1) % this.selectedService.images.length;
+    }
+  }
+
+  prevModalImage() {
+    if (this.selectedService?.images) {
+      this.currentModalImage = (this.currentModalImage - 1 + this.selectedService.images.length) % this.selectedService.images.length;
+    }
   }
 
   cotizarService(serviceTitle: string) {
@@ -246,5 +268,48 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     const blockWidth = el.scrollWidth / 20;
     if (el.scrollLeft < blockWidth) el.scrollLeft += blockWidth * 10;
     else if (el.scrollLeft > el.scrollWidth - blockWidth * 2) el.scrollLeft -= blockWidth * 10;
+  }
+
+  // Services Drag Helpers
+  onMouseDownServices(e: MouseEvent) {
+    this.isDraggingServices = true;
+    if (this.servicesScroll) {
+      const el = this.servicesScroll.nativeElement;
+      el.classList.add('active');
+      this.startXServices = e.pageX - el.offsetLeft;
+      this.scrollLeftServices = el.scrollLeft;
+    }
+  }
+
+  onMouseLeaveServices() {
+    this.isDraggingServices = false;
+    if (this.servicesScroll) this.servicesScroll.nativeElement.classList.remove('active');
+  }
+
+  onMouseUpServices() {
+    this.isDraggingServices = false;
+    if (this.servicesScroll) this.servicesScroll.nativeElement.classList.remove('active');
+  }
+
+  onMouseMoveServices(e: MouseEvent) {
+    if (!this.isDraggingServices) return;
+    e.preventDefault();
+    if (this.servicesScroll) {
+      const el = this.servicesScroll.nativeElement;
+      const x = e.pageX - el.offsetLeft;
+      const walk = (x - this.startXServices) * 1.5;
+      el.scrollLeft = this.scrollLeftServices - walk;
+    }
+  }
+
+  // Horizontal scroll with mousewheel
+  onWheelScroll(e: WheelEvent, type: 'gallery' | 'services') {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      const el = type === 'gallery' ? this.galleryScroll?.nativeElement : this.servicesScroll?.nativeElement;
+      if (el) {
+        el.scrollLeft += e.deltaY;
+        e.preventDefault();
+      }
+    }
   }
 }

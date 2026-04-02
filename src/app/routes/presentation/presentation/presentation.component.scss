@@ -885,6 +885,11 @@ $border-dk: rgba(255, 255, 255, 0.07);
     &::-webkit-scrollbar {
       display: none;
     }
+    cursor: grab;
+    &.active {
+      cursor: grabbing;
+      scroll-snap-type: none;
+    }
   }
 
   .service-window {
@@ -1047,6 +1052,61 @@ $border-dk: rgba(255, 255, 255, 0.07);
       color: white;
       margin: 0;
       font-size: 1.8rem;
+    }
+
+    .modal-carousel-nav {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      pointer-events: none;
+
+      button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.4);
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        pointer-events: auto;
+        backdrop-filter: blur(4px);
+
+        &:hover {
+          background: $accent;
+          transform: scale(1.1);
+        }
+      }
+
+      .carousel-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        pointer-events: none;
+
+        .carousel-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.4);
+          transition: all 0.3s ease;
+          &.active {
+            background: white;
+            width: 20px;
+            border-radius: 4px;
+          }
+        }
+      }
     }
   }
 

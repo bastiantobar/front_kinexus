@@ -4,6 +4,7 @@ export interface KinexusService {
   id: string;
   title: string;
   image: string;
+  images?: string[]; // Optional for carousel
   brief: string;
   description: string;
   fullInfo: string;
@@ -29,8 +30,10 @@ export class PresentationContentService {
   private galleryImages = [
     { src: 'assets/kinexus/gallery/gal-1.webp', cls: '' },
     { src: 'assets/kinexus/gallery/gal-2.webp', cls: 'slower' },
+    { src: 'assets/kinexus/services/vitality-1.png', cls: 'faster' }, // New Vitality image
     { src: 'assets/kinexus/gallery/gal-3.webp', cls: 'faster' },
     { src: 'assets/kinexus/gallery/gal-4.webp', cls: 'slower slower-down' },
+    { src: 'assets/kinexus/services/vitality-2.png', cls: 'slower' }, // New Vitality image
     { src: 'assets/kinexus/gallery/gal-5.webp', cls: 'slower' },
     { src: 'assets/kinexus/gallery/gal-6.webp', cls: 'last' },
   ];
@@ -39,7 +42,11 @@ export class PresentationContentService {
     {
       id: 'vitality',
       title: 'KI-NEXUS VITALITY',
-      image: 'assets/kinexus/services/vitality.png',
+      image: 'assets/kinexus/services/vitality-2.png', // Using the worker one which is more characteristic
+      images: [
+        'assets/kinexus/services/vitality-1.png',
+        'assets/kinexus/services/vitality-2.png'
+      ],
       brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo. Enfoque clínico | Mediciones reales | Bajo roce, alto impacto',
       description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa de entrenamiento funcional y neuro-reajuste aplicado al puesto de trabajo, liderado por un especialista en kinesiología.',
       fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados.',

@@ -91,7 +91,8 @@
   <div class="gallery-outer">
     <div class="gallery-scroll" #galleryScroll (mouseenter)="isHovered = true" (mouseleave)="onMouseLeaveGallery()"
       (mousedown)="onMouseDownGallery($event)" (mouseup)="onMouseUpGallery()" (mousemove)="onMouseMoveGallery($event)"
-      (touchstart)="isHovered = true" (touchend)="isHovered = false" (scroll)="onGalleryScroll()">
+      (touchstart)="isHovered = true" (touchend)="isHovered = false" (scroll)="onGalleryScroll()"
+      (wheel)="onWheelScroll($event, 'gallery')">
       <div *ngFor="let img of infiniteGalleryImages" class="gallery-item" [ngClass]="img.cls">
         <div class="gallery-frame">
           <img [src]="img.src" [attr.alt]="'Galería Kinexus'" loading="lazy" draggable="false" />
@@ -149,7 +150,10 @@
   <div class="container">
     <h2 class="section-title">Nuestros Servicios</h2>
     <div class="services-slider-container">
-      <div class="services-scroll" #servicesScroll>
+      <div class="services-scroll" #servicesScroll 
+        (mousedown)="onMouseDownServices($event)" (mouseup)="onMouseUpServices()" 
+        (mouseleave)="onMouseLeaveServices()" (mousemove)="onMouseMoveServices($event)"
+        (wheel)="onWheelScroll($event, 'services')">
         <article class="service-window" *ngFor="let service of services">
           <div class="service-img" [style.backgroundImage]="'url(' + service.image + ')'">
             <div class="holo"></div>
@@ -177,8 +181,16 @@
     <button class="modal-close" (click)="closeServiceDetails()">
       <i class="fa fa-times"></i>
     </button>
-    <div class="modal-header" [style.backgroundImage]="'url(' + selectedService.image + ')'">
+    <div class="modal-header" [style.backgroundImage]="'url(' + (selectedService.images ? selectedService.images[currentModalImage] : selectedService.image) + ')'">
       <div class="overlay"></div>
+      <div class="modal-carousel-nav" *ngIf="selectedService.images && selectedService.images.length > 1">
+        <button class="carousel-prev" (click)="prevModalImage()"><i class="fa fa-chevron-left"></i></button>
+        <button class="carousel-next" (click)="nextModalImage()"><i class="fa fa-chevron-right"></i></button>
+        <div class="carousel-dots">
+          <span *ngFor="let img of selectedService.images; let i = index" 
+                class="carousel-dot" [class.active]="i === currentModalImage"></span>
+        </div>
+      </div>
       <h2>{{ selectedService.title }}</h2>
     </div>
     <div class="modal-body">
