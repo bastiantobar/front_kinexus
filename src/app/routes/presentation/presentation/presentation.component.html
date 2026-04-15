@@ -75,24 +75,21 @@
         <div class="acc-content">
           <p>Somos una consultora de salud organizacional dedicada a transformar la cultura del trabajo a través del
             movimiento inteligente. En Ki-Nexus, aplicamos nuestra experiencia clínica en neurorrehabilitación y
-            ciencias del deporte para ofrecer soluciones preventivas que van más allá de lo convencional.</p>
-          <p>Nos especializamos en servicios de salud laboral, desde pausas activas personalizadas hasta consultoría
-            estratégica en bienestar. Nuestro enfoque es técnico, humano y escalable, garantizando que cada intervención
-            reduzca el riesgo biomecánico y potencie el compromiso de los colaboradores.</p>
-          <p>El propósito de Ki-Nexus es conectar el potencial de las personas con la eficiencia de las organizaciones
-            porque creemos que el talento de una empresa florece cuando el cuerpo y la mente están en equilibrio.</p>
+            ergonomía para ofrecer soluciones preventivas que van más allá de lo convencional.</p>
         </div>
       </li>
     </ul>
   </div>
 </section>
 
-<section class="galeria section" id="galeria">
+<section class="galeria section ss-style-roundedsplit" id="galeria">
+  <div class="container" style="text-align: center; margin-bottom: 30px; position: relative; z-index: 5;">
+    <h2 class="section-title">Galería</h2>
+  </div>
   <div class="gallery-outer">
     <div class="gallery-scroll" #galleryScroll (mouseenter)="isHovered = true" (mouseleave)="onMouseLeaveGallery()"
       (mousedown)="onMouseDownGallery($event)" (mouseup)="onMouseUpGallery()" (mousemove)="onMouseMoveGallery($event)"
-      (touchstart)="isHovered = true" (touchend)="isHovered = false" (scroll)="onGalleryScroll()"
-      (wheel)="onWheelScroll($event, 'gallery')">
+      (touchstart)="isHovered = true" (touchend)="isHovered = false" (scroll)="onGalleryScroll()">
       <div *ngFor="let img of infiniteGalleryImages" class="gallery-item" [ngClass]="img.cls">
         <div class="gallery-frame">
           <img [src]="img.src" [attr.alt]="'Galería Kinexus'" loading="lazy" draggable="false" />
@@ -105,27 +102,8 @@
   </div>
 </section>
 
-<section class="concepto section centered-concepto" id="mision-vision">
-  <!-- Interactive Bubbles Background -->
-  <div class="gradient-bg">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
-    <div class="gradients-container">
-      <div class="g1"></div>
-      <div class="g2"></div>
-      <div class="g3"></div>
-      <div class="g4"></div>
-      <div class="g5"></div>
-      <div class="interactive"></div>
-    </div>
-  </div>
+<section class="concepto section centered-concepto ss-style-zigzag" id="mision-vision">
+  
 
   <div class="container grid two" style="position: relative; z-index: 2;">
     <div class="concepto-item">
@@ -147,13 +125,32 @@
 </section>
 
 <section class="servicios section" id="servicios">
-  <div class="container">
+  <!-- Interactive Bubbles Background -->
+  <div class="gradient-bg">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="gradients-container">
+      <div class="g1"></div>
+      <div class="g2"></div>
+      <div class="g3"></div>
+      <div class="g4"></div>
+      <div class="g5"></div>
+      <div class="interactive"></div>
+    </div>
+  </div>
+  <div class="container" style="text-align: center; position: relative; z-index: 5; margin-bottom: 2rem;">
     <h2 class="section-title">Nuestros Servicios</h2>
+
     <div class="services-slider-container">
-      <div class="services-scroll" #servicesScroll 
-        (mousedown)="onMouseDownServices($event)" (mouseup)="onMouseUpServices()" 
-        (mouseleave)="onMouseLeaveServices()" (mousemove)="onMouseMoveServices($event)"
-        (wheel)="onWheelScroll($event, 'services')">
+      <div class="services-scroll" #servicesScroll (mousedown)="onMouseDownServices($event)"
+        (mouseup)="onMouseUpServices()" (mouseleave)="onMouseLeaveServices()" (mousemove)="onMouseMoveServices($event)">
         <article class="service-window" *ngFor="let service of services">
           <div class="service-img" [style.backgroundImage]="'url(' + service.image + ')'">
             <div class="holo"></div>
@@ -181,21 +178,22 @@
     <button class="modal-close" (click)="closeServiceDetails()">
       <i class="fa fa-times"></i>
     </button>
-    <div class="modal-header" [style.backgroundImage]="'url(' + (selectedService.images ? selectedService.images[currentModalImage] : selectedService.image) + ')'">
+    <div class="modal-header"
+      [style.backgroundImage]="'url(' + (selectedService.images ? selectedService.images[currentModalImage] : selectedService.image) + ')'">
       <div class="overlay"></div>
       <div class="modal-carousel-nav" *ngIf="selectedService.images && selectedService.images.length > 1">
         <button class="carousel-prev" (click)="prevModalImage()"><i class="fa fa-chevron-left"></i></button>
         <button class="carousel-next" (click)="nextModalImage()"><i class="fa fa-chevron-right"></i></button>
         <div class="carousel-dots">
-          <span *ngFor="let img of selectedService.images; let i = index" 
-                class="carousel-dot" [class.active]="i === currentModalImage"></span>
+          <span *ngFor="let img of selectedService.images; let i = index" class="carousel-dot"
+            [class.active]="i === currentModalImage"></span>
         </div>
       </div>
       <h2>{{ selectedService.title }}</h2>
     </div>
     <div class="modal-body">
       <p class="description">{{ selectedService.description }}</p>
-      
+
       <div class="info-block" *ngIf="selectedService.features">
         <h4>¿Qué incluye el programa?</h4>
         <ul>
@@ -219,7 +217,7 @@
 
       <p class="full-info" *ngIf="selectedService.fullInfo">{{ selectedService.fullInfo }}</p>
       <p class="stats" *ngIf="selectedService.stats"><strong>{{ selectedService.stats }}</strong></p>
-      
+
       <div class="modal-actions">
         <button class="btn btn-accent" (click)="cotizarService(selectedService.title)">Cotizar ahora</button>
       </div>
@@ -247,28 +245,23 @@
 
     <aside class="profile-card" [class.active]="contactActive">
       <header>
-        <a target="_blank" [href]="whatsAppUrl" class="img-link">
-          <img src="assets/kinexus/card/felipe.png" alt="Felipe Reyes" (error)="handleImageError($event)">
-        </a>
-        <h1>Felipe Reyes</h1>
-        <h2>Kinesiólogo</h2>
-
-        <div class="header-contact">
-          <a [href]="whatsAppUrl" target="_blank" title="Contactar" class="contact-icon-link">
-            <i class="fa fa-phone"></i>
-          </a>
-          <a class="email-link" [href]="'mailto:felipe.reyes@ki-nexus.cl'" title="Email">
-            <i class="fa fa-envelope"></i>
-            <span>felipe.reyes@ki-nexus.cl</span>
-          </a>
-        </div>
-      </header>
-
-      <div class="profile-content-right">
         <div class="profile-bio">
           <p>
             Potenciamos el bienestar laboral y el rendimiento a través de la kinesiología basada en evidencia.
           </p>
+        </div>
+      </header>
+
+      <div class="profile-content-right">
+        <div class="header-contact">
+          <a [href]="whatsAppUrl" target="_blank" title="WhatsApp" class="contact-link">
+            <i class="fa fa-phone"></i>
+            <span>+{{ whatsAppConfig.number }}</span>
+          </a>
+          <a [href]="'mailto:felipe.reyes@ki-nexus.cl'" title="Email" class="contact-link">
+            <i class="fa fa-envelope"></i>
+            <span>felipe.reyes@ki-nexus.cl</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -289,7 +282,7 @@
     <h2 class="section-title" style="text-align: center; margin-bottom: 8px;">Cotización por email</h2>
     <form class="contact-card" (submit)="submitContact($event)">
       <h3>Enviar consulta</h3>
-        <div class="fields form-grid-fields">
+      <div class="fields form-grid-fields">
         <div class="form-group">
           <label>Nombre *</label>
           <input type="text" name="name" placeholder="Nombre completo" required />

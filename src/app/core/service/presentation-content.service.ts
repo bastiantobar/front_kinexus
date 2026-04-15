@@ -42,12 +42,12 @@ export class PresentationContentService {
     {
       id: 'vitality',
       title: 'KI-NEXUS VITALITY',
-      image: 'assets/kinexus/services/vitality-2.png', // Using the worker one which is more characteristic
+      image: 'assets/kinexus/services/vitality-2.png',
       images: [
         'assets/kinexus/services/vitality-1.png',
         'assets/kinexus/services/vitality-2.png'
       ],
-      brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo. Enfoque clínico | Mediciones reales | Bajo roce, alto impacto',
+      brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo de pausas activas. enfoque clínico / mediciones reales / bajo roce y alto impacto',
       description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa de entrenamiento funcional y neuro-reajuste aplicado al puesto de trabajo, liderado por un especialista en kinesiología.',
       fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados.',
       features: [
@@ -59,7 +59,7 @@ export class PresentationContentService {
     },
     {
       id: 'cbe',
-      title: 'CBE (CHECK-OUT BIOMECÁNICO EXPRESS)',
+      title: 'KI-NEXUS CBE: Check-Up Biomecánico Express',
       image: 'assets/kinexus/services/cbe.png',
       brief: 'Evaluación biomecánica individual en el puesto real para detectar riesgos ergonómicos al instante.',
       description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un recorrido de visitas de 10 a 15 minutos por colaborador para obtener un mapa de calor sobre la salud de tu equipo y activa soluciones de bienestar personalizadas.',
@@ -72,11 +72,11 @@ export class PresentationContentService {
     },
     {
       id: 'focus',
-      title: 'Focus time',
+      title: 'KI-NEXUS: FOCUS TIME',
       image: 'assets/kinexus/services/focus.png',
-      brief: 'Optimiza el rendimiento cognitivo de tu equipo mediante técnicas de neuro-activación que eliminan la fatiga mental.',
-      description: 'Vive una sesión de alto impacto para resetear el enfoque, ideal para equipos de tecnología, creativos, grupos de alta demanda laboral observando pantallas o gerencias con alta carga de estrés.',
-      fullInfo: 'Un taller teórico-práctico de una sola sesión de alto impacto (2 horas).',
+      brief: 'Optimiza el rendimiento de tu equipo con nuestra jornada de capacitación teórico práctica orientada al desarrollo de herramientas sobre ergonomía cognitiva y manejo del estrés.',
+      description: 'Vive una sesión de alto impacto para equipos de tecnología, equipos creativos, grupos de alta demanda laboral observando pantallas o gerencias con alta carga de estrés.',
+      fullInfo: 'Un taller teórico-práctico de una sola sesión de alto impacto (2 horas) que le entregará herramientas prácticas a tu equipo.',
       content: [
         'Ciencia del estrés',
         'Técnicas de neuro-activación',
@@ -85,12 +85,17 @@ export class PresentationContentService {
     },
     {
       id: 'game',
-      title: 'KI-NEXUS GAME: Wellness league',
+      title: 'KI-NEXUS: WELLNESS LEAGUE',
       image: 'assets/kinexus/services/game.png',
-      brief: 'Implementamos nuestra fórmula de ludificación para optimizar el ecosistema laboral generando impacto en áreas o sucursales.',
-      description: 'Implementamos un reto en tu empresa que tendrá una duración de 30 días y tendrá como objetivo optimizar el clima laboral, disminuir el sedentarismo y mejorar los niveles de energía.',
-      fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa a través de un ecosistema de bienestar gamificado y un enfoque kinésico de vanguardia, convertimos la salud en un tablero de juego donde la ciencia del movimiento y la motivación se encuentran.',
-      stats: 'Obtén métricas precisas sobre el estado de salud y la productividad de tu organización.'
+      brief: 'Este es nuestro plan de bienestar organizacional que optimiza el ecosistema laboral generando impacto en áreas o sucursales.',
+      description: 'Nuestro plan KI-NEXUS GAME: WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación y que tienen como objetivo optimizar la cultura organizacional de tu empresa.',
+      fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa.',
+      features: [
+        'Optimizar la comunicación interdisciplinaria',
+        'Impulsar mejores hábitos en tu organización',
+        'Mejorar la experiencia de trabajo',
+        'Obtener KPI sobre la salud y productividad de tu empresa'
+      ]
     }
   ];
 
