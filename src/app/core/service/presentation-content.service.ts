@@ -33,9 +33,7 @@ export class PresentationContentService {
     { src: 'assets/kinexus/gallery/gal-3.jpg', cls: 'faster' },
     { src: 'assets/kinexus/gallery/gal-4.jpg', cls: 'faster' },
     { src: 'assets/kinexus/gallery/gal-5.jpg', cls: 'slower slower-down' },
-    { src: 'assets/kinexus/gallery/gal-6.jpg', cls: 'slower' },
-    { src: 'assets/kinexus/gallery/gal-7.jpg', cls: 'slower' },
-    { src: 'assets/kinexus/gallery/gal-8.jpg', cls: 'last' },
+    { src: 'assets/kinexus/gallery/gal-6.jpg', cls: 'last' }
   ];
 
   private services: KinexusService[] = [
