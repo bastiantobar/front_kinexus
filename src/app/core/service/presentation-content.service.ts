@@ -41,15 +41,15 @@ export class PresentationContentService {
   private services: KinexusService[] = [
     {
       id: 'vitality',
-      title: 'KI-NEXUS VITALITY',
+      title: 'KI-NEXUS: VITALITY',
       image: 'assets/kinexus/services/vitality-2.png',
       images: [
         'assets/kinexus/services/vitality-1.png',
         'assets/kinexus/services/vitality-2.png'
       ],
       brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo de pausas activas. enfoque clínico / mediciones reales / bajo roce y alto impacto',
-      description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa de entrenamiento funcional y neuro-reajuste aplicado al puesto de trabajo, liderado por un especialista en kinesiología.',
-      fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados.',
+      description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa de[...]
+      fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados[...]
       features: [
         'Sesión de Onboarding y Diagnóstico',
         'Ciclo de Entrenamiento Presencial',
@@ -59,10 +59,10 @@ export class PresentationContentService {
     },
     {
       id: 'cbe',
-      title: 'KI-NEXUS CBE: Check-Up Biomecánico Express',
+      title: 'KI-NEXUS: CBE - CHECK UP BIOMECÁNICO EXPRESS',
       image: 'assets/kinexus/services/cbe.png',
       brief: 'Evaluación biomecánica individual en el puesto real para detectar riesgos ergonómicos al instante.',
-      description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un recorrido de visitas de 10 a 15 minutos por colaborador para obtener un mapa de calor sobre la salud de tu equipo y activa soluciones de bienestar personalizadas.',
+      description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un reco[...]
       fullInfo: 'Ideal para obtener un mapa de calor sobre la salud de tu equipo y activa soluciones de bienestar personalizadas.',
       whyChoose: [
         'Sesión de poco tiempo de interrupción de la jornada laboral',
@@ -74,7 +74,7 @@ export class PresentationContentService {
       id: 'focus',
       title: 'KI-NEXUS: FOCUS TIME',
       image: 'assets/kinexus/services/focus.png',
-      brief: 'Optimiza el rendimiento de tu equipo con nuestra jornada de capacitación teórico práctica orientada al desarrollo de herramientas sobre ergonomía cognitiva y manejo del estrés.',
+      brief: 'Optimiza el rendimiento de tu equipo con nuestra jornada de capacitación teórico práctica orientada al desarrollo de herramientas sobre ergonomía cognitiva y manejo del estrés.'[...]
       description: 'Vive una sesión de alto impacto para equipos de tecnología, equipos creativos, grupos de alta demanda laboral observando pantallas o gerencias con alta carga de estrés.',
       fullInfo: 'Un taller teórico-práctico de una sola sesión de alto impacto (2 horas) que le entregará herramientas prácticas a tu equipo.',
       content: [
@@ -88,7 +88,7 @@ export class PresentationContentService {
       title: 'KI-NEXUS: WELLNESS LEAGUE',
       image: 'assets/kinexus/services/game.png',
       brief: 'Este es nuestro plan de bienestar organizacional que optimiza el ecosistema laboral generando impacto en áreas o sucursales.',
-      description: 'Nuestro plan KI-NEXUS GAME: WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación y que tienen como objetivo optimizar la cultura organizacional de tu empresa.',
+      description: 'Nuestro plan KI-NEXUS GAME: WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación y que[...]
       fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa.',
       features: [
         'Optimizar la comunicación interdisciplinaria',
