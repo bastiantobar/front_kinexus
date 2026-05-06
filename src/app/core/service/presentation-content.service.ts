@@ -59,7 +59,7 @@ export class PresentationContentService {
     },
     {
       id: 'cbe',
-      title: 'KI-NEXUS: CBE - CHECK UP BIOMECÁNICO EXPRESS',
+      title: 'KI-NEXUS: CHECK UP BIOMECÁNICO EXPRESS (CBE)',
       image: 'assets/kinexus/services/cbe.png',
       brief: 'Evaluación biomecánica individual en el puesto real para detectar riesgos ergonómicos al instante.',
       description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un reconocimiento postural completo.',
