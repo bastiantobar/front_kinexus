@@ -81,20 +81,21 @@ export class PresentationContentService {
         'Higiene de columna y visión para trabajadores digitales'
       ]
     },
-    {
-      id: 'game',
-      title: 'KI-NEXUS: WELLNESS LEAGUE',
-      image: 'assets/kinexus/services/game.png',
-      brief: 'Este es nuestro plan de bienestar organizacional que optimiza el ecosistema laboral generando impacto en áreas o sucursales.',
-      description: 'Nuestro plan KI-NEXUS WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación.',
-      fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa.',
-      features: [
-        'Optimizar la comunicación interdisciplinaria',
-        'Impulsar mejores hábitos en tu organización',
-        'Mejorar la experiencia de trabajo',
-        'Obtener KPI sobre la salud y productividad de tu empresa'
-      ]
-    }
+    // TODO: Reactivar el servicio KI-NEXUS WELLNESS LEAGUE cuando esté listo para su lanzamiento.
+    // {
+    //   id: 'game',
+    //   title: 'KI-NEXUS: WELLNESS LEAGUE',
+    //   image: 'assets/kinexus/services/game.png',
+    //   brief: 'Este es nuestro plan de bienestar organizacional que optimiza el ecosistema laboral generando impacto en áreas o sucursales.',
+    //   description: 'Nuestro plan KI-NEXUS WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación.',
+    //   fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa.',
+    //   features: [
+    //     'Optimizar la comunicación interdisciplinaria',
+    //     'Impulsar mejores hábitos en tu organización',
+    //     'Mejorar la experiencia de trabajo',
+    //     'Obtener KPI sobre la salud y productividad de tu empresa'
+    //   ]
+    // }
   ];
 
   getHeroVideos() { return [...this.heroVideos]; }
