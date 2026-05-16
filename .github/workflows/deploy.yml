@@ -27,6 +27,11 @@ jobs:
         env:
           NODE_OPTIONS: --openssl-legacy-provider
 
+      - name: Copy backend files to dist
+        run: |
+          cp deploy/contact.php dist/contact.php
+          cp deploy/design.png  dist/design.png
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
