@@ -178,12 +178,12 @@ $clientHtml = <<<HTML
 <!DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:30px 0;">
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:30px 0;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0"
-               style="max-width:600px;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.10);">
+               style="max-width:600px;background:#ffffff;border-radius:10px 10px 0 0;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.20);">
 
           <!-- Header -->
           <tr>
@@ -217,16 +217,21 @@ $clientHtml = <<<HTML
             </td>
           </tr>
 
-          <!-- Footer image — tarjeta de Felipe -->
-          <tr>
-            <td style="padding:0;line-height:0;">
-              <img src="cid:{$imageCid}"
-                   alt="Ki-Nexus | Felipe Reyes Montecinos - Fundador"
-                   width="600" style="display:block;width:100%;border:0;">
-            </td>
-          </tr>
 
         </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Footer image full-bleed: #0a0a0a coincide con los bordes izq/der de design.png -->
+  <table width="100%" cellpadding="0" cellspacing="0"
+         style="background:#0a0a0a;margin:0 auto;">
+    <tr>
+      <td align="center" style="padding:0;line-height:0;background:#0a0a0a;">
+        <img src="cid:{$imageCid}"
+             alt="Ki-Nexus | Felipe Reyes Montecinos - Fundador"
+             width="600"
+             style="display:block;width:100%;max-width:600px;border:0;">
       </td>
     </tr>
   </table>

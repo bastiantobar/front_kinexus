@@ -171,7 +171,7 @@ $border-dk: #2a2a2c;
   min-height: 88vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   overflow: hidden;
   background: $bg-surface;
 
@@ -230,8 +230,11 @@ $border-dk: #2a2a2c;
   padding: 14px 20px;
   margin: 12px auto;
   border-radius: 18px;
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
   gap: 16px;
 
   // ← Efecto glass en el nav
@@ -239,13 +242,13 @@ $border-dk: #2a2a2c;
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 
   .brand {
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: $text;
-
-    :host-context(body.dark-theme) & {
-      color: $text-dk;
+    display: flex;
+    align-items: center;
+    
+    img {
+      height: 80px;
+      width: auto;
+      display: block;
     }
   }
 
