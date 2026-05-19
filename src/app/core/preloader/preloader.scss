@@ -69,15 +69,10 @@ $preloader-hg: 30px;
 .preloader-brand {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: calc(50% - 50px);
     transform: translate(-50%, -50%);
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    font-size: 32px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #0f0f0f; // elegant black
-    text-rendering: optimizeLegibility;
+    max-width: 250px;
+    height: auto;
 }
 
 /* ========================================================================
