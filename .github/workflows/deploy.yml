@@ -29,6 +29,7 @@ jobs:
 
       - name: Copy backend files to dist
         run: |
+          mkdir -p dist/assets
           cp deploy/contact.php dist/contact.php
           cp deploy/design.png  dist/design.png
           cp src/assets/availability.json dist/assets/availability.json
