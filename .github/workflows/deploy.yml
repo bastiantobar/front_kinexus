@@ -31,6 +31,8 @@ jobs:
         run: |
           cp deploy/contact.php dist/contact.php
           cp deploy/design.png  dist/design.png
+          cp deploy/availability.json dist/assets/availability.json
+          cp deploy/login.php dist/login.php
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4

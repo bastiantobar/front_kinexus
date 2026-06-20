@@ -14,6 +14,21 @@ export class Dashboardv2Component implements OnInit {
   // Propiedad para almacenar la lista de empresas obtenida del servicio
   empresas: any[] = [];
 
+  // Availability Admin State
+  availabilityData: any = {};
+  calendarDate = new Date();
+  selectedAdminDate: Date | null = null;
+  adminCalendarDays: any[] = [];
+  minDate = new Date();
+  maxDate = new Date(new Date().getFullYear(), new Date().getMonth() + 12, 0);
+  availableTimeSlots: string[] = [
+    '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30',
+    '16:00', '16:30', '17:00', '17:30', '18:00'
+  ];
+  selectedSlotsForSelectedDate: string[] = [];
+  saveStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
+
   sparkOptions1 = {
     barColor: this.colors.byName("info"),
     height: 60,
@@ -192,6 +207,7 @@ export class Dashboardv2Component implements OnInit {
   ngOnInit() {
     // Llamamos al método de carga al inicializar el componente
     this.cargarEmpresas();
+    this.cargarDisponibilidad();
   }
 
   /**
@@ -208,6 +224,176 @@ export class Dashboardv2Component implements OnInit {
         // Aquí podrías agregar lógica para mostrar un mensaje de error en la UI
       },
     });
+  }
+
+  cargarDisponibilidad() {
+    this.http.get('availability.php').subscribe({
+      next: (data: any) => {
+        this.availabilityData = data || {};
+        // Seleccionar hoy por defecto
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        this.selectedAdminDate = today;
+        const key = this.formatDateKey(today);
+        this.selectedSlotsForSelectedDate = this.availabilityData[key] ? [...this.availabilityData[key]] : [];
+        this.generateAdminCalendar();
+      },
+      error: (err) => {
+        console.warn('Error loading from availability.php, trying assets fallback:', err);
+        this.http.get('assets/availability.json').subscribe({
+          next: (data: any) => {
+            this.availabilityData = data || {};
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            this.selectedAdminDate = today;
+            const key = this.formatDateKey(today);
+            this.selectedSlotsForSelectedDate = this.availabilityData[key] ? [...this.availabilityData[key]] : [];
+            this.generateAdminCalendar();
+          }
+        });
+      }
+    });
+  }
+
+  formatDateKey(date: Date): string {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  generateAdminCalendar() {
+    const year = this.calendarDate.getFullYear();
+    const month = this.calendarDate.getMonth();
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    let adjustedFirstDay = firstDayIndex - 1;
+    if (adjustedFirstDay < 0) adjustedFirstDay = 6;
+
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const days: any[] = [];
+
+    for (let i = 0; i < adjustedFirstDay; i++) {
+      days.push({ date: null, dayNum: '', isSelectable: false, hasSlots: false });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let d = 1; d <= totalDays; d++) {
+      const date = new Date(year, month, d);
+      date.setHours(0, 0, 0, 0);
+
+      const dateKey = this.formatDateKey(date);
+      const slots = this.availabilityData[dateKey] || [];
+      const hasSlots = slots.length > 0;
+
+      const isSelectable = date >= today && date <= this.maxDate;
+      const isToday = date.getTime() === today.getTime();
+      const isSelected = this.selectedAdminDate ? date.getTime() === this.selectedAdminDate.getTime() : false;
+
+      days.push({
+        date,
+        dayNum: d,
+        isSelectable,
+        isToday,
+        isSelected,
+        hasSlots
+      });
+    }
+
+    this.adminCalendarDays = days;
+  }
+
+  prevAdminCalendarMonth() {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const minMonth = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    if (currentMonth > minMonth) {
+      this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() - 1, 1);
+      this.generateAdminCalendar();
+    }
+  }
+
+  nextAdminCalendarMonth() {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const maxMonth = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+    if (currentMonth < maxMonth) {
+      this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() + 1, 1);
+      this.generateAdminCalendar();
+    }
+  }
+
+  isPrevAdminMonthDisabled(): boolean {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const minMonth = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    return currentMonth <= minMonth;
+  }
+
+  isNextAdminMonthDisabled(): boolean {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const maxMonth = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+    return currentMonth >= maxMonth;
+  }
+
+  selectAdminCalendarDate(day: any) {
+    if (day.isSelectable && day.date) {
+      this.selectedAdminDate = day.date;
+      const key = this.formatDateKey(day.date);
+      this.selectedSlotsForSelectedDate = this.availabilityData[key] ? [...this.availabilityData[key]] : [];
+      this.generateAdminCalendar();
+      this.saveStatus = { state: 'idle' };
+    }
+  }
+
+  toggleTimeSlot(slot: string) {
+    const index = this.selectedSlotsForSelectedDate.indexOf(slot);
+    if (index > -1) {
+      this.selectedSlotsForSelectedDate.splice(index, 1);
+    } else {
+      this.selectedSlotsForSelectedDate.push(slot);
+    }
+    this.saveStatus = { state: 'idle' };
+  }
+
+  isSlotSelected(slot: string): boolean {
+    return this.selectedSlotsForSelectedDate.includes(slot);
+  }
+
+  saveAvailability() {
+    if (!this.selectedAdminDate) return;
+    
+    const key = this.formatDateKey(this.selectedAdminDate);
+    
+    if (this.selectedSlotsForSelectedDate.length === 0) {
+      delete this.availabilityData[key];
+    } else {
+      this.availabilityData[key] = [...this.selectedSlotsForSelectedDate].sort();
+    }
+
+    this.saveStatus = { state: 'pending', message: 'Guardando disponibilidad...' };
+
+    this.http.post('availability.php', this.availabilityData).subscribe({
+      next: (res: any) => {
+        if (res && res.success) {
+          this.saveStatus = { state: 'success', message: 'Disponibilidad guardada correctamente.' };
+          this.generateAdminCalendar(); // Regenerar para actualizar los puntos en el calendario
+        } else {
+          this.saveStatus = { state: 'error', message: res.message || 'Error al guardar.' };
+        }
+      },
+      error: (err) => {
+        console.error('Error al guardar disponibilidad:', err);
+        this.saveStatus = { state: 'error', message: 'No se pudo conectar con el servidor para guardar.' };
+      }
+    });
+  }
+
+  get adminCalendarMonthName(): string {
+    const monthNames = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    return `${monthNames[this.calendarDate.getMonth()]} ${this.calendarDate.getFullYear()}`;
   }
 
   goToPlan() {

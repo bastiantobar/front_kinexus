@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ThemeService } from '../../../core/service/theme.service';
 import { PresentationContentService, KinexusService } from '../../../core/service/presentation-content.service';
 import { ContactService } from '../../../core/service/contact.service';
+import { HttpClient } from '@angular/common/http';
 
 declare var intlTelInput: any;
 
@@ -29,6 +30,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   galleryImages: { src: string; cls: string }[] = [];
   services: KinexusService[] = [];
   whatsAppConfig: { number: string; message: string } = { number: '', message: '' };
+  availabilityData: any = {};
+  selectedDateSlots: string[] = [];
 
   infiniteGalleryImages: any[] = [];
   currentHero = 0;
@@ -62,7 +65,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     private contentService: PresentationContentService,
     private contactService: ContactService,
     private ngZone: NgZone,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +79,23 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < 8; i++) {
       this.infiniteGalleryImages.push(...this.galleryImages);
     }
+
+    // Load dynamic availability data
+    this.http.get('availability.php').subscribe({
+      next: (data: any) => {
+        this.availabilityData = data || {};
+        this.generateCalendar();
+      },
+      error: (err) => {
+        console.warn('Error loading from availability.php, falling back to assets:', err);
+        this.http.get('assets/availability.json').subscribe({
+          next: (data: any) => {
+            this.availabilityData = data || {};
+            this.generateCalendar();
+          }
+        });
+      }
+    });
   }
 
   get whatsAppUrl(): string {
@@ -350,6 +371,13 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(baseUrl + addressEscaped + suffix);
   }
 
+  formatDateKey(date: Date): string {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
   generateCalendar() {
     const year = this.calendarDate.getFullYear();
     const month = this.calendarDate.getMonth();
@@ -374,7 +402,12 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
       const date = new Date(year, month, d);
       date.setHours(0, 0, 0, 0);
 
-      const isSelectable = date >= today && date <= this.maxDate;
+      const dateKey = this.formatDateKey(date);
+      const slots = this.availabilityData[dateKey] || [];
+      const hasSlots = slots.length > 0;
+
+      // Selectable only if it has configured available time slots
+      const isSelectable = date >= today && date <= this.maxDate && hasSlots;
       const isToday = date.getTime() === today.getTime();
       const isSelected = this.selectedReservationDate ? date.getTime() === this.selectedReservationDate.getTime() : false;
 
@@ -423,6 +456,17 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   selectCalendarDate(day: any) {
     if (day.isSelectable && day.date) {
       this.selectedReservationDate = day.date;
+      const dateKey = this.formatDateKey(day.date);
+      this.selectedDateSlots = this.availabilityData[dateKey] || [];
+      
+      // Reset the time selection box when a new date is selected
+      setTimeout(() => {
+        const timeSelect = document.querySelector('select[name="time"]') as HTMLSelectElement;
+        if (timeSelect) {
+          timeSelect.value = '';
+        }
+      }, 50);
+
       this.generateCalendar();
     }
   }

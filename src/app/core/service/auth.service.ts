@@ -8,14 +8,14 @@ import { tap } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService {
-  private apiUrl = "/api/auth"; // tu endpoint de login
+  private loginUrl = "login.php"; // Endpoint PHP nativo — compatible con cPanel
   private tokenKey = "auth_token";
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/login`, { email, password })
+      .post<any>(this.loginUrl, { email, password })
       .pipe(
         tap((res) => {
           if (res && res.token) {
