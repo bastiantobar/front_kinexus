@@ -28,4 +28,8 @@ coverage/
 .env
 .env.local
 
+# images
+src/assets/kinexus/card/*
+src/assets/kinexus/hero/*
+src/assets/kinexus/services/*
 
