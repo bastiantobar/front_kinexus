@@ -1,9 +1,17 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  
+  # Permitir métodos POST, PUT, DELETE, PATCH sin reescritura
+  RewriteCond %{REQUEST_METHOD} ^(POST|PUT|DELETE|PATCH)$ [NC]
+  RewriteRule ^ - [L]
+  
+  # No reescribir si es un archivo real
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # Redirigir todo lo demás a index.html (para Angular routing)
   RewriteRule . /index.html [L]
 </IfModule>
 
