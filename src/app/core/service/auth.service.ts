@@ -8,21 +8,22 @@ import { tap } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService {
-  private loginUrl = "/login.php"; // URL absoluta del endpoint PHP nativo
+  private loginUrl = "api-login.php"; // Endpoint PHP nativo — compatible con cPanel
   private tokenKey = "auth_token";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(email: string, password: string): Observable<any> {
-    return this.http
-      .post<any>(this.loginUrl, { email, password })
-      .pipe(
-        tap((res) => {
-          if (res && res.token) {
-            localStorage.setItem(this.tokenKey, res.token);
-          }
-        })
-      );
+    return this.http.post<any>(this.loginUrl, {
+      email,
+      password
+    }).pipe(
+      tap((res) => {
+        if (res?.token) {
+          localStorage.setItem(this.tokenKey, res.token);
+        }
+      })
+    );
   }
 
   logout(): void {
