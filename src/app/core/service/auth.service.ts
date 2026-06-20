@@ -8,7 +8,7 @@ import { tap } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService {
-  private loginUrl = "login.php"; // Endpoint PHP nativo — compatible con cPanel
+  private loginUrl = "/login.php"; // URL absoluta del endpoint PHP nativo
   private tokenKey = "auth_token";
 
   constructor(private http: HttpClient, private router: Router) {}
