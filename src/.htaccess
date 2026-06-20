@@ -1,17 +1,20 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  
+  # Permitir métodos POST, PUT, DELETE, PATCH sin reescritura
+  RewriteCond %{REQUEST_METHOD} ^(POST|PUT|DELETE|PATCH)$ [NC]
+  RewriteRule ^ - [L]
 
   # Redirect to HTTPS if needed (optional, depends on host)
-  # RewriteCond % {HTTPS} off
+  # RewriteCond %{HTTPS} off
   # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # If the requested resource doesn't exist as a file or directory, 
-  # redirect all requests to index.html for Angular routing.
+  # Si es archivo o directorio real, no reescribir
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
   RewriteRule ^ - [L]
 
-  # Fallback all other routes to index.html
+  # Fallback: todo lo demás a index.html (Angular routing)
   RewriteRule ^ index.html [L]
 </IfModule>
 
