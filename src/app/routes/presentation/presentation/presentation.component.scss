@@ -1529,6 +1529,170 @@ $border-dk: #2a2a2c;
     background: $bg-dk;
   }
 
+  .form-selector-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+
+    .selector-btn {
+      padding: 12px 24px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: 2px solid rgba(100, 140, 52, 0.4);
+      background: rgba(100, 140, 52, 0.05);
+      color: $text;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      :host-context(body.dark-theme) & {
+        color: $text-dk;
+        background: rgba(100, 140, 52, 0.02);
+      }
+
+      &:hover {
+        background: rgba(100, 140, 52, 0.15);
+        transform: translateY(-2px);
+      }
+
+      &.active {
+        background: $accent;
+        color: white;
+        border-color: $accent;
+        box-shadow: 0 4px 15px rgba(100, 140, 52, 0.4);
+      }
+    }
+  }
+
+  .map-preview-container {
+    animation: fadeIn 0.4s ease-out;
+    iframe {
+      border-radius: 12px;
+    }
+  }
+
+  .custom-calendar {
+    border: 1px solid rgba(100, 140, 52, 0.25);
+    border-radius: 12px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    max-width: 100%;
+    margin-top: 5px;
+    
+    :host-context(body.dark-theme) & {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(100, 140, 52, 0.15);
+      padding-bottom: 8px;
+
+      span {
+        font-weight: 700;
+        color: $text;
+        font-size: 1rem;
+        
+        :host-context(body.dark-theme) & {
+          color: $text-dk;
+        }
+      }
+
+      button {
+        background: rgba(100, 140, 52, 0.1);
+        border: none;
+        color: $accent;
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+          background: $accent;
+          color: white;
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: $accent;
+      margin-bottom: 8px;
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+
+      .calendar-day {
+        font-size: 0.9rem;
+        padding: 8px 0;
+        border-radius: 8px;
+        cursor: pointer;
+        color: $text;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+
+        :host-context(body.dark-theme) & {
+          color: $text-dk;
+        }
+
+        &.empty {
+          cursor: default;
+          pointer-events: none;
+        }
+
+        &.disabled {
+          opacity: 0.25;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+
+        &:not(.empty):not(.disabled):hover {
+          background: rgba(100, 140, 52, 0.2);
+          transform: scale(1.05);
+        }
+
+        &.today {
+          border: 1px solid $accent;
+          font-weight: bold;
+        }
+
+        &.selected {
+          background: $accent !important;
+          color: white !important;
+          font-weight: bold;
+          box-shadow: 0 2px 8px rgba(100, 140, 52, 0.4);
+        }
+      }
+    }
+  }
+
   .contact-card {
     max-width: 760px;
     margin: 18px auto 0;

@@ -41,15 +41,15 @@
       <a (click)="scrollTo('servicios')">Servicios</a>
       <a (click)="scrollTo('contacto')">Contacto</a>
       <a (click)="scrollTo('cotizacion')">Cotización por email</a>
+      <a (click)="scrollToReservation()">Reserva Presencial</a>
     </nav>
   </aside>
 
   <div class="hero-content container">
-    <h1 class="title">Bienestar que impulsa resultados</h1>
-    <p class="subtitle">Pausas activas para empresas y kinesiología para personas. Salud, rendimiento y datos
-      accionables para tu organización.</p>
+    <h1 class="title">Kinesiología Preventiva y Bienestar Laboral</h1>
+    <p class="subtitle">Programas clínicos de pausas activas, ergonomía cognitiva y evaluaciones biomecánicas orientadas a prevenir lesiones y optimizar el rendimiento de sus equipos.</p>
     <div class="cta">
-      <button class="btn btn-solid" (click)="scrollTo('servicios')">Ver servicios</button>
+      <button class="btn btn-solid" (click)="scrollToReservation()">Solicitar diagnóstico</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
     </div>
     <div class="hero-dots" *ngIf="heroVideos.length > 1">
@@ -236,6 +236,7 @@
   <div class="container cta-centered content-layer">
     <h2 class="cta-heading">Cotiza o agenda tu evaluación</h2>
     <div class="cta-buttons">
+      <button class="btn btn-solid btn-lg" (click)="scrollToReservation()">Solicitar diagnóstico</button>
       <a class="btn btn-accent btn-lg" [href]="whatsAppUrl" target="_blank" rel="noopener">WhatsApp ahora</a>
     </div>
   </div>
@@ -281,8 +282,19 @@
 
 <section class="contact-form section" id="cotizacion">
   <div class="container">
-    <h2 class="section-title" style="text-align: center; margin-bottom: 8px;">Cotización por email</h2>
-    <form class="contact-card" (submit)="submitContact($event)">
+    
+    <!-- Selector Buttons -->
+    <div class="form-selector-buttons">
+      <button type="button" class="selector-btn" [class.active]="selectedForm === 'email'" (click)="selectForm('email')">
+        Cotización por email
+      </button>
+      <button type="button" class="selector-btn" [class.active]="selectedForm === 'presencial'" (click)="selectForm('presencial')">
+        Reserva una consulta presencial
+      </button>
+    </div>
+
+    <!-- Form 1: Email Quote -->
+    <form [style.display]="selectedForm === 'email' ? 'block' : 'none'" class="contact-card" (submit)="submitContact($event)">
       <h3>Enviar consulta</h3>
       <div class="fields form-grid-fields">
         <div class="form-group">
@@ -354,10 +366,114 @@
         <button class="btn btn-accent" type="submit">Enviar consulta</button>
       </div>
     </form>
+
+    <!-- Form 2: Presencial Booking -->
+    <form [style.display]="selectedForm === 'presencial' ? 'block' : 'none'" class="contact-card">
+      <h3>Reserva una consulta presencial</h3>
+      <div class="fields form-grid-fields">
+        <div class="form-group">
+          <label>Empresa *</label>
+          <input type="text" name="company" placeholder="Nombre de la empresa" required />
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico *</label>
+          <input type="email" name="email" placeholder="ejemplo@empresa.com" required />
+        </div>
+        <div class="form-group">
+          <label>Región *</label>
+          <select name="region" required>
+            <option value="" disabled selected>Seleccione una región</option>
+            <option value="Arica y Parinacota">Arica y Parinacota</option>
+            <option value="Tarapacá">Tarapacá</option>
+            <option value="Antofagasta">Antofagasta</option>
+            <option value="Atacama">Atacama</option>
+            <option value="Coquimbo">Coquimbo</option>
+            <option value="Valparaíso">Valparaíso</option>
+            <option value="Metropolitana">Metropolitana de Santiago</option>
+            <option value="O'Higgins">Libertador General Bernardo O'Higgins</option>
+            <option value="Maule">Maule</option>
+            <option value="Ñuble">Ñuble</option>
+            <option value="Biobío">Biobío</option>
+            <option value="La Araucanía">La Araucanía</option>
+            <option value="Los Ríos">Los Ríos</option>
+            <option value="Los Lagos">Los Lagos</option>
+            <option value="Aysén">Aysén del Gral. Carlos Ibáñez del Campo</option>
+            <option value="Magallanes">Magallanes y de la Antártica Chilena</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ciudad *</label>
+          <input type="text" name="city" placeholder="Ciudad" required />
+        </div>
+        <div class="form-group full-width">
+          <label>Dirección *</label>
+          <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Dirección completa" required />
+          <div *ngIf="reservationAddress" class="map-preview-container" style="margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(100,140,52,0.25); height: 250px; background: rgba(0, 0, 0, 0.05);">
+            <iframe
+              width="100%"
+              height="100%"
+              style="border:0"
+              loading="lazy"
+              allowfullscreen
+              [src]="getMapUrl()">
+            </iframe>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Fecha *</label>
+          <!-- Custom Inline Calendar -->
+          <div class="custom-calendar">
+            <div class="calendar-header">
+              <button type="button" (click)="prevCalendarMonth()" [disabled]="isPrevMonthDisabled()">&lt;</button>
+              <span>{{ calendarMonthName }}</span>
+              <button type="button" (click)="nextCalendarMonth()" [disabled]="isNextMonthDisabled()">&gt;</button>
+            </div>
+            <div class="calendar-weekdays">
+              <div>Lu</div><div>Ma</div><div>Mi</div><div>Ju</div><div>Vi</div><div>Sá</div><div>Do</div>
+            </div>
+            <div class="calendar-days">
+              <div *ngFor="let day of calendarDays" 
+                   class="calendar-day" 
+                   [class.empty]="!day.date"
+                   [class.disabled]="day.date && !day.isSelectable"
+                   [class.today]="day.isToday"
+                   [class.selected]="day.isSelected"
+                   (click)="selectCalendarDate(day)">
+                {{ day.dayNum }}
+              </div>
+            </div>
+          </div>
+          <!-- Hidden input to store selected date in form -->
+          <input type="hidden" name="date" [value]="selectedReservationDate ? selectedReservationDate.toISOString() : ''" required />
+        </div>
+        <div class="form-group">
+          <label>Hora *</label>
+          <select name="time" required>
+            <option value="" disabled selected>Seleccione una hora</option>
+            <option value="10:00">10:00 am</option>
+            <option value="10:30">10:30 am</option>
+            <option value="11:00">11:00 am</option>
+            <option value="11:30">11:30 am</option>
+            <option value="12:00">12:00 pm</option>
+            <option value="12:30">12:30 pm</option>
+            <option value="13:00">01:00 pm (13:00)</option>
+            <option value="13:30">01:30 pm (13:30)</option>
+            <option value="14:00">02:00 pm (14:00)</option>
+            <option value="14:30">02:30 pm (14:30)</option>
+            <option value="15:00">03:00 pm (15:00)</option>
+            <option value="15:30">03:30 pm (15:30)</option>
+            <option value="16:00">04:00 pm (16:00)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-accent" type="button" disabled>Enviar reserva</button>
+      </div>
+    </form>
   </div>
 
   <div class="container" style="position: relative; z-index: 20;">
-    <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle'">
+    <div class="contact-status" *ngIf="contactStatus && contactStatus.state !== 'idle' && selectedForm === 'email'">
       <div [class]="'status-' + contactStatus.state">{{ contactStatus.message }}</div>
     </div>
   </div>

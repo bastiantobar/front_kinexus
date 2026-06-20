@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, NgZone } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ThemeService } from '../../../core/service/theme.service';
 import { PresentationContentService, KinexusService } from '../../../core/service/presentation-content.service';
 import { ContactService } from '../../../core/service/contact.service';
@@ -13,6 +14,15 @@ declare var intlTelInput: any;
 export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   currentYear = new Date().getFullYear();
   iti: any;
+
+  // Form toggle and booking state
+  selectedForm: 'email' | 'presencial' | null = null;
+  reservationAddress: string = '';
+  calendarDate = new Date();
+  selectedReservationDate: Date | null = null;
+  calendarDays: any[] = [];
+  minDate = new Date();
+  maxDate = new Date(new Date().getFullYear(), new Date().getMonth() + 12, 0);
 
   // Data from Service
   heroVideos: string[] = [];
@@ -51,7 +61,8 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     private themeService: ThemeService,
     private contentService: PresentationContentService,
     private contactService: ContactService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -114,7 +125,18 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollTo(id: string) {
     this.closeMenu();
+    if (id === 'cotizacion' && !this.selectedForm) {
+      this.selectedForm = 'email';
+    }
     const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  scrollToReservation() {
+    this.selectedForm = 'presencial';
+    this.generateCalendar();
+    this.closeMenu();
+    const el = document.getElementById('cotizacion');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -147,6 +169,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cotizarService(serviceTitle: string) {
+    this.selectedForm = 'email';
     this.closeServiceDetails();
     this.scrollTo('cotizacion');
     setTimeout(() => {
@@ -311,5 +334,104 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
         e.preventDefault();
       }
     }
+  }
+
+  selectForm(type: 'email' | 'presencial') {
+    this.selectedForm = type;
+    if (type === 'presencial') {
+      this.generateCalendar();
+    }
+  }
+
+  getMapUrl(): SafeResourceUrl {
+    const baseUrl = 'https://maps.google.com/maps?q=';
+    const addressEscaped = encodeURIComponent(this.reservationAddress);
+    const suffix = '&t=&z=15&ie=UTF8&iwloc=&output=embed';
+    return this.sanitizer.bypassSecurityTrustResourceUrl(baseUrl + addressEscaped + suffix);
+  }
+
+  generateCalendar() {
+    const year = this.calendarDate.getFullYear();
+    const month = this.calendarDate.getMonth();
+
+    const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Sunday, 1 = Monday...
+    let adjustedFirstDay = firstDayIndex - 1;
+    if (adjustedFirstDay < 0) adjustedFirstDay = 6; // Make Monday the first day (0 = Monday, 6 = Sunday)
+
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    const days: any[] = [];
+
+    // Empty spaces for padding at the start of the week
+    for (let i = 0; i < adjustedFirstDay; i++) {
+      days.push({ date: null, dayNum: '', isSelectable: false });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let d = 1; d <= totalDays; d++) {
+      const date = new Date(year, month, d);
+      date.setHours(0, 0, 0, 0);
+
+      const isSelectable = date >= today && date <= this.maxDate;
+      const isToday = date.getTime() === today.getTime();
+      const isSelected = this.selectedReservationDate ? date.getTime() === this.selectedReservationDate.getTime() : false;
+
+      days.push({
+        date,
+        dayNum: d,
+        isSelectable,
+        isToday,
+        isSelected
+      });
+    }
+
+    this.calendarDays = days;
+  }
+
+  prevCalendarMonth() {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const minMonth = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    if (currentMonth > minMonth) {
+      this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() - 1, 1);
+      this.generateCalendar();
+    }
+  }
+
+  nextCalendarMonth() {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const maxMonth = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+    if (currentMonth < maxMonth) {
+      this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() + 1, 1);
+      this.generateCalendar();
+    }
+  }
+
+  isPrevMonthDisabled(): boolean {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const minMonth = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    return currentMonth <= minMonth;
+  }
+
+  isNextMonthDisabled(): boolean {
+    const currentMonth = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth(), 1);
+    const maxMonth = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+    return currentMonth >= maxMonth;
+  }
+
+  selectCalendarDate(day: any) {
+    if (day.isSelectable && day.date) {
+      this.selectedReservationDate = day.date;
+      this.generateCalendar();
+    }
+  }
+
+  get calendarMonthName(): string {
+    const monthNames = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    return `${monthNames[this.calendarDate.getMonth()]} ${this.calendarDate.getFullYear()}`;
   }
 }
