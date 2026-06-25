@@ -4,11 +4,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .qr-landing-content {
@@ -31,7 +31,6 @@
   width: 85vw;
   max-width: 100%;
   height: auto;
-  max-height: calc(100vh - 140px);
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);

@@ -30,10 +30,10 @@ jobs:
       - name: Copy backend files to dist
         run: |
           mkdir -p dist/assets
-          cp deploy/contact.php dist/contact.php
-          cp deploy/design.png  dist/design.png
-          cp src/assets/availability.json dist/assets/availability.json
-          cp deploy/api-login.php dist/api-login.php
+          cp deploy/contact.php          dist/contact.php
+          cp deploy/design.png           dist/design.png
+          cp deploy/api-login.php        dist/api-login.php
+          cp deploy/book-reservation.php dist/book-reservation.php
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -47,3 +47,4 @@ jobs:
             **/.git*
             **/node_modules/**
             **/assets/kinexus/hero/**
+            **/assets/availability.json

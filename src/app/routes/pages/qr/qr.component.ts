@@ -13,13 +13,13 @@ export class QrComponent implements OnInit, OnDestroy {
   constructor(private meta: Meta) {}
 
   ngOnInit(): void {
-    // Dynamically set noindex, nofollow to prevent search engine indexing
     this.meta.updateTag({ name: 'robots', content: 'noindex, nofollow' });
+    this.meta.updateTag({ name: 'viewport', content: 'width=device-width, initial-scale=1' });
   }
 
   ngOnDestroy(): void {
-    // Restore the default robots index settings when navigating away
     this.meta.updateTag({ name: 'robots', content: 'index, follow' });
+    this.meta.updateTag({ name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' });
   }
 
   get whatsAppUrl(): string {

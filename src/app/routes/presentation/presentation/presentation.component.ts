@@ -24,6 +24,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   calendarDays: any[] = [];
   minDate = new Date();
   maxDate = new Date(new Date().getFullYear(), new Date().getMonth() + 12, 0);
+  reservationStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
 
   // Data from Service
   heroVideos: string[] = [];
@@ -477,5 +478,57 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
     ];
     return `${monthNames[this.calendarDate.getMonth()]} ${this.calendarDate.getFullYear()}`;
+  }
+
+  submitReservation(e: Event) {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    if (!form) return;
+
+    if (!this.selectedReservationDate) {
+      this.reservationStatus = { state: 'error', message: 'Por favor selecciona una fecha en el calendario.' };
+      return;
+    }
+
+    const timeSelect = form.querySelector('select[name="time"]') as HTMLSelectElement;
+    if (!timeSelect?.value) {
+      this.reservationStatus = { state: 'error', message: 'Por favor selecciona una hora disponible.' };
+      return;
+    }
+
+    const fd = new FormData(form);
+    fd.set('date', this.formatDateKey(this.selectedReservationDate));
+
+    this.reservationStatus = { state: 'pending', message: 'Enviando reserva...' };
+
+    const selectedDate = this.selectedReservationDate;
+    const selectedTime = timeSelect.value;
+
+    this.http.post<any>('/book-reservation.php', fd).subscribe({
+      next: (res) => {
+        if (res && res.success) {
+          // Remove booked slot from local data so calendar updates immediately
+          const dateKey = this.formatDateKey(selectedDate);
+          if (this.availabilityData[dateKey]) {
+            this.availabilityData[dateKey] = this.availabilityData[dateKey].filter((s: string) => s !== selectedTime);
+            if (this.availabilityData[dateKey].length === 0) {
+              delete this.availabilityData[dateKey];
+            }
+          }
+          this.reservationStatus = { state: 'success', message: res.message || 'Tu reserva fue confirmada. Revisa tu correo.' };
+          form.reset();
+          this.selectedReservationDate = null;
+          this.selectedDateSlots = [];
+          this.reservationAddress = '';
+          this.generateCalendar();
+        } else {
+          this.reservationStatus = { state: 'error', message: res.message || 'Error al enviar la reserva.' };
+        }
+      },
+      error: (err) => {
+        console.error('Error enviando reserva', err);
+        this.reservationStatus = { state: 'error', message: 'No se pudo enviar la reserva. Intenta nuevamente.' };
+      }
+    });
   }
 }

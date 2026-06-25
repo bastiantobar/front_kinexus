@@ -47,7 +47,8 @@
 
   <div class="hero-content container">
     <h1 class="title">Kinesiología Preventiva y Bienestar Laboral</h1>
-    <p class="subtitle">Programas clínicos de pausas activas, ergonomía cognitiva y evaluaciones biomecánicas orientadas a prevenir lesiones y optimizar el rendimiento de sus equipos.</p>
+    <p class="subtitle">Programas clínicos de pausas activas, ergonomía cognitiva y evaluaciones biomecánicas orientadas
+      a prevenir lesiones y optimizar el rendimiento de sus equipos.</p>
     <div class="cta">
       <button class="btn btn-solid" (click)="scrollToReservation()">Solicitar diagnóstico</button>
       <a class="btn btn-accent" [href]="whatsAppUrl" target="_blank" rel="noopener">Agenda por WhatsApp</a>
@@ -105,7 +106,7 @@
 </section>
 
 <section class="concepto section centered-concepto ss-style-zigzag" id="mision-vision">
-  
+
 
   <div class="container grid two" style="position: relative; z-index: 2;">
     <div class="concepto-item">
@@ -282,19 +283,22 @@
 
 <section class="contact-form section" id="cotizacion">
   <div class="container">
-    
+
     <!-- Selector Buttons -->
     <div class="form-selector-buttons">
-      <button type="button" class="selector-btn" [class.active]="selectedForm === 'email'" (click)="selectForm('email')">
+      <button type="button" class="selector-btn" [class.active]="selectedForm === 'email'"
+        (click)="selectForm('email')">
         Cotización por email
       </button>
-      <button type="button" class="selector-btn" [class.active]="selectedForm === 'presencial'" (click)="selectForm('presencial')">
-        Reserva una consulta presencial
+      <button type="button" class="selector-btn" [class.active]="selectedForm === 'presencial'"
+        (click)="selectForm('presencial')">
+        Reserva un diagnostico
       </button>
     </div>
 
     <!-- Form 1: Email Quote -->
-    <form [style.display]="selectedForm === 'email' ? 'block' : 'none'" class="contact-card" (submit)="submitContact($event)">
+    <form [style.display]="selectedForm === 'email' ? 'block' : 'none'" class="contact-card"
+      (submit)="submitContact($event)">
       <h3>Enviar consulta</h3>
       <div class="fields form-grid-fields">
         <div class="form-group">
@@ -316,7 +320,8 @@
             <option value="KI-NEXUS VITALITY">KI-NEXUS VITALITY</option>
             <option value="CBE (CHECK-OUT BIOMECÁNICO EXPRESS)">CBE (CHECK-OUT BIOMECÁNICO EXPRESS)</option>
             <option value="Focus time">Focus time</option>
-            <!-- <option value="KI-NEXUS GAME: Wellness league">KI-NEXUS GAME: Wellness league</option> --> <!-- Wellness League service hidden, enable when ready -->
+            <!-- <option value="KI-NEXUS GAME: Wellness league">KI-NEXUS GAME: Wellness league</option> -->
+            <!-- Wellness League service hidden, enable when ready -->
           </select>
         </div>
         <div class="form-group">
@@ -368,8 +373,8 @@
     </form>
 
     <!-- Form 2: Presencial Booking -->
-    <form [style.display]="selectedForm === 'presencial' ? 'block' : 'none'" class="contact-card">
-      <h3>Reserva una consulta presencial</h3>
+    <form [style.display]="selectedForm === 'presencial' ? 'block' : 'none'" class="contact-card" (submit)="submitReservation($event)">
+      <h3>Reserva un diagnostico</h3>
       <div class="fields form-grid-fields">
         <div class="form-group">
           <label>Empresa *</label>
@@ -407,17 +412,19 @@
         </div>
         <div class="form-group full-width">
           <label>Dirección *</label>
-          <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Dirección completa" required />
-          <div *ngIf="reservationAddress" class="map-preview-container" style="margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(100,140,52,0.25); height: 250px; background: rgba(0, 0, 0, 0.05);">
-            <iframe
-              width="100%"
-              height="100%"
-              style="border:0"
-              loading="lazy"
-              allowfullscreen
-              [src]="getMapUrl()">
+          <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Dirección completa"
+            required />
+          <div *ngIf="reservationAddress" class="map-preview-container"
+            style="margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(100,140,52,0.25); height: 250px; background: rgba(0, 0, 0, 0.05);">
+            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen [src]="getMapUrl()">
             </iframe>
           </div>
+        </div>
+        <div class="form-group full-width">
+          <label>Descripción *</label>
+          <textarea name="description" rows="4"
+            placeholder="Describe brevemente el propósito del diagnóstico o alguna consulta adicional..."
+            required></textarea>
         </div>
         <div class="form-group">
           <label>Fecha *</label>
@@ -429,22 +436,25 @@
               <button type="button" (click)="nextCalendarMonth()" [disabled]="isNextMonthDisabled()">&gt;</button>
             </div>
             <div class="calendar-weekdays">
-              <div>Lu</div><div>Ma</div><div>Mi</div><div>Ju</div><div>Vi</div><div>Sá</div><div>Do</div>
+              <div>Lu</div>
+              <div>Ma</div>
+              <div>Mi</div>
+              <div>Ju</div>
+              <div>Vi</div>
+              <div>Sá</div>
+              <div>Do</div>
             </div>
             <div class="calendar-days">
-              <div *ngFor="let day of calendarDays" 
-                   class="calendar-day" 
-                   [class.empty]="!day.date"
-                   [class.disabled]="day.date && !day.isSelectable"
-                   [class.today]="day.isToday"
-                   [class.selected]="day.isSelected"
-                   (click)="selectCalendarDate(day)">
+              <div *ngFor="let day of calendarDays" class="calendar-day" [class.empty]="!day.date"
+                [class.disabled]="day.date && !day.isSelectable" [class.today]="day.isToday"
+                [class.selected]="day.isSelected" (click)="selectCalendarDate(day)">
                 {{ day.dayNum }}
               </div>
             </div>
           </div>
           <!-- Hidden input to store selected date in form -->
-          <input type="hidden" name="date" [value]="selectedReservationDate ? selectedReservationDate.toISOString() : ''" required />
+          <input type="hidden" name="date"
+            [value]="selectedReservationDate ? selectedReservationDate.toISOString() : ''" required />
         </div>
         <div class="form-group">
           <label>Hora *</label>
@@ -455,7 +465,15 @@
         </div>
       </div>
       <div class="form-actions" style="margin-top: 20px;">
-        <button class="btn btn-accent" type="button" disabled>Enviar reserva</button>
+        <button class="btn btn-accent" type="submit" [disabled]="reservationStatus.state === 'pending'">
+          {{ reservationStatus.state === 'pending' ? 'Enviando...' : 'Enviar reserva' }}
+        </button>
+        <p *ngIf="reservationStatus.state === 'success'" style="margin-top:12px;color:#7fc742;font-size:14px;font-weight:600;">
+          ✓ {{ reservationStatus.message }}
+        </p>
+        <p *ngIf="reservationStatus.state === 'error'" style="margin-top:12px;color:#e05555;font-size:14px;">
+          {{ reservationStatus.message }}
+        </p>
       </div>
     </form>
   </div>
