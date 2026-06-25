@@ -492,6 +492,18 @@
 </section>
 
 
+<!-- Reservation success modal -->
+<div class="reservation-modal-overlay" *ngIf="showReservationModal" (click)="closeReservationModal()">
+  <div class="reservation-modal-card" (click)="$event.stopPropagation()">
+    <div class="reservation-modal-icon">
+      <i class="fa fa-check"></i>
+    </div>
+    <h2>¡Reserva confirmada!</h2>
+    <p>{{ reservationStatus.message }}</p>
+    <button class="btn btn-accent" (click)="closeReservationModal()">Entendido</button>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="container footer-bottom">
     <span>Todos los derechos reservados © {{ currentYear }} Kinexus</span>

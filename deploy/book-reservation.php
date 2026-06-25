@@ -45,19 +45,6 @@ if (!preg_match('/^\d{2}:\d{2}$/', $time)) {
 
 $felipeEmail = 'felipe.reyes@ki-nexus.cl';
 
-// ── Generate deterministic Google Meet code ────────────────────────────────
-function generateMeetCode(string $seed): string {
-    $chars = 'abcdefghijklmnopqrstuvwxyz';
-    srand(crc32($seed));
-    $p1 = $p2 = $p3 = '';
-    for ($i = 0; $i < 3; $i++) $p1 .= $chars[rand(0, 25)];
-    for ($i = 0; $i < 4; $i++) $p2 .= $chars[rand(0, 25)];
-    for ($i = 0; $i < 3; $i++) $p3 .= $chars[rand(0, 25)];
-    return "$p1-$p2-$p3";
-}
-$meetCode = generateMeetCode($date . $time . strtolower($company));
-$meetUrl  = "https://meet.google.com/$meetCode";
-
 // ── Format date/time for display (Chilean locale) ─────────────────────────
 $dateObj = new DateTime($date . ' ' . $time, new DateTimeZone('America/Santiago'));
 $endObj  = clone $dateObj;
@@ -73,6 +60,15 @@ $displayDate = $dayNames[(int)$dateObj->format('w')] . ', '
              . $dateObj->format('Y');
 $displayTime = $time . ' – ' . $endObj->format('H:i') . ' hrs (Chile)';
 
+// ── Google Calendar event creation URL (for Felipe's email) ───────────────
+$calendarDetails = "Empresa: $company\nEmail: $email\nDirección: $address, $city, $region\nDescripción: $description\n\nPasos: Editar evento → Agregar videoconferencia → Guardar y enviar invitación al cliente.";
+$calendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    . '&text=' . rawurlencode("Diagnóstico Ki-Nexus — $company")
+    . '&dates=' . $dateObj->format('Ymd\THis') . '/' . $endObj->format('Ymd\THis')
+    . '&details=' . rawurlencode($calendarDetails)
+    . '&location=' . rawurlencode("$address, $city, $region")
+    . '&add=' . rawurlencode($email);
+
 // ── Build ICS calendar invite ──────────────────────────────────────────────
 $dtStart  = $dateObj->format('Ymd\THis');
 $dtEnd    = $endObj->format('Ymd\THis');
@@ -81,7 +77,7 @@ $uid      = 'kinexus-' . $date . '-' . str_replace(':', '', $time) . '@ki-nexus.
 $icsDesc  = 'Diagnóstico presencial Ki-Nexus\\nEmpresa: ' . $company
            . '\\nDirección: ' . $address . ', ' . $city . ', ' . $region
            . '\\nDescripción: ' . $description
-           . '\\n\\nLink Google Meet: ' . $meetUrl;
+           . '\\n\\nFelipe enviará el link de Google Meet antes de la reunión.';
 
 $icsContent  = "BEGIN:VCALENDAR\r\n";
 $icsContent .= "VERSION:2.0\r\n";
@@ -94,8 +90,7 @@ $icsContent .= "DTSTART;TZID=America/Santiago:$dtStart\r\n";
 $icsContent .= "DTEND;TZID=America/Santiago:$dtEnd\r\n";
 $icsContent .= "SUMMARY:Diagnóstico Ki-Nexus — $company\r\n";
 $icsContent .= "DESCRIPTION:$icsDesc\r\n";
-$icsContent .= "LOCATION:Google Meet — $meetUrl\r\n";
-$icsContent .= "X-GOOGLE-CONFERENCE:$meetUrl\r\n";
+$icsContent .= "LOCATION:$address, $city, $region\r\n";
 $icsContent .= "ORGANIZER;CN=Ki-Nexus:mailto:$felipeEmail\r\n";
 $icsContent .= "ATTENDEE;CN=$company;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:$email\r\n";
 $icsContent .= "ATTENDEE;CN=Felipe Reyes;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:$felipeEmail\r\n";
@@ -208,10 +203,12 @@ $felipeHtml = <<<HTML
                 <tr><td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;"><strong>Fecha:</strong> {$displayDate}</td></tr>
                 <tr><td style="padding:7px 0;color:#555;font-size:15px;"><strong>Hora:</strong> {$displayTime}</td></tr>
               </table>
-              <div style="margin-top:24px;padding:16px 20px;background:#f0f7e8;border-left:4px solid #7fc742;border-radius:6px;">
-                <p style="margin:0 0 8px;color:#0a0a0a;font-size:14px;font-weight:700;">🎥 Enlace Google Meet</p>
-                <a href="{$meetUrl}" style="color:#7fc742;font-size:15px;word-break:break-all;">{$meetUrl}</a>
-                <p style="margin:8px 0 0;color:#666;font-size:12px;">Se adjunta archivo .ics para agregar el evento a tu calendario.</p>
+              <div style="margin-top:24px;text-align:center;">
+                <a href="{$calendarUrl}"
+                   style="display:inline-block;background:#7fc742;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 28px;border-radius:8px;letter-spacing:.5px;">
+                  📅 Crear evento en Google Calendar
+                </a>
+                <p style="margin:12px 0 0;color:#666;font-size:12px;line-height:1.5;">Al abrir el evento, haz clic en <strong>Agregar videoconferencia</strong> para generar el link de Google Meet y enviárselo automáticamente al cliente.</p>
               </div>
             </td>
           </tr>
@@ -237,7 +234,7 @@ $felipeText .= "Dirección:   $address\n";
 $felipeText .= "Descripción: $description\n";
 $felipeText .= "Fecha:       $displayDate\n";
 $felipeText .= "Hora:        $displayTime\n\n";
-$felipeText .= "Google Meet: $meetUrl\n";
+$felipeText .= "Crear evento en Google Calendar: $calendarUrl\n";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // EMAIL 2 — Confirmación al cliente
@@ -274,18 +271,14 @@ $clientHtml = <<<HTML
                 <p style="margin:4px 0;color:#555;font-size:15px;">Dirección: <strong>{$address}, {$city}, {$region}</strong></p>
                 {$descRowClient}
               </div>
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
-                <tr>
-                  <td align="center">
-                    <a href="{$meetUrl}"
-                       style="display:inline-block;background:#7fc742;color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;padding:14px 32px;border-radius:8px;letter-spacing:.5px;">
-                      🎥 Unirse a Google Meet
-                    </a>
-                  </td>
-                </tr>
-              </table>
+              <div style="background:#f0f7e8;border-left:4px solid #7fc742;border-radius:6px;padding:16px 20px;margin-bottom:24px;">
+                <p style="margin:0 0 6px;color:#0a0a0a;font-size:14px;font-weight:700;">🎥 ¿Cómo será la reunión?</p>
+                <p style="margin:0;color:#555;font-size:14px;line-height:1.6;">
+                  Felipe te enviará el link de <strong>Google Meet</strong> por correo antes de la reunión, una vez que confirme la agenda desde su calendario.
+                </p>
+              </div>
               <p style="margin:0;color:#888;font-size:13px;line-height:1.6;">
-                Hemos adjuntado una invitación de calendario (.ics) a este correo para que puedas agregar el evento directamente a Google Calendar, Outlook o Apple Calendar. Si tienes alguna consulta, contáctanos a <a href="mailto:felipe.reyes@ki-nexus.cl" style="color:#7fc742;">felipe.reyes@ki-nexus.cl</a>.
+                Hemos adjuntado una invitación de calendario (.ics) a este correo para que puedas reservar el horario en Google Calendar, Outlook o Apple Calendar. Si tienes alguna consulta, escríbenos a <a href="mailto:felipe.reyes@ki-nexus.cl" style="color:#7fc742;">felipe.reyes@ki-nexus.cl</a>.
               </p>
             </td>
           </tr>
@@ -314,7 +307,7 @@ $clientText .= "Fecha:       $displayDate\n";
 $clientText .= "Hora:        $displayTime\n";
 $clientText .= "Dirección:   $address, $city, $region\n";
 $clientText .= "Descripción: $description\n\n";
-$clientText .= "Enlace Google Meet: $meetUrl\n\n";
+$clientText .= "Felipe te enviará el link de Google Meet por correo antes de la reunión.\n";
 $clientText .= "Se adjunta una invitación de calendario (.ics) a este correo.\n\n";
 $clientText .= "--\n";
 $clientText .= "Felipe Reyes Montecinos | Fundador\n";
@@ -340,10 +333,10 @@ if ($isLocal) {
     $entry = '[' . date('c') . '] ' . json_encode([
         'company' => $company, 'email' => $email, 'region' => $region, 'city' => $city,
         'address' => $address, 'description' => $description, 'date' => $date, 'time' => $time,
-        'meetUrl' => $meetUrl,
+        'calendarUrl' => $calendarUrl,
     ]) . "\n";
     @file_put_contents(__DIR__ . '/reservations.log', $entry, FILE_APPEND);
-    echo json_encode(['success' => true, 'message' => 'Modo desarrollo: reserva registrada en reservations.log', 'meetUrl' => $meetUrl]);
+    echo json_encode(['success' => true, 'message' => 'Modo desarrollo: reserva registrada en reservations.log']);
     exit;
 }
 
@@ -364,7 +357,7 @@ $sentClient = sendReservationMail(
 );
 
 if ($sentFelipe) {
-    echo json_encode(['success' => true, 'message' => 'Tu reserva fue confirmada. Revisa tu correo para los detalles y el link de Google Meet.']);
+    echo json_encode(['success' => true, 'message' => 'Reserva confirmada. Revisa tu correo — Felipe te enviará el link de Google Meet antes de la reunión.']);
 } else {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Ocurrió un error al confirmar la reserva.']);

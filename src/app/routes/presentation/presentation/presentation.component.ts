@@ -25,6 +25,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate = new Date();
   maxDate = new Date(new Date().getFullYear(), new Date().getMonth() + 12, 0);
   reservationStatus: { state: 'idle' | 'pending' | 'success' | 'error'; message?: string } = { state: 'idle' };
+  showReservationModal = false;
 
   // Data from Service
   heroVideos: string[] = [];
@@ -480,6 +481,11 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     return `${monthNames[this.calendarDate.getMonth()]} ${this.calendarDate.getFullYear()}`;
   }
 
+  closeReservationModal() {
+    this.showReservationModal = false;
+    this.reservationStatus = { state: 'idle' };
+  }
+
   submitReservation(e: Event) {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -507,7 +513,6 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     this.http.post<any>('/book-reservation.php', fd).subscribe({
       next: (res) => {
         if (res && res.success) {
-          // Remove booked slot from local data so calendar updates immediately
           const dateKey = this.formatDateKey(selectedDate);
           if (this.availabilityData[dateKey]) {
             this.availabilityData[dateKey] = this.availabilityData[dateKey].filter((s: string) => s !== selectedTime);
@@ -516,6 +521,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }
           this.reservationStatus = { state: 'success', message: res.message || 'Tu reserva fue confirmada. Revisa tu correo.' };
+          this.showReservationModal = true;
           form.reset();
           this.selectedReservationDate = null;
           this.selectedDateSlots = [];
