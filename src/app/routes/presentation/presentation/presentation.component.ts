@@ -69,7 +69,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.heroVideos = this.contentService.getHeroVideos();
@@ -206,7 +206,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
     const form = e.target as HTMLFormElement;
     if (!form) return;
     const fd = new FormData(form);
-    
+
     if (this.iti) {
       const fullNumber = this.iti.getNumber();
       if (fullNumber) fd.set('phone', fullNumber);
@@ -460,7 +460,7 @@ export class PresentationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedReservationDate = day.date;
       const dateKey = this.formatDateKey(day.date);
       this.selectedDateSlots = this.availabilityData[dateKey] || [];
-      
+
       // Reset the time selection box when a new date is selected
       setTimeout(() => {
         const timeSelect = document.querySelector('select[name="time"]') as HTMLSelectElement;

@@ -74,7 +74,7 @@ $dtStart  = $dateObj->format('Ymd\THis');
 $dtEnd    = $endObj->format('Ymd\THis');
 $dtStamp  = (new DateTime('now', new DateTimeZone('UTC')))->format('Ymd\THis\Z');
 $uid      = 'kinexus-' . $date . '-' . str_replace(':', '', $time) . '@ki-nexus.cl';
-$icsDesc  = 'Diagnóstico presencial Ki-Nexus\\nEmpresa: ' . $company
+$icsDesc  = 'Diagnóstico virtual Ki-Nexus\\nEmpresa: ' . $company
            . '\\nDirección: ' . $address . ', ' . $city . ', ' . $region
            . '\\nDescripción: ' . $description
            . '\\n\\nFelipe enviará el link de Google Meet antes de la reunión.';
@@ -187,7 +187,7 @@ $felipeHtml = <<<HTML
           <tr>
             <td style="background:#0a0a0a;padding:20px 30px;">
               <span style="color:#7fc742;font-size:22px;font-weight:700;letter-spacing:1px;">KI-NEXUS</span>
-              <span style="color:#ffffff;font-size:13px;margin-left:10px;opacity:.7;">Nueva reserva de diagnóstico presencial</span>
+              <span style="color:#ffffff;font-size:13px;margin-left:10px;opacity:.7;">Nueva reserva de diagnóstico virtual</span>
             </td>
           </tr>
           <tr>
@@ -225,7 +225,7 @@ $felipeHtml = <<<HTML
 </html>
 HTML;
 
-$felipeText  = "Nueva reserva de diagnóstico presencial:\n\n";
+$felipeText  = "Nueva reserva de diagnóstico:\n\n";
 $felipeText .= "Empresa:     $company\n";
 $felipeText .= "Email:       $email\n";
 $felipeText .= "Región:      $region\n";
@@ -261,7 +261,7 @@ $clientHtml = <<<HTML
                 ¡Tu diagnóstico ha sido agendado, {$company}!
               </h1>
               <p style="margin:0 0 24px;color:#555;font-size:15px;line-height:1.7;">
-                Hemos confirmado tu reserva para un diagnóstico presencial con Felipe Reyes de Ki-Nexus. A continuación encontrarás el resumen y el enlace para unirte a la reunión por Google Meet.
+                Hemos confirmado tu reserva para un diagnóstico con Felipe Reyes de Ki-Nexus. A continuación encontrarás el resumen y el enlace para unirte a la reunión por Google Meet.
               </p>
               <div style="background:#f9f9f9;border-left:4px solid #7fc742;border-radius:6px;padding:16px 20px;margin-bottom:24px;">
                 <p style="margin:0 0 10px;color:#0a0a0a;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Resumen de tu reserva</p>
@@ -301,7 +301,7 @@ $clientHtml = <<<HTML
 HTML;
 
 $clientText  = "¡Tu diagnóstico ha sido agendado, $company!\n\n";
-$clientText .= "Hemos confirmado tu reserva para un diagnóstico presencial con Felipe Reyes.\n\n";
+$clientText .= "Hemos confirmado tu reserva para un diagnóstico con Felipe Reyes.\n\n";
 $clientText .= "Detalles:\n";
 $clientText .= "Fecha:       $displayDate\n";
 $clientText .= "Hora:        $displayTime\n";
@@ -343,7 +343,7 @@ if ($isLocal) {
 // ── Send both emails ──────────────────────────────────────────────────────
 $sentFelipe = sendReservationMail(
     $felipeEmail, 'Ki-Nexus', $felipeEmail,
-    'Nueva reserva presencial — ' . $company . ' | Ki-Nexus',
+    'Nueva reserva — ' . $company . ' | Ki-Nexus',
     $felipeHtml, $felipeText,
     $icsBase64, $icsFilename
 );

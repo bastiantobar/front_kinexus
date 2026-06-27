@@ -41,7 +41,7 @@
       <a (click)="scrollTo('servicios')">Servicios</a>
       <a (click)="scrollTo('contacto')">Contacto</a>
       <a (click)="scrollTo('cotizacion')">Cotización por email</a>
-      <a (click)="scrollToReservation()">Reserva Presencial</a>
+      <a (click)="scrollToReservation()">Reserva un Diagnostico</a>
     </nav>
   </aside>
 
@@ -373,7 +373,8 @@
     </form>
 
     <!-- Form 2: Presencial Booking -->
-    <form [style.display]="selectedForm === 'presencial' ? 'block' : 'none'" class="contact-card" (submit)="submitReservation($event)">
+    <form [style.display]="selectedForm === 'presencial' ? 'block' : 'none'" class="contact-card"
+      (submit)="submitReservation($event)">
       <h3>Reserva un diagnostico</h3>
       <div class="fields form-grid-fields">
         <div class="form-group">
@@ -468,7 +469,8 @@
         <button class="btn btn-accent" type="submit" [disabled]="reservationStatus.state === 'pending'">
           {{ reservationStatus.state === 'pending' ? 'Enviando...' : 'Enviar reserva' }}
         </button>
-        <p *ngIf="reservationStatus.state === 'success'" style="margin-top:12px;color:#7fc742;font-size:14px;font-weight:600;">
+        <p *ngIf="reservationStatus.state === 'success'"
+          style="margin-top:12px;color:#7fc742;font-size:14px;font-weight:600;">
           ✓ {{ reservationStatus.message }}
         </p>
         <p *ngIf="reservationStatus.state === 'error'" style="margin-top:12px;color:#e05555;font-size:14px;">
