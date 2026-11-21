@@ -14,7 +14,7 @@
         <p *ngIf="s.fullInfo">{{ s.fullInfo }}</p>
 
         <ng-container *ngIf="s.features">
-          <h2 class="kx-h3">¿Qué incluye el programa?</h2>
+          <h2 class="kx-h3">{{ s.audiencia === 'personas' ? '¿En qué te ayudamos?' : '¿Qué incluye el programa?' }}</h2>
           <ul class="kx-checks"><li *ngFor="let i of s.features">{{ i }}</li></ul>
         </ng-container>
         <ng-container *ngIf="s.whyChoose">
@@ -29,7 +29,7 @@
 
       <aside class="kx-detail__side">
         <img class="kx-detail__img" [src]="s.image" [alt]="s.name" loading="lazy">
-        <div class="kx-card">
+        <div class="kx-card" *ngIf="s.audiencia === 'empresas'">
           <h2 class="kx-h3">Cotiza este servicio</h2>
           <p class="kx-muted">Te respondemos con una propuesta según el tamaño y la ubicación de tu equipo.</p>
           <a class="kx-btn kx-btn--accent kx-btn--block" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">Cotizar</a>
@@ -37,11 +37,18 @@
             Reservar diagnóstico
           </a>
         </div>
+        <div class="kx-card" *ngIf="s.audiencia === 'personas'">
+          <h2 class="kx-h3">Solicita una atención</h2>
+          <p class="kx-muted">Cuéntanos tu caso y coordinamos la visita de un kinesiólogo a tu hogar.</p>
+          <a class="kx-btn kx-btn--accent kx-btn--block" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">
+            Solicitar atención
+          </a>
+        </div>
       </aside>
     </div>
   </section>
 
-  <section class="kx-section kx-section--alt">
+  <section class="kx-section kx-section--alt" *ngIf="otros.length">
     <div class="kx-container">
       <h2 class="kx-h2">Otros servicios</h2>
       <div class="kx-grid kx-grid--2">
