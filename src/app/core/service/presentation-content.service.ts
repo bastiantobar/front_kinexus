@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
+export type Audiencia = 'empresas' | 'personas';
+
 export interface KinexusService {
   id: string;
+  audiencia: Audiencia; // define en qué grupo aparece y los textos de sus botones
   slug: string; // URL: /servicios/:slug
   name: string; // nombre corto para cards y nav
   seoTitle: string; // <title> de /servicios/:slug, con la palabra clave al inicio
@@ -9,7 +12,7 @@ export interface KinexusService {
   image: string;
   brief: string;
   description: string;
-  fullInfo: string;
+  fullInfo?: string;
   features?: string[];
   whyChoose?: string[];
   content?: string[];
@@ -30,6 +33,7 @@ export class PresentationContentService {
   private services: KinexusService[] = [
     {
       id: 'vitality',
+      audiencia: 'empresas',
       slug: 'vitality-pausas-activas',
       name: 'Vitality',
       seoTitle: 'Pausas activas para empresas: programa Vitality | Ki-Nexus',
@@ -47,6 +51,7 @@ export class PresentationContentService {
     },
     {
       id: 'cbe',
+      audiencia: 'empresas',
       slug: 'check-up-biomecanico',
       name: 'Check Up Biomecánico',
       seoTitle: 'Ergonomía laboral: Check Up Biomecánico Express | Ki-Nexus',
@@ -63,6 +68,7 @@ export class PresentationContentService {
     },
     {
       id: 'focus',
+      audiencia: 'empresas',
       slug: 'focus-time',
       name: 'Focus Time',
       seoTitle: 'Taller de ergonomía cognitiva y manejo del estrés: Focus Time | Ki-Nexus',
@@ -75,6 +81,23 @@ export class PresentationContentService {
         'Ciencia del estrés',
         'Técnicas de neuro-activación',
         'Higiene de columna y visión para trabajadores digitales'
+      ]
+    },
+    {
+      id: 'domicilio',
+      audiencia: 'personas',
+      slug: 'kinesiologia-a-domicilio',
+      name: 'Kinesiología a domicilio',
+      seoTitle: 'Kinesiología a domicilio: rehabilitación en tu hogar | Ki-Nexus',
+      title: 'KI-NEXUS: KINESIOLOGÍA A DOMICILIO',
+      image: 'assets/kinexus/nuestro-trabajo/nt5.jpg',
+      brief: 'Kinesiología y rehabilitación en tu hogar.',
+      description: 'Atención profesional y personalizada para mejorar tu movilidad, recuperar tu funcionalidad y potenciar tu calidad de vida.',
+      features: [
+        'Rehabilitación neurológica',
+        'Recuperación musculoesquelética',
+        'Mejora de la funcionalidad',
+        'Atención segura y en tu hogar'
       ]
     },
     // TODO: Reactivar el servicio KI-NEXUS WELLNESS LEAGUE cuando esté listo para su lanzamiento.
@@ -96,7 +119,9 @@ export class PresentationContentService {
 
   getHeroVideos() { return [...this.heroVideos]; }
   getGalleryImages() { return [...this.galleryImages]; }
-  getServices() { return [...this.services]; }
+  getServices(audiencia?: Audiencia) {
+    return this.services.filter(s => !audiencia || s.audiencia === audiencia);
+  }
   getService(slug: string) { return this.services.find(s => s.slug === slug); }
   getWhatsAppUrl() {
     return `https://wa.me/${this.whatsAppNumber}?text=${encodeURIComponent(this.whatsAppMessage)}`;

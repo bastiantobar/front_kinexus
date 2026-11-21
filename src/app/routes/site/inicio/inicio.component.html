@@ -25,23 +25,6 @@
   </div>
 </section>
 
-<section class="kx-section">
-  <div class="kx-container">
-    <div class="kx-section__head">
-      <h2 class="kx-h2">Prevención con respaldo clínico</h2>
-      <p class="kx-muted">Tres frentes para equipos más sanos y con menos ausentismo.</p>
-    </div>
-    <div class="kx-grid kx-grid--3">
-      <article class="kx-card kx-pillar kx-pillar--{{ p.color }}" *ngFor="let p of pilares">
-        <i class="fa {{ p.icono }} kx-pillar__icon" aria-hidden="true"></i>
-        <h3 class="kx-h3">{{ p.titulo }}</h3>
-        <p class="kx-muted">{{ p.texto }}</p>
-        <a class="kx-link" [routerLink]="['/servicios', p.slug]">Ver más <span aria-hidden="true">→</span></a>
-      </article>
-    </div>
-  </div>
-</section>
-
 <section class="kx-section kx-section--alt">
   <div class="kx-container">
     <div class="kx-section__head">

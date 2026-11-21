@@ -21,7 +21,7 @@ export class ServicioComponent implements OnDestroy {
         router.navigate(['/servicios']);
         return;
       }
-      this.otros = content.getServices().filter(o => o !== this.s);
+      this.otros = content.getServices(this.s.audiencia).filter(o => o !== this.s);
       title.setTitle(this.s.seoTitle);
       meta.updateTag({ property: 'og:title', content: this.s.seoTitle });
       meta.updateTag({ name: 'description', content: this.s.description });
