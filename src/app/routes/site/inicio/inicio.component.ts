@@ -11,22 +11,6 @@ export class InicioComponent implements AfterViewInit {
   heroVideos = this.content.getHeroVideos();
   currentHero = 0;
 
-  // Los 3 conceptos SEO. Cada pilar enlaza al servicio que lo resuelve.
-  pilares = [
-    {
-      color: 'blue', icono: 'fa-user-md', titulo: 'Kinesiología laboral', slug: 'vitality-pausas-activas',
-      texto: 'Intervenciones dirigidas por kinesiólogos para prevenir lesiones y reducir el desgaste físico de tus equipos.'
-    },
-    {
-      color: 'orange', icono: 'fa-running', titulo: 'Pausas activas para empresas', slug: 'vitality-pausas-activas',
-      texto: 'Ciclos presenciales de 5 a 8 semanas, guiados en el lugar de trabajo y con resultados medidos.'
-    },
-    {
-      color: 'green', icono: 'fa-chair', titulo: 'Ergonomía laboral', slug: 'check-up-biomecanico',
-      texto: 'Evaluación biomecánica en el puesto real para detectar riesgos ergonómicos y corregirlos a tiempo.'
-    },
-  ];
-
   pasos = [
     { titulo: 'Diagnóstico', texto: 'Evaluamos a tu equipo y su puesto de trabajo.' },
     { titulo: 'Diseño', texto: 'Definimos un programa según riesgos y objetivos.' },
