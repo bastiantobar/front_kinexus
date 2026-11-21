@@ -29,6 +29,8 @@ export class ContactoComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   services: KinexusService[] = this.content.getServices();
+  serviciosEmpresas = this.content.getServices('empresas');
+  serviciosPersonas = this.content.getServices('personas');
   servicioElegido = '';
   selectedForm: 'email' | 'presencial' = 'email';
   whatsAppUrl = this.content.getWhatsAppUrl();
@@ -92,6 +94,11 @@ export class ContactoComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
     this.iti?.destroy();
+  }
+
+  get esServicioPersonas(): boolean {
+    const s = this.services.find(o => o.title === this.servicioElegido);
+    return !!s && s.audiencia === 'personas';
   }
 
   submitContact(e: Event) {
