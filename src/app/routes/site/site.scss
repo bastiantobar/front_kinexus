@@ -282,7 +282,16 @@ body.dark-theme .site {
   a { display: inline-flex; align-items: center; gap: .6rem; &:hover { color: var(--kx-primary); } }
   i { width: 1.1rem; color: var(--kx-primary); }
 }
+// Correo de contacto destacado (página de contacto y footer)
+.site a.kx-email {
+  font-size: 1.15rem; font-weight: 700; color: var(--kx-accent-text); overflow-wrap: anywhere;
+  i { font-size: 1.25rem; color: inherit; }
+  &:hover { color: var(--kx-accent-text); text-decoration: underline; text-underline-offset: 3px; }
+}
+.kx-footer a.kx-email { color: var(--kx-accent-bright); &:hover { color: var(--kx-accent-bright); } }
 .kx-accent-bar { display: block; width: 3.5rem; height: 4px; background: var(--kx-accent); }
+
+.kx-form__intro { margin: 0 0 1.25rem; font-weight: 600; }
 
 .kx-tabs {
   display: flex; gap: .25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--kx-line);
