@@ -2,7 +2,7 @@
   <div class="kx-container">
     <p class="kx-eyebrow">Contacto</p>
     <h1 class="kx-page-title">Cotiza o reserva un diagnóstico</h1>
-    <p class="kx-lead">Cuéntanos sobre tu equipo y te enviamos una propuesta de kinesiología laboral a medida.</p>
+    <p class="kx-lead">Cuéntanos sobre tu equipo o tu caso y te enviamos una propuesta a medida.</p>
   </div>
 </section>
 
@@ -42,7 +42,12 @@
           <label class="kx-field">Servicio de interés *
             <select name="service" [(ngModel)]="servicioElegido" required>
               <option value="" disabled>Seleccione un servicio</option>
-              <option *ngFor="let s of services" [value]="s.title">{{ s.name }}</option>
+              <optgroup label="Para empresas">
+                <option *ngFor="let s of serviciosEmpresas" [value]="s.title">{{ s.name }}</option>
+              </optgroup>
+              <optgroup label="Para personas">
+                <option *ngFor="let s of serviciosPersonas" [value]="s.title">{{ s.name }}</option>
+              </optgroup>
             </select>
           </label>
           <label class="kx-field">Región *
@@ -51,20 +56,23 @@
               <option *ngFor="let r of regiones" [value]="r[0]">{{ r[1] }}</option>
             </select>
           </label>
-          <label class="kx-field">Empresa *
-            <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
-          </label>
-          <label class="kx-field">Cargo *
-            <input type="text" name="role" placeholder="Tu cargo" autocomplete="organization-title" required>
-          </label>
-          <label class="kx-field">Número de sucursales *
-            <input type="number" name="branches" placeholder="Ej: 3" min="1" required>
-          </label>
-          <label class="kx-field">Trabajadores *
-            <input type="number" name="workers" placeholder="Ej: 50" min="1" required>
-          </label>
+          <!-- Datos de empresa: no aplican a servicios para personas (*ngIf los saca del form y de la validación). -->
+          <ng-container *ngIf="!esServicioPersonas">
+            <label class="kx-field">Empresa *
+              <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
+            </label>
+            <label class="kx-field">Cargo *
+              <input type="text" name="role" placeholder="Tu cargo" autocomplete="organization-title" required>
+            </label>
+            <label class="kx-field">Número de sucursales *
+              <input type="number" name="branches" placeholder="Ej: 3" min="1" required>
+            </label>
+            <label class="kx-field">Trabajadores *
+              <input type="number" name="workers" placeholder="Ej: 50" min="1" required>
+            </label>
+          </ng-container>
           <label class="kx-field kx-field--full">¿Cómo te podemos ayudar? (opcional)
-            <textarea name="message" rows="4" placeholder="Cuéntanos brevemente qué necesita tu equipo..."></textarea>
+            <textarea name="message" rows="4" [placeholder]="esServicioPersonas ? 'Cuéntanos brevemente tu caso y tu comuna...' : 'Cuéntanos brevemente qué necesita tu equipo...'"></textarea>
           </label>
         </div>
         <div class="kx-form__actions">
