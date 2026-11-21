@@ -22,7 +22,7 @@
           <ul class="kx-checks"><li *ngFor="let i of s.whyChoose">{{ i }}</li></ul>
         </ng-container>
         <ng-container *ngIf="s.content">
-          <h2 class="kx-h3">Contenido</h2>
+          <h2 class="kx-h3">Temas</h2>
           <ul class="kx-checks"><li *ngFor="let i of s.content">{{ i }}</li></ul>
         </ng-container>
       </div>
@@ -55,7 +55,7 @@
         <a class="kx-card kx-service-card" *ngFor="let o of otros" [routerLink]="['/servicios', o.slug]">
           <h3 class="kx-h3">{{ o.name }}</h3>
           <p class="kx-muted">{{ o.brief }}</p>
-          <span class="kx-link">Conocer servicio <span aria-hidden="true">→</span></span>
+          <span class="kx-link">Conoce más <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </div>
