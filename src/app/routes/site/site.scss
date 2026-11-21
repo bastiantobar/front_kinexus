@@ -184,7 +184,7 @@ body.dark-theme .site {
 @media (min-width: 1024px) { .kx-hero__content { padding-top: 8rem; padding-bottom: 6rem; } }
 .kx-hero__title {
   font-family: var(--kx-font-title); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(2.6rem, 7vw, 5.25rem); line-height: 1; margin: 0 0 1.25rem; color: #fff;
+  font-size: clamp(2.1rem, 5.5vw, 4.25rem); line-height: 1.05; margin: 0 0 1.25rem; color: #fff; text-wrap: balance;
   span { color: var(--kx-accent-bright); }
 }
 .kx-hero .kx-eyebrow { color: var(--kx-accent-bright); }
