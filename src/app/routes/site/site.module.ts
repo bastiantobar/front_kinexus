@@ -26,8 +26,8 @@ const routes: Routes = [
       },
       {
         path: 'servicios', component: ServiciosComponent, data: {
-          title: 'Servicios: pausas activas, ergonomía laboral y talleres' + SUFIJO,
-          description: 'Programas de pausas activas para empresas, check up biomecánico de ergonomía laboral y talleres de manejo del estrés dictados por kinesiólogos.'
+          title: 'Servicios: pausas activas, ergonomía laboral y kinesiología a domicilio' + SUFIJO,
+          description: 'Pausas activas para empresas, check up biomecánico de ergonomía laboral, talleres de manejo del estrés y kinesiología a domicilio, con kinesiólogos.'
         }
       },
       // title/description de cada servicio los pone ServicioComponent.
