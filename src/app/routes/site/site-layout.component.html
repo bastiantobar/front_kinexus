@@ -1,0 +1,75 @@
+<div class="site">
+  <a class="kx-skip" href="#contenido" (click)="$event.preventDefault(); main.focus()">Saltar al contenido</a>
+
+  <header class="kx-header">
+    <div class="kx-container kx-header__bar">
+      <a routerLink="/" class="kx-brand" title="Ki-Nexus, inicio">
+        <img src="assets/kinexus/logos/nuevo/fulllogo-oficial.png" alt="Ki-Nexus, movimiento que nos une" width="1280" height="756">
+      </a>
+
+      <nav class="kx-nav" aria-label="Principal">
+        <ul>
+          <li *ngFor="let item of nav">
+            <a [routerLink]="item.path" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: item.exact }">{{ item.label }}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="kx-header__actions">
+        <button type="button" class="kx-icon-btn" (click)="theme.toggle()"
+          [attr.aria-label]="theme.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+          <i class="fa" [class.fa-sun]="theme.isDark()" [class.fa-moon]="!theme.isDark()" aria-hidden="true"></i>
+        </button>
+        <a routerLink="/contacto" class="kx-btn kx-btn--accent kx-header__cta">Cotizar</a>
+        <button type="button" class="kx-icon-btn kx-menu-btn" (click)="menuAbierto = !menuAbierto"
+          [attr.aria-expanded]="menuAbierto" aria-controls="kx-menu-movil" aria-label="Menú">
+          <i class="fa" [class.fa-bars]="!menuAbierto" [class.fa-times]="menuAbierto" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <nav id="kx-menu-movil" class="kx-mobile-nav" *ngIf="menuAbierto" aria-label="Principal móvil">
+      <a *ngFor="let item of nav" [routerLink]="item.path" routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: item.exact }">{{ item.label }}</a>
+      <a routerLink="/contacto" class="kx-btn kx-btn--accent">Cotizar</a>
+    </nav>
+  </header>
+
+  <main id="contenido" class="kx-main" #main tabindex="-1">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Botón flotante de WhatsApp: fijo al hacer scroll, en todas las páginas -->
+  <a class="kx-chat" [href]="whatsAppUrl" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp">
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <footer class="kx-footer">
+    <div class="kx-container kx-footer__grid">
+      <div class="kx-footer__brand">
+        <img src="assets/kinexus/logos/nuevo/icono.png" alt="Ki-Nexus" width="84" height="48">
+        <p class="kx-footer__lead">Kinesiología laboral, pausas activas para empresas y ergonomía laboral en Chile.</p>
+      </div>
+      <div>
+        <h2 class="kx-footer__title">Servicios</h2>
+        <ul>
+          <li *ngFor="let s of services"><a [routerLink]="['/servicios', s.slug]">{{ s.name }}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="kx-footer__title">Ki-Nexus</h2>
+        <ul>
+          <li *ngFor="let item of nav"><a [routerLink]="item.path">{{ item.label }}</a></li>
+        </ul>
+      </div>
+      <address class="kx-footer__contact">
+        <h2 class="kx-footer__title">Contacto</h2>
+        <a href="mailto:felipe.reyes@ki-nexus.cl"><i class="fa fa-envelope" aria-hidden="true"></i> felipe.reyes@ki-nexus.cl</a>
+        <a [href]="whatsAppUrl" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+        <span><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Chile</span>
+      </address>
+    </div>
+    <p class="kx-footer__legal">© {{ year }} Ki-Nexus. Todos los derechos reservados.</p>
+  </footer>
+</div>

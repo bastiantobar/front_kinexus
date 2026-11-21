@@ -1,0 +1,87 @@
+<section class="kx-hero">
+  <div class="kx-hero__bg" aria-hidden="true">
+    <video #heroVideo *ngFor="let vid of heroVideos; let i = index" [src]="vid" [class.is-active]="i === currentHero"
+      [muted]="true" playsinline preload="metadata" (ended)="onVideoEnded(i)"></video>
+  </div>
+  <div class="kx-container kx-hero__content">
+    <p class="kx-eyebrow">Kinesiología laboral · Chile</p>
+    <h1 class="kx-hero__title">Movimiento<br><span>que nos une</span></h1>
+    <p class="kx-hero__lead">
+      Kinesiología laboral, pausas activas para empresas y ergonomía laboral.
+      Programas preventivos con medición de resultados.
+    </p>
+    <div class="kx-actions">
+      <a class="kx-btn kx-btn--accent kx-btn--lg" routerLink="/contacto" [queryParams]="{ form: 'diagnostico' }">
+        Solicitar diagnóstico
+      </a>
+      <a class="kx-btn kx-btn--ghost kx-btn--lg" [href]="whatsAppUrl" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+      </a>
+    </div>
+    <div class="kx-hero__dots" *ngIf="heroVideos.length > 1">
+      <button type="button" *ngFor="let _ of heroVideos; let i = index" [class.is-active]="i === currentHero"
+        (click)="goToSlide(i)" [attr.aria-label]="'Ver video ' + (i + 1)" [attr.aria-pressed]="i === currentHero"></button>
+    </div>
+  </div>
+</section>
+
+<section class="kx-section">
+  <div class="kx-container">
+    <div class="kx-section__head">
+      <h2 class="kx-h2">Prevención con respaldo clínico</h2>
+      <p class="kx-muted">Tres frentes para equipos más sanos y con menos ausentismo.</p>
+    </div>
+    <div class="kx-grid kx-grid--3">
+      <article class="kx-card kx-pillar kx-pillar--{{ p.color }}" *ngFor="let p of pilares">
+        <i class="fa {{ p.icono }} kx-pillar__icon" aria-hidden="true"></i>
+        <h3 class="kx-h3">{{ p.titulo }}</h3>
+        <p class="kx-muted">{{ p.texto }}</p>
+        <a class="kx-link" [routerLink]="['/servicios', p.slug]">Ver más <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="kx-section kx-section--alt">
+  <div class="kx-container">
+    <div class="kx-section__head">
+      <h2 class="kx-h2">Cómo trabajamos</h2>
+      <p class="kx-muted">Un proceso simple, medible y sin interrumpir la operación.</p>
+    </div>
+    <ol class="kx-steps">
+      <li *ngFor="let paso of pasos; let i = index">
+        <span class="kx-steps__num">{{ i + 1 | number: '2.0' }}</span>
+        <h3 class="kx-h3">{{ paso.titulo }}</h3>
+        <p class="kx-muted">{{ paso.texto }}</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="kx-section">
+  <div class="kx-container">
+    <div class="kx-section__head kx-section__head--row">
+      <h2 class="kx-h2">Servicios</h2>
+      <a class="kx-link" routerLink="/servicios">Ver todos <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="kx-grid kx-grid--3">
+      <a class="kx-card kx-service-card" *ngFor="let s of services" [routerLink]="['/servicios', s.slug]">
+        <h3 class="kx-h3">{{ s.name }}</h3>
+        <p class="kx-muted">{{ s.brief }}</p>
+        <span class="kx-link">Conocer servicio <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="kx-cta">
+  <div class="kx-container kx-cta__inner">
+    <h2 class="kx-h2">¿Tu equipo necesita moverse mejor?</h2>
+    <div class="kx-actions">
+      <a class="kx-btn kx-btn--accent kx-btn--lg" routerLink="/contacto">Cotizar</a>
+      <a class="kx-btn kx-btn--ghost kx-btn--lg" routerLink="/contacto" [queryParams]="{ form: 'diagnostico' }">
+        Reservar diagnóstico
+      </a>
+    </div>
+  </div>
+</section>

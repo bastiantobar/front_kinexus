@@ -1,0 +1,391 @@
+// ================================================================
+// Sitio público Ki-Nexus (routes/site). Global y acotado a `.site`.
+// Paleta tomada del logo; modo oscuro con body.dark-theme (ThemeService).
+// ================================================================
+
+.site {
+  --kx-bg: #f4f6f8;
+  --kx-bg-alt: #e9edf1;
+  --kx-surface: #ffffff;
+  --kx-ink: #16222e;
+  --kx-muted: #5b6875;
+  --kx-line: #dde2e7;
+  --kx-primary: #0a6c93; // azul profundo del logo (AA sobre blanco)
+  --kx-accent: #3a841c; // verde del logo, CTA (blanco encima: AA 4.67)
+  --kx-accent-dark: #2f6f16;
+  --kx-accent-text: #367a1b; // texto verde sobre fondo claro (AA)
+  --kx-accent-bright: #7fc742; // texto verde sobre marino
+  --kx-orange: #f27c1a; // naranjo del logo: rayita de tarjetas
+  --kx-orange-text: #b85409; // naranjo para texto sobre fondo claro (AA 4.5)
+  --kx-green: #429321;
+  --kx-red: #b7092e;
+  --kx-navy: #0f1b26; // header, hero y footer: fijos en ambos modos
+  --kx-font: 'Barlow', 'Open Sans', system-ui, sans-serif;
+  --kx-font-title: 'Poppins', 'Barlow', sans-serif; // como "KI-NEXUS" del logo oficial
+  --kx-font-tag: 'Roboto', 'Barlow', sans-serif; // como el lema "MOVIMIENTO QUE NOS UNE"
+
+  background: var(--kx-bg);
+  color: var(--kx-ink);
+  font-family: var(--kx-font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--kx-accent); outline-offset: 2px; }
+  p { margin: 0 0 1rem; }
+}
+
+body.dark-theme .site {
+  --kx-bg: #0e141b;
+  --kx-bg-alt: #121b24;
+  --kx-surface: #16202a;
+  --kx-ink: #e8eef3;
+  --kx-muted: #9aa7b4;
+  --kx-line: #253240;
+  --kx-primary: #22a9d8;
+  --kx-green: #b4ec51;
+  --kx-accent-text: #7fc742;
+  --kx-orange-text: #f27c1a;
+  --kx-navy: #0a1219;
+}
+
+// ── Base ─────────────────────────────────────────────────────────
+.kx-container { width: 100%; max-width: 80rem; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 640px) { .kx-container { padding: 0 1.5rem; } }
+
+.kx-main { flex: 1; outline: none; }
+
+.kx-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--kx-accent); color: #fff !important; padding: .5rem 1rem;
+  &:focus { left: 1rem; top: 1rem; }
+}
+
+.kx-h2, .kx-h3, .kx-page-title {
+  font-family: var(--kx-font-title);
+  font-weight: 700;
+  line-height: 1.12;
+  margin: 0 0 .75rem;
+  color: inherit;
+}
+.kx-h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.kx-h3 { font-size: 1.3rem; }
+.kx-muted { color: var(--kx-muted); }
+.kx-lead { font-size: 1.2rem; color: var(--kx-muted); max-width: 46rem; }
+.kx-eyebrow {
+  font-family: var(--kx-font-tag); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .2em; font-size: .8rem; color: var(--kx-orange-text); margin-bottom: .75rem;
+}
+.site .kx-link {
+  color: var(--kx-primary); font-weight: 600;
+  &:hover { text-decoration: underline; }
+}
+
+// ── Botones ──────────────────────────────────────────────────────
+.kx-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  border-radius: 6px; border: 2px solid transparent;
+  padding: .55rem 1.4rem;
+  font-family: var(--kx-font-title); font-size: .95rem; font-weight: 600; letter-spacing: .01em;
+  white-space: nowrap; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s;
+  &:disabled { opacity: .6; cursor: not-allowed; }
+}
+.kx-btn--lg { padding: .8rem 1.75rem; font-size: 1.05rem; }
+.kx-btn--block { width: 100%; margin-top: .75rem; }
+.kx-btn--accent { background: var(--kx-accent); color: #fff !important; &:hover:not(:disabled) { background: var(--kx-accent-dark); } }
+.kx-btn--ghost { border-color: rgba(255, 255, 255, .6); color: #fff !important; &:hover { background: rgba(255, 255, 255, .1); } }
+.kx-btn--outline { border-color: var(--kx-line); color: var(--kx-ink) !important; &:hover { border-color: var(--kx-primary); } }
+.kx-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+.kx-icon-btn {
+  display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem;
+  border-radius: 6px; border: 1px solid rgba(255, 255, 255, .2); background: transparent;
+  color: #fff; cursor: pointer; font-size: 1rem;
+  &:hover { border-color: var(--kx-accent-bright); color: var(--kx-accent-bright); }
+}
+
+// ── Header ───────────────────────────────────────────────────────
+.kx-header {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--kx-navy); color: #fff;
+  // Difuminado: el color del header se desvanece hacia el contenido en vez de cortar en seco.
+  &::after {
+    content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 1.75rem;
+    background: linear-gradient(to bottom, var(--kx-navy), transparent);
+    pointer-events: none;
+  }
+}
+.kx-header__bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto; // logo | nav | acciones
+  align-items: center; gap: 1.5rem;
+  min-height: 5.25rem;
+  @media (min-width: 1024px) { min-height: 5.75rem; }
+}
+// Logo oficial lo más grande posible dentro de la barra: apoyado abajo, sin espacio bajo el lema.
+.kx-brand {
+  align-self: stretch; display: flex; align-items: flex-end;
+  padding-top: 1rem; // = margen izquierdo del contenedor, para que arriba e izquierda se vean iguales
+  @media (min-width: 640px) { padding-top: 1.5rem; }
+  img { height: 4.95rem; width: auto; max-width: none; }
+}
+@media (min-width: 1024px) { .kx-brand img { height: 5.45rem; } }
+
+// Nav centrado. Con gap fijo y nowrap caben 5 ítems (Blog a futuro) desde 1024 px.
+.kx-nav { display: none; justify-self: center; }
+.kx-nav ul { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.kx-nav a {
+  display: block; padding: .5rem 0; white-space: nowrap;
+  color: rgba(255, 255, 255, .82); font-family: var(--kx-font-title); font-weight: 500; font-size: .95rem;
+  border-bottom: 2px solid transparent;
+  &:hover { color: #fff; }
+  &.is-active { color: #fff; border-bottom-color: var(--kx-accent-bright); }
+}
+.kx-header__actions { display: flex; align-items: center; gap: .5rem; justify-self: end; }
+.kx-header__cta { display: none; }
+.kx-menu-btn { display: inline-grid; }
+
+@media (min-width: 640px) { .kx-header__cta { display: inline-flex; } }
+@media (min-width: 1024px) {
+  .kx-nav { display: block; }
+  .kx-menu-btn { display: none; }
+}
+@media (min-width: 1024px) and (max-width: 1199.98px) { .kx-nav ul { gap: 1.5rem; } }
+
+.kx-mobile-nav {
+  display: flex; flex-direction: column; gap: .25rem;
+  padding: .75rem 1rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, .08);
+  a:not(.kx-btn) { padding: .75rem .25rem; color: rgba(255, 255, 255, .85); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  a.is-active { color: var(--kx-accent-bright); }
+  .kx-btn { margin-top: .75rem; }
+  @media (min-width: 1024px) { display: none; }
+}
+
+// ── Hero: carrusel de videos con degradado marino ─────────────
+.kx-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--kx-navy); color: #fff; }
+.kx-hero__bg {
+  position: absolute; inset: 0; z-index: -1;
+  video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity .8s ease;
+    &.is-active { opacity: 1; }
+  }
+  &::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--kx-navy) 0%, rgba(15, 27, 38, .82) 45%, rgba(15, 27, 38, .35) 100%);
+  }
+  @media (max-width: 767.98px) { &::after { background: rgba(15, 27, 38, .8); } }
+}
+.kx-hero__content { padding-top: 5rem; padding-bottom: 4rem; }
+@media (min-width: 1024px) { .kx-hero__content { padding-top: 8rem; padding-bottom: 6rem; } }
+.kx-hero__title {
+  font-family: var(--kx-font-title); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(2.6rem, 7vw, 5.25rem); line-height: 1; margin: 0 0 1.25rem; color: #fff;
+  span { color: var(--kx-accent-bright); }
+}
+.kx-hero .kx-eyebrow { color: var(--kx-accent-bright); }
+.site .kx-hero__lead { max-width: 36rem; font-size: 1.2rem; color: rgba(255, 255, 255, .85); margin: 0 0 2rem; }
+.kx-hero__dots {
+  display: flex; gap: .5rem; margin-top: 3rem;
+  button {
+    width: 2rem; height: 4px; border: 0; padding: 0; border-radius: 2px; cursor: pointer;
+    background: rgba(255, 255, 255, .35);
+    &.is-active { background: var(--kx-accent-bright); }
+  }
+}
+
+// ── Secciones ────────────────────────────────────────────────────
+.kx-section { padding: 4.5rem 0; }
+.kx-section--alt { background: var(--kx-bg-alt); }
+.kx-section__head { max-width: 44rem; margin-bottom: 2.5rem; }
+.kx-section__head--row { max-width: none; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+
+.kx-page-head { padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--kx-line); }
+.kx-page-title { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; max-width: 52rem; }
+.kx-back { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1.25rem; }
+
+.kx-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 768px) { .kx-grid--2, .kx-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .kx-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+
+.kx-card {
+  background: var(--kx-surface); border: 1px solid var(--kx-line);
+  border-radius: 8px; padding: 1.75rem;
+}
+// Rayita superior con los 3 colores del logo.
+.kx-pillar { border-top: 3px solid var(--kx-orange); }
+.kx-pillar--blue { border-top-color: #22a9d8; }
+.kx-pillar--orange { border-top-color: var(--kx-orange); }
+.kx-pillar--green { border-top-color: #6db33f; }
+.kx-pillar__icon { font-size: 1.75rem; color: var(--kx-primary); margin-bottom: 1rem; }
+
+.kx-service-card {
+  display: flex; flex-direction: column; transition: border-color .15s;
+  p { flex: 1; }
+  &:hover { border-color: var(--kx-primary); }
+}
+
+.kx-service { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.kx-service__img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; background: var(--kx-bg-alt); }
+.kx-service__body { display: flex; flex-direction: column; flex: 1; padding: 1.75rem; }
+.kx-service__body .kx-checks { flex: 1; }
+.kx-service__actions { display: flex; align-items: center; gap: 1.25rem; margin-top: 1.5rem; }
+
+.kx-checks {
+  list-style: none; padding: 0; margin: 0 0 1.5rem;
+  li { position: relative; padding-left: 1.6rem; margin-bottom: .5rem; }
+  li::before {
+    content: '\f00c'; font-family: 'Font Awesome 5 Free'; font-weight: 900; font-size: .85rem;
+    position: absolute; left: 0; top: .15rem; color: var(--kx-green);
+  }
+}
+
+// Pasos "Cómo trabajamos"
+.kx-steps {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; gap: 1.5rem;
+  @media (min-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1024px) { grid-template-columns: repeat(4, 1fr); }
+  li { border-top: 2px solid var(--kx-line); padding-top: 1.25rem; }
+}
+.kx-steps__num { display: block; font-family: var(--kx-font-title); font-weight: 700; font-size: 2rem; color: var(--kx-accent-text); line-height: 1; margin-bottom: .5rem; }
+
+// Banda CTA
+.kx-cta { background: var(--kx-navy); color: #fff; padding: 4rem 0; }
+.kx-cta__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.kx-cta .kx-h2 { margin: 0; }
+
+// Detalle de servicio
+.kx-detail { display: grid; gap: 2.5rem; }
+@media (min-width: 1024px) { .kx-detail { grid-template-columns: 1fr 22rem; align-items: start; } }
+.kx-detail__main { font-size: 1.125rem; max-width: 46rem; .kx-h3 { margin-top: 2rem; } }
+.kx-detail__side { display: grid; gap: 1.5rem; @media (min-width: 1024px) { position: sticky; top: 6rem; } }
+.kx-detail__img { border-radius: 8px; border: 1px solid var(--kx-line); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+
+// Galería (Nosotros)
+.kx-gallery {
+  display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+  img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+}
+
+// ── Contacto y formularios ───────────────────────────────────────
+.kx-contact { display: grid; gap: 2.5rem; }
+@media (min-width: 1024px) { .kx-contact { grid-template-columns: 18rem 1fr; align-items: start; } }
+.kx-contact__list {
+  list-style: none; padding: 0; margin: 1.5rem 0;
+  li { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; }
+  a { display: inline-flex; align-items: center; gap: .6rem; &:hover { color: var(--kx-primary); } }
+  i { width: 1.1rem; color: var(--kx-primary); }
+}
+.kx-accent-bar { display: block; width: 3.5rem; height: 4px; background: var(--kx-accent); }
+
+.kx-tabs {
+  display: flex; gap: .25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--kx-line);
+  button {
+    background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px;
+    padding: .6rem 1rem; cursor: pointer; color: var(--kx-muted);
+    font-family: var(--kx-font-title); font-size: 1rem; font-weight: 700;
+    &.is-active { color: var(--kx-ink); border-bottom-color: var(--kx-accent); }
+  }
+}
+
+.kx-form__grid { display: grid; gap: 1.1rem 1.25rem; @media (min-width: 768px) { grid-template-columns: 1fr 1fr; } }
+.kx-field {
+  display: flex; flex-direction: column; gap: .4rem; margin: 0;
+  font-size: .9rem; font-weight: 500;
+  input, select, textarea {
+    width: 100%; border: 1px solid var(--kx-line); border-radius: 6px;
+    background: var(--kx-bg); color: var(--kx-ink);
+    padding: .65rem .8rem; font: inherit; font-size: 1rem; font-weight: 400;
+    &::placeholder { color: var(--kx-muted); opacity: .75; }
+    &:focus { outline: none; border-color: var(--kx-accent); }
+  }
+  .iti { width: 100%; }
+  .iti__country-list { color: #16222e; }
+}
+.kx-field--full { @media (min-width: 768px) { grid-column: 1 / -1; } }
+.kx-form__actions { margin-top: 1.5rem; }
+.kx-status { margin: .75rem 0 0; font-size: .95rem; font-weight: 600; }
+.kx-status--ok { color: var(--kx-green); }
+.kx-status--error { color: var(--kx-red); }
+body.dark-theme .site .kx-status--error { color: #ff7a8f; }
+
+.kx-map { height: 15rem; border: 1px solid var(--kx-line); border-radius: 8px; overflow: hidden; iframe { width: 100%; height: 100%; border: 0; } }
+
+.kx-calendar { border: 1px solid var(--kx-line); border-radius: 8px; padding: .75rem; background: var(--kx-bg); }
+.kx-calendar__head {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; font-weight: 600;
+  button { background: none; border: 0; font-size: 1.5rem; line-height: 1; padding: 0 .5rem; color: var(--kx-ink); cursor: pointer; &:disabled { opacity: .3; cursor: default; } }
+}
+.kx-calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .25rem; text-align: center; }
+.kx-calendar__weekdays { font-size: .75rem; color: var(--kx-muted); margin-bottom: .25rem; }
+.kx-calendar__day {
+  aspect-ratio: 1; border: 1px solid transparent; border-radius: 6px; background: var(--kx-surface);
+  color: var(--kx-ink); font: inherit; font-size: .9rem; cursor: pointer;
+  &:hover:not(:disabled) { border-color: var(--kx-accent); }
+  &:disabled { background: transparent; color: var(--kx-muted); opacity: .45; cursor: default; }
+  &.is-today { border-color: var(--kx-line); }
+  &.is-selected { background: var(--kx-accent); color: #fff; }
+}
+
+.kx-modal {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 1rem;
+  background: rgba(10, 18, 25, .6);
+}
+.kx-modal__card {
+  max-width: 26rem; width: 100%; text-align: center; padding: 2rem;
+  background: var(--kx-surface); border-radius: 10px; border: 1px solid var(--kx-line);
+}
+.kx-modal__icon {
+  display: inline-grid; place-items: center; width: 3.5rem; height: 3.5rem; margin-bottom: 1rem;
+  border-radius: 50%; background: var(--kx-green); color: #fff; font-size: 1.4rem;
+}
+body.dark-theme .site .kx-modal__icon { color: #0e141b; }
+
+// ── Botón flotante de WhatsApp (burbuja de chat) ────────────────
+.site .kx-chat {
+  position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 50;
+  display: grid; place-items: center; width: 3.5rem; height: 3.5rem;
+  border-radius: 50% 50% .35rem 50%; // esquina en punta = burbuja de chat
+  background: var(--kx-accent); color: #fff; font-size: 1.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  transition: transform .15s, background-color .15s;
+  &:hover { background: var(--kx-accent-dark); transform: translateY(-2px); }
+  @media (min-width: 768px) { right: 2rem; bottom: 2rem; width: 3.75rem; height: 3.75rem; }
+}
+
+// ── Footer ───────────────────────────────────────────────────────
+.kx-footer { background: var(--kx-navy); color: rgba(255, 255, 255, .85); font-size: .95rem; }
+.kx-footer__grid {
+  display: grid; gap: 2rem; padding-top: 3.5rem; padding-bottom: 2.5rem;
+  @media (min-width: 768px) { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { margin-bottom: .5rem; }
+  a:hover { color: var(--kx-accent-bright); }
+  img { height: 3rem; width: auto; margin-bottom: 1rem; }
+}
+.kx-footer__brand {
+  display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 20rem;
+}
+.kx-footer__lead { color: rgba(255, 255, 255, .7); }
+.kx-footer__title {
+  font-family: var(--kx-font-tag); font-size: .85rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .2em; color: #fff; margin: 0 0 1rem;
+}
+.kx-footer__contact {
+  display: flex; flex-direction: column; gap: .6rem; font-style: normal;
+  a, span { display: inline-flex; align-items: center; gap: .6rem; }
+}
+.kx-footer__legal {
+  margin: 0; padding: 1rem; text-align: center; font-size: .8rem; color: rgba(255, 255, 255, .5);
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site * { transition: none !important; }
+}

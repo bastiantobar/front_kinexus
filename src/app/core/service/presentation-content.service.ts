@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 
 export interface KinexusService {
   id: string;
+  slug: string; // URL: /servicios/:slug
+  name: string; // nombre corto para cards y nav
+  seoTitle: string; // <title> de /servicios/:slug, con la palabra clave al inicio
   title: string;
   image: string;
-  images?: string[]; // Optional for carousel
   brief: string;
   description: string;
   fullInfo: string;
@@ -21,30 +23,18 @@ export class PresentationContentService {
   private whatsAppNumber = '56963691898';
   private whatsAppMessage = 'Hola, me gustaría agendar una evaluación inicial con Kinexus.';
 
-  private heroVideos = [
-    'assets/kinexus/hero/video1_muted.mp4',
-    'assets/kinexus/hero/video2_muted.mp4',
-    'assets/kinexus/hero/video3_muted.mp4'
-  ];
+  private heroVideos = [1, 2, 3].map(n => `assets/kinexus/hero/video${n}_muted.mp4`);
 
-  private galleryImages = [
-    { src: 'assets/kinexus/gallery/gal-1.jpg', cls: '' },
-    { src: 'assets/kinexus/gallery/gal-2.jpg', cls: 'slower' },
-    { src: 'assets/kinexus/gallery/gal-3.jpg', cls: 'faster' },
-    { src: 'assets/kinexus/gallery/gal-4.jpg', cls: 'faster' },
-    { src: 'assets/kinexus/gallery/gal-5.jpg', cls: 'slower slower-down' },
-    { src: 'assets/kinexus/gallery/gal-6.jpg', cls: 'last' }
-  ];
+  private galleryImages = [1, 2, 3, 4, 5, 6].map(n => `assets/kinexus/nuestro-trabajo/nt${n}.jpg`);
 
   private services: KinexusService[] = [
     {
       id: 'vitality',
+      slug: 'vitality-pausas-activas',
+      name: 'Vitality',
+      seoTitle: 'Pausas activas para empresas: programa Vitality | Ki-Nexus',
       title: 'KI-NEXUS: VITALITY',
-      image: 'assets/kinexus/services/vitality-2.png',
-      images: [
-        'assets/kinexus/services/vitality-1.png',
-        'assets/kinexus/services/vitality-2.png'
-      ],
+      image: 'assets/kinexus/servicios/vitality.jpg',
       brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo de pausas activas. enfoque clínico / mediciones reales / bajo roce y alto impacto',
       description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa transformador.',
       fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados.',
@@ -57,8 +47,11 @@ export class PresentationContentService {
     },
     {
       id: 'cbe',
+      slug: 'check-up-biomecanico',
+      name: 'Check Up Biomecánico',
+      seoTitle: 'Ergonomía laboral: Check Up Biomecánico Express | Ki-Nexus',
       title: 'KI-NEXUS: CHECK UP BIOMECÁNICO EXPRESS (CBE)',
-      image: 'assets/kinexus/services/cbe.png',
+      image: 'assets/kinexus/servicios/check-up-biomecanico.jpg',
       brief: 'Evaluación biomecánica individual en el puesto real para detectar riesgos ergonómicos al instante.',
       description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un reconocimiento postural completo.',
       fullInfo: 'Ideal para obtener un mapa de calor sobre la salud de tu equipo y activa soluciones de bienestar personalizadas.',
@@ -70,8 +63,11 @@ export class PresentationContentService {
     },
     {
       id: 'focus',
+      slug: 'focus-time',
+      name: 'Focus Time',
+      seoTitle: 'Taller de ergonomía cognitiva y manejo del estrés: Focus Time | Ki-Nexus',
       title: 'KI-NEXUS: FOCUS TIME',
-      image: 'assets/kinexus/services/focus.png',
+      image: 'assets/kinexus/servicios/focus-time.jpg',
       brief: 'Optimiza el rendimiento de tu equipo con nuestra jornada de capacitación teórico práctica orientada al desarrollo de herramientas sobre ergonomía cognitiva y manejo del estrés.',
       description: 'Vive una sesión de alto impacto para equipos de tecnología, equipos creativos, grupos de alta demanda laboral observando pantallas o gerencias con alta carga de estrés.',
       fullInfo: 'Un taller teórico-práctico de una sola sesión de alto impacto (2 horas) que le entregará herramientas prácticas a tu equipo.',
@@ -85,7 +81,7 @@ export class PresentationContentService {
     // {
     //   id: 'game',
     //   title: 'KI-NEXUS: WELLNESS LEAGUE',
-    //   image: 'assets/kinexus/services/game.png',
+    //   image: '', // la imagen anterior (services/game.png) se eliminó; recuperable desde git
     //   brief: 'Este es nuestro plan de bienestar organizacional que optimiza el ecosistema laboral generando impacto en áreas o sucursales.',
     //   description: 'Nuestro plan KI-NEXUS WELLNESS LEAGUE consta de una serie de intervenciones con un enfoque lúdico dirigidas por kinesiólogos especialistas en neurorehabilitación.',
     //   fullInfo: 'Implementamos nuestra metodología exclusiva de intervención híbrida diseñada para equipos que exigen el máximo rendimiento con la mínima interrupción operativa.',
@@ -101,6 +97,10 @@ export class PresentationContentService {
   getHeroVideos() { return [...this.heroVideos]; }
   getGalleryImages() { return [...this.galleryImages]; }
   getServices() { return [...this.services]; }
+  getService(slug: string) { return this.services.find(s => s.slug === slug); }
+  getWhatsAppUrl() {
+    return `https://wa.me/${this.whatsAppNumber}?text=${encodeURIComponent(this.whatsAppMessage)}`;
+  }
   getWhatsAppConfig() {
     return { number: this.whatsAppNumber, message: this.whatsAppMessage };
   }

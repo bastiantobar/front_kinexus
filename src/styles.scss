@@ -37,6 +37,8 @@
 @import "./app/shared/styles/bootstrap.scss";
 //== Application
 @import "./app/shared/styles/app.scss";
+//== Sitio público (routes/site)
+@import "./app/routes/site/site.scss";
 
 // Fuente global
 body {

@@ -9,18 +9,18 @@ import { LockComponent } from "./pages/lock/lock.component";
 import { MaintenanceComponent } from "./pages/maintenance/maintenance.component";
 import { Error404Component } from "./pages/error404/error404.component";
 import { Error500Component } from "./pages/error500/error500.component";
-import { QrComponent } from "./pages/qr/qr.component";
 
 // ✅ importa el guard
 import { AuthGuard } from "../core/guards/auth.guard";
 
 export const routes: Routes = [
-  // Redirige la ruta vacía (raíz) a la página de presentación
+  // Sitio público: Inicio, Servicios, Nosotros, Contacto (y Blog a futuro)
   {
     path: "",
-    redirectTo: "presentation",
-    pathMatch: "full",
+    loadChildren: () => import("./site/site.module").then((m) => m.SiteModule),
   },
+  // URL antigua de la landing de una sola página
+  { path: "presentation", redirectTo: "", pathMatch: "full" },
 
   // Rutas públicas (sin layout)
   { path: "login", component: LoginComponent },
@@ -30,7 +30,8 @@ export const routes: Routes = [
   { path: "maintenance", component: MaintenanceComponent },
   { path: "404", component: Error404Component },
   { path: "500", component: Error500Component },
-  { path: "qr", component: QrComponent },
+  // QR desactivado por ahora: redirige al inicio. Para reactivarlo: { path: "qr", component: QrComponent }
+  { path: "qr", redirectTo: "", pathMatch: "full" },
 
   // Rutas con layout
   {
@@ -108,13 +109,6 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
     ],
-  },
-
-  // Ruta de presentación fuera del layout
-  {
-    path: "presentation",
-    loadChildren: () =>
-      import("./presentation/presentation.module").then((m) => m.PresentationModule),
   },
 
   // Not found (asegúrate de que esto sea lo último)

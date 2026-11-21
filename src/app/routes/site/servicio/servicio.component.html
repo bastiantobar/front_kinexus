@@ -1,0 +1,56 @@
+<ng-container *ngIf="s">
+  <section class="kx-page-head">
+    <div class="kx-container">
+      <a class="kx-link kx-back" routerLink="/servicios"><i class="fa fa-arrow-left" aria-hidden="true"></i> Servicios</a>
+      <h1 class="kx-page-title">{{ s.name }}</h1>
+      <p class="kx-lead">{{ s.brief }}</p>
+    </div>
+  </section>
+
+  <section class="kx-section">
+    <div class="kx-container kx-detail">
+      <div class="kx-detail__main">
+        <p>{{ s.description }}</p>
+        <p *ngIf="s.fullInfo">{{ s.fullInfo }}</p>
+
+        <ng-container *ngIf="s.features">
+          <h2 class="kx-h3">¿Qué incluye el programa?</h2>
+          <ul class="kx-checks"><li *ngFor="let i of s.features">{{ i }}</li></ul>
+        </ng-container>
+        <ng-container *ngIf="s.whyChoose">
+          <h2 class="kx-h3">¿Por qué elegirlo?</h2>
+          <ul class="kx-checks"><li *ngFor="let i of s.whyChoose">{{ i }}</li></ul>
+        </ng-container>
+        <ng-container *ngIf="s.content">
+          <h2 class="kx-h3">Contenido</h2>
+          <ul class="kx-checks"><li *ngFor="let i of s.content">{{ i }}</li></ul>
+        </ng-container>
+      </div>
+
+      <aside class="kx-detail__side">
+        <img class="kx-detail__img" [src]="s.image" [alt]="s.name" loading="lazy">
+        <div class="kx-card">
+          <h2 class="kx-h3">Cotiza este servicio</h2>
+          <p class="kx-muted">Te respondemos con una propuesta según el tamaño y la ubicación de tu equipo.</p>
+          <a class="kx-btn kx-btn--accent kx-btn--block" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">Cotizar</a>
+          <a class="kx-btn kx-btn--outline kx-btn--block" routerLink="/contacto" [queryParams]="{ form: 'diagnostico' }">
+            Reservar diagnóstico
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="kx-section kx-section--alt">
+    <div class="kx-container">
+      <h2 class="kx-h2">Otros servicios</h2>
+      <div class="kx-grid kx-grid--2">
+        <a class="kx-card kx-service-card" *ngFor="let o of otros" [routerLink]="['/servicios', o.slug]">
+          <h3 class="kx-h3">{{ o.name }}</h3>
+          <p class="kx-muted">{{ o.brief }}</p>
+          <span class="kx-link">Conocer servicio <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</ng-container>

@@ -1,0 +1,153 @@
+<section class="kx-page-head">
+  <div class="kx-container">
+    <p class="kx-eyebrow">Contacto</p>
+    <h1 class="kx-page-title">Cotiza o reserva un diagnóstico</h1>
+    <p class="kx-lead">Cuéntanos sobre tu equipo y te enviamos una propuesta de kinesiología laboral a medida.</p>
+  </div>
+</section>
+
+<section class="kx-section">
+  <div class="kx-container kx-contact">
+    <aside class="kx-contact__info">
+      <h2 class="kx-h3">Hablemos</h2>
+      <p class="kx-muted">Potenciamos el bienestar laboral y el rendimiento a través de la kinesiología basada en evidencia.</p>
+      <ul class="kx-contact__list">
+        <li><a [href]="whatsAppUrl" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> +{{ whatsAppNumber }}</a></li>
+        <li><a href="mailto:felipe.reyes@ki-nexus.cl"><i class="fa fa-envelope" aria-hidden="true"></i> felipe.reyes@ki-nexus.cl</a></li>
+        <li><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Atención en todo Chile</li>
+      </ul>
+      <span class="kx-accent-bar" aria-hidden="true"></span>
+    </aside>
+
+    <div class="kx-card kx-contact__forms">
+      <div class="kx-tabs" role="tablist">
+        <button type="button" role="tab" [attr.aria-selected]="selectedForm === 'email'"
+          [class.is-active]="selectedForm === 'email'" (click)="selectedForm = 'email'">Cotización</button>
+        <button type="button" role="tab" [attr.aria-selected]="selectedForm === 'presencial'"
+          [class.is-active]="selectedForm === 'presencial'" (click)="selectedForm = 'presencial'">Reservar diagnóstico</button>
+      </div>
+
+      <!-- Cotización por email. Se oculta con [hidden] (no *ngIf) para conservar intlTelInput. -->
+      <form [hidden]="selectedForm !== 'email'" class="kx-form" (submit)="submitContact($event)" ngNativeValidate>
+        <div class="kx-form__grid">
+          <label class="kx-field">Nombre *
+            <input type="text" name="name" placeholder="Nombre completo" autocomplete="name" required>
+          </label>
+          <label class="kx-field">Correo electrónico *
+            <input type="email" name="email" placeholder="ejemplo@empresa.com" autocomplete="email" required>
+          </label>
+          <label class="kx-field">Teléfono *
+            <input type="tel" #phoneInput name="phone" autocomplete="tel" required>
+          </label>
+          <label class="kx-field">Servicio de interés *
+            <select name="service" [(ngModel)]="servicioElegido" required>
+              <option value="" disabled>Seleccione un servicio</option>
+              <option *ngFor="let s of services" [value]="s.title">{{ s.name }}</option>
+            </select>
+          </label>
+          <label class="kx-field">Región *
+            <select name="region" required>
+              <option value="" disabled selected>Seleccione una región</option>
+              <option *ngFor="let r of regiones" [value]="r[0]">{{ r[1] }}</option>
+            </select>
+          </label>
+          <label class="kx-field">Empresa *
+            <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
+          </label>
+          <label class="kx-field">Cargo *
+            <input type="text" name="role" placeholder="Tu cargo" autocomplete="organization-title" required>
+          </label>
+          <label class="kx-field">Número de sucursales *
+            <input type="number" name="branches" placeholder="Ej: 3" min="1" required>
+          </label>
+          <label class="kx-field">Trabajadores *
+            <input type="number" name="workers" placeholder="Ej: 50" min="1" required>
+          </label>
+          <label class="kx-field kx-field--full">¿Cómo te podemos ayudar? (opcional)
+            <textarea name="message" rows="4" placeholder="Cuéntanos brevemente qué necesita tu equipo..."></textarea>
+          </label>
+        </div>
+        <div class="kx-form__actions">
+          <button class="kx-btn kx-btn--accent" type="submit" [disabled]="contactStatus.state === 'pending'">
+            {{ contactStatus.state === 'pending' ? 'Enviando...' : 'Enviar consulta' }}
+          </button>
+          <p *ngIf="contactStatus.state === 'success'" class="kx-status kx-status--ok" role="status">✓ {{ contactStatus.message }}</p>
+          <p *ngIf="contactStatus.state === 'error'" class="kx-status kx-status--error" role="alert">{{ contactStatus.message }}</p>
+        </div>
+      </form>
+
+      <!-- Reserva de diagnóstico -->
+      <form [hidden]="selectedForm !== 'presencial'" class="kx-form" (submit)="submitReservation($event)" ngNativeValidate>
+        <div class="kx-form__grid">
+          <label class="kx-field">Empresa *
+            <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
+          </label>
+          <label class="kx-field">Correo electrónico *
+            <input type="email" name="email" placeholder="ejemplo@empresa.com" autocomplete="email" required>
+          </label>
+          <label class="kx-field">Región *
+            <select name="region" required>
+              <option value="" disabled selected>Seleccione una región</option>
+              <option *ngFor="let r of regiones" [value]="r[0]">{{ r[1] }}</option>
+            </select>
+          </label>
+          <label class="kx-field">Ciudad *
+            <input type="text" name="city" placeholder="Ciudad" autocomplete="address-level2" required>
+          </label>
+          <label class="kx-field kx-field--full">Dirección *
+            <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Dirección completa"
+              autocomplete="street-address" required>
+          </label>
+          <div class="kx-field--full kx-map" *ngIf="reservationAddress">
+            <iframe title="Vista previa de la dirección" loading="lazy" [src]="getMapUrl()"></iframe>
+          </div>
+          <label class="kx-field kx-field--full">Descripción *
+            <textarea name="description" rows="4" required
+              placeholder="Describe brevemente el propósito del diagnóstico o alguna consulta adicional..."></textarea>
+          </label>
+
+          <div class="kx-field">
+            <span>Fecha *</span>
+            <div class="kx-calendar">
+              <div class="kx-calendar__head">
+                <button type="button" (click)="prevCalendarMonth()" [disabled]="isPrevMonthDisabled()" aria-label="Mes anterior">‹</button>
+                <span>{{ calendarMonthName }}</span>
+                <button type="button" (click)="nextCalendarMonth()" [disabled]="isNextMonthDisabled()" aria-label="Mes siguiente">›</button>
+              </div>
+              <div class="kx-calendar__grid kx-calendar__weekdays">
+                <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
+              </div>
+              <div class="kx-calendar__grid">
+                <button type="button" *ngFor="let day of calendarDays" class="kx-calendar__day"
+                  [class.is-today]="day.isToday" [class.is-selected]="day.isSelected"
+                  [disabled]="!day.isSelectable" [style.visibility]="day.date ? 'visible' : 'hidden'"
+                  (click)="selectCalendarDate(day)">{{ day.dayNum }}</button>
+              </div>
+            </div>
+          </div>
+          <label class="kx-field">Hora *
+            <select name="time" [(ngModel)]="selectedTime" required>
+              <option value="" disabled>{{ selectedDateSlots.length ? 'Seleccione una hora' : 'Primero elige un día' }}</option>
+              <option *ngFor="let slot of selectedDateSlots" [value]="slot">{{ slot }}</option>
+            </select>
+          </label>
+        </div>
+        <div class="kx-form__actions">
+          <button class="kx-btn kx-btn--accent" type="submit" [disabled]="reservationStatus.state === 'pending'">
+            {{ reservationStatus.state === 'pending' ? 'Enviando...' : 'Enviar reserva' }}
+          </button>
+          <p *ngIf="reservationStatus.state === 'error'" class="kx-status kx-status--error" role="alert">{{ reservationStatus.message }}</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="kx-modal" *ngIf="showReservationModal" (click)="closeReservationModal()">
+  <div class="kx-modal__card" role="dialog" aria-modal="true" aria-labelledby="kx-modal-title" (click)="$event.stopPropagation()">
+    <span class="kx-modal__icon"><i class="fa fa-check" aria-hidden="true"></i></span>
+    <h2 id="kx-modal-title" class="kx-h3">¡Reserva confirmada!</h2>
+    <p class="kx-muted">{{ reservationStatus.message }}</p>
+    <button type="button" class="kx-btn kx-btn--accent" (click)="closeReservationModal()">Entendido</button>
+  </div>
+</div>

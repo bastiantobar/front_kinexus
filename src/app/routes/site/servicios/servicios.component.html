@@ -1,0 +1,26 @@
+<section class="kx-page-head">
+  <div class="kx-container">
+    <p class="kx-eyebrow">Servicios</p>
+    <h1 class="kx-page-title">Pausas activas, ergonomía laboral y talleres para empresas</h1>
+    <p class="kx-lead">Programas de kinesiología laboral diseñados para prevenir lesiones y medir su impacto.</p>
+  </div>
+</section>
+
+<section class="kx-section">
+  <div class="kx-container kx-grid kx-grid--3">
+    <article class="kx-card kx-service" *ngFor="let s of services">
+      <img class="kx-service__img" [src]="s.image" [alt]="s.name + ' — ' + s.brief" loading="lazy">
+      <div class="kx-service__body">
+        <h2 class="kx-h3">{{ s.name }}</h2>
+        <p class="kx-muted">{{ s.brief }}</p>
+        <ul class="kx-checks" *ngIf="s.features || s.whyChoose || s.content as items">
+          <li *ngFor="let item of items">{{ item }}</li>
+        </ul>
+        <div class="kx-service__actions">
+          <a class="kx-btn kx-btn--accent" [routerLink]="['/servicios', s.slug]">Ver detalle</a>
+          <a class="kx-link" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">Cotizar</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
