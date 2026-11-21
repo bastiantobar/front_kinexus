@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { ColorsService } from "../../../shared/colors/colors.service";
+import { AuthService } from "../../../core/service/auth.service";
 import { EmpresaService } from "../../../../app/core/service/empresa.service"; // ¡Ajusta esta ruta según tu estructura!
 //import { Empresa } from "../empresa.model"; // ¡Ajusta esta ruta según tu estructura!
 
@@ -194,7 +195,8 @@ export class Dashboardv2Component implements OnInit {
     public http: HttpClient,
     private router: Router,
     // Inyectamos el servicio
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private authService: AuthService
   ) {
     http
       .get("assets/server/chart/barstackedv2.json")
@@ -383,7 +385,13 @@ export class Dashboardv2Component implements OnInit {
       },
       error: (err) => {
         console.error('Error al guardar disponibilidad:', err);
-        this.saveStatus = { state: 'error', message: 'No se pudo conectar con el servidor para guardar.' };
+        if (err.status === 401) {
+          this.saveStatus = { state: 'error', message: 'Tu sesión expiró. Inicia sesión nuevamente para guardar.' };
+          setTimeout(() => this.authService.logout(), 2500);
+          return;
+        }
+        const detalle = err.error?.message || (err.status ? `Error ${err.status}` : 'sin conexión');
+        this.saveStatus = { state: 'error', message: `No se pudo guardar (${detalle}).` };
       }
     });
   }

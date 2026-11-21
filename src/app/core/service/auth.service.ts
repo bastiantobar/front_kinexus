@@ -35,7 +35,15 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  // El token (JWT del login) expira a las 8 h: además de existir, no debe estar vencido.
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      if (payload.exp && payload.exp * 1000 > Date.now()) return true;
+    } catch { }
+    localStorage.removeItem(this.tokenKey); // vencido o inválido
+    return false;
   }
 }
