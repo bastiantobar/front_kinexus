@@ -15,11 +15,8 @@
         <div class="kx-service__body">
           <h3 class="kx-h3">{{ s.name }}</h3>
           <p class="kx-muted">{{ s.brief }}</p>
-          <ul class="kx-checks" *ngIf="s.features || s.whyChoose || s.content as items">
-            <li *ngFor="let item of items">{{ item }}</li>
-          </ul>
           <div class="kx-service__actions">
-            <a class="kx-btn kx-btn--accent" [routerLink]="['/servicios', s.slug]">Ver detalle</a>
+            <a class="kx-btn kx-btn--accent" [routerLink]="['/servicios', s.slug]">Conoce más</a>
             <a class="kx-link" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">
               {{ s.audiencia === 'personas' ? 'Solicitar atención' : 'Cotizar' }}
             </a>
