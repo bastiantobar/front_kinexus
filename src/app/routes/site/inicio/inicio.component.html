@@ -5,11 +5,8 @@
   </div>
   <div class="kx-container kx-hero__content">
     <p class="kx-eyebrow">Kinesiología laboral · Chile</p>
-    <h1 class="kx-hero__title">Movimiento<br><span>que nos une</span></h1>
-    <p class="kx-hero__lead">
-      Kinesiología laboral, pausas activas para empresas y ergonomía laboral.
-      Programas preventivos con medición de resultados.
-    </p>
+    <h1 class="kx-hero__title">Acercando el movimiento<br><span>a personas y empresas</span></h1>
+    <p class="kx-hero__lead">Ergonomía | Pausas activas | Kinesiología a domicilio</p>
     <div class="kx-actions">
       <a class="kx-btn kx-btn--accent kx-btn--lg" routerLink="/contacto" [queryParams]="{ form: 'diagnostico' }">
         Solicitar diagnóstico
@@ -44,14 +41,14 @@
 <section class="kx-section">
   <div class="kx-container">
     <div class="kx-section__head kx-section__head--row">
-      <h2 class="kx-h2">Servicios</h2>
+      <h2 class="kx-h2">Nuestros servicios</h2>
       <a class="kx-link" routerLink="/servicios">Ver todos <span aria-hidden="true">→</span></a>
     </div>
     <div class="kx-grid kx-grid--3">
       <a class="kx-card kx-service-card" *ngFor="let s of services" [routerLink]="['/servicios', s.slug]">
         <h3 class="kx-h3">{{ s.name }}</h3>
         <p class="kx-muted">{{ s.brief }}</p>
-        <span class="kx-link">Conocer servicio <span aria-hidden="true">→</span></span>
+        <span class="kx-link">Conoce más <span aria-hidden="true">→</span></span>
       </a>
     </div>
   </div>
