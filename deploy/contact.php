@@ -20,19 +20,37 @@ if (!empty($_POST['hp_field'])) {
 }
 
 // Get and sanitize inputs
-$name    = isset($_POST['name'])    ? strip_tags(trim($_POST['name']))                         : '';
-$email   = isset($_POST['email'])   ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : false;
-$phone   = isset($_POST['phone'])   ? strip_tags(trim($_POST['phone']))                        : '';
-$service = isset($_POST['service']) ? strip_tags(trim($_POST['service']))                      : '';
-$message = isset($_POST['message']) ? strip_tags(trim($_POST['message']))                      : '';
+function campo(string $key): string {
+    return isset($_POST[$key]) ? strip_tags(trim($_POST[$key])) : '';
+}
+$name    = campo('name');
+$company = campo('company');
+$role    = campo('role');
+$email   = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : false;
+$phone   = campo('phone');
+$workers = campo('workers');
+$service = campo('service'); // opcional: viene del botón "Cotizar" de un servicio
+$message = campo('message');
 
-if (!$name || !$email) {
+if (!$name || !$company || !$email || !$phone) {
     http_response_code(400);
     echo json_encode([ 'success' => false, 'message' => 'Faltan datos requeridos' ]);
     exit;
 }
 
-$felipeEmail = 'felipe.reyes@ki-nexus.cl';
+// Correo que recibe los avisos y desde el que salen las confirmaciones.
+// Sigue siendo el de Felipe mientras no exista la casilla contacto@ en el hosting.
+// Para cambiarlo: crear contacto@ki-nexus.cl en cPanel y reemplazarlo aquí.
+$notifyEmail = 'felipe.reyes@ki-nexus.cl';
+
+// Versiones seguras para insertar en el HTML de los correos
+$h = fn(string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+$nameH    = $h($name);
+$companyH = $h($company);
+$roleH    = $h($role);
+$emailH   = $h($email);
+$phoneH   = $h($phone);
+$workersH = $workers !== '' ? $h($workers) : '—';
 
 // ── Inline image (footer for client confirmation) ──────────────────────────
 $imagePath = __DIR__ . '/design.png';
@@ -42,7 +60,7 @@ $imageCid  = 'kinexus-footer-' . md5($imagePath) . '@ki-nexus.cl';
 // ══════════════════════════════════════════════════════════════════════════════
 // FUNCIÓN AUXILIAR: construye y envía un email HTML + texto con imagen inline
 // ══════════════════════════════════════════════════════════════════════════════
-function sendHtmlMail(string $to, string $fromName, string $fromEmail,
+function sendHtmlMail(string $to, string $fromEmail, string $replyTo,
                       string $subject, string $htmlBody, string $textBody,
                       string $imageData = '', string $imageCid = ''): bool
 {
@@ -51,7 +69,7 @@ function sendHtmlMail(string $to, string $fromName, string $fromEmail,
 
     $headers   = [];
     $headers[] = 'From: Ki-Nexus <' . $fromEmail . '>';
-    $headers[] = 'Reply-To: ' . $fromName . ' <' . $fromEmail . '>';
+    $headers[] = 'Reply-To: ' . $replyTo;
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-Type: multipart/mixed; boundary="' . $mixedBoundary . '"';
 
@@ -84,19 +102,20 @@ function sendHtmlMail(string $to, string $fromName, string $fromEmail,
 
     $body .= "--{$mixedBoundary}--";
 
+    $subject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
     return mail($to, $subject, $body, implode("\r\n", $headers));
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// EMAIL 1 — Notificación interna a Felipe (sin footer)
+// EMAIL 1 — Notificación interna (sin footer)
 // ══════════════════════════════════════════════════════════════════════════════
-$serviceRowFelipe = $service
-    ? '<tr><td style="padding:6px 0;color:#555;font-size:15px;"><strong>Servicio de interés:</strong> ' . htmlspecialchars($service) . '</td></tr>'
+$serviceRowInternal = $service
+    ? '<tr><td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;"><strong>Servicio de interés:</strong> ' . $h($service) . '</td></tr>'
     : '';
 
-$messageHtml = nl2br(htmlspecialchars($message));
+$messageHtml = $message !== '' ? nl2br($h($message)) : '<em style="color:#999;">Sin mensaje</em>';
 
-$felipeHtml = <<<HTML
+$internalHtml = <<<HTML
 <!DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -111,44 +130,60 @@ $felipeHtml = <<<HTML
           <tr>
             <td style="background:#0a0a0a;padding:20px 30px;">
               <span style="color:#7fc742;font-size:22px;font-weight:700;letter-spacing:1px;">KI-NEXUS</span>
-              <span style="color:#ffffff;font-size:13px;margin-left:10px;opacity:.7;">Nueva consulta desde el sitio web</span>
+              <span style="color:#ffffff;font-size:13px;margin-left:10px;opacity:.7;">Nueva solicitud de cotización</span>
             </td>
           </tr>
 
           <!-- Body -->
           <tr>
             <td style="padding:30px;">
-              <h2 style="margin:0 0 20px;color:#0a0a0a;font-size:18px;">📬 Datos del cliente</h2>
+              <h2 style="margin:0 0 20px;color:#0a0a0a;font-size:18px;">📬 Datos de la empresa</h2>
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
-                    <strong>Nombre:</strong> {$name}
+                    <strong>Nombre:</strong> {$nameH}
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
-                    <strong>Email:</strong> <a href="mailto:{$email}" style="color:#7fc742;">{$email}</a>
+                    <strong>Empresa:</strong> {$companyH}
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
-                    <strong>Teléfono:</strong> {$phone}
+                    <strong>Cargo:</strong> {$roleH}
                   </td>
                 </tr>
-                {$serviceRowFelipe}
+                <tr>
+                  <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
+                    <strong>Correo:</strong> <a href="mailto:{$emailH}" style="color:#7fc742;">{$emailH}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
+                    <strong>Teléfono:</strong> {$phoneH}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:7px 0;color:#555;font-size:15px;border-bottom:1px solid #f0f0f0;">
+                    <strong>Trabajadores (aprox.):</strong> {$workersH}
+                  </td>
+                </tr>
+                {$serviceRowInternal}
               </table>
 
               <hr style="border:none;border-top:1px solid #ececec;margin:24px 0;">
 
-              <p style="margin:0 0 8px;color:#0a0a0a;font-size:15px;font-weight:700;">Mensaje:</p>
+              <p style="margin:0 0 8px;color:#0a0a0a;font-size:15px;font-weight:700;">Cómo podemos ayudar:</p>
               <p style="margin:0;color:#444;font-size:15px;line-height:1.8;background:#f9f9f9;padding:14px 16px;border-radius:6px;">{$messageHtml}</p>
+              <p style="margin:20px 0 0;color:#888;font-size:13px;">Responde este correo para escribirle directamente al cliente.</p>
             </td>
           </tr>
 
           <!-- Footer mínimo -->
           <tr>
             <td style="background:#f4f4f4;padding:14px 30px;text-align:center;">
-              <p style="margin:0;color:#999;font-size:12px;">Este mensaje fue generado automáticamente desde el formulario de contacto de ki-nexus.cl</p>
+              <p style="margin:0;color:#999;font-size:12px;">Este mensaje fue generado automáticamente desde el formulario de cotización de ki-nexus.cl</p>
             </td>
           </tr>
 
@@ -160,18 +195,21 @@ $felipeHtml = <<<HTML
 </html>
 HTML;
 
-$felipeText  = "Nueva consulta desde el formulario de contacto:\n\n";
-$felipeText .= "Nombre:   $name\n";
-$felipeText .= "Email:    $email\n";
-$felipeText .= "Teléfono: $phone\n";
-if ($service) $felipeText .= "Servicio: $service\n";
-$felipeText .= "\nMensaje:\n$message\n";
+$internalText  = "Nueva solicitud de cotización:\n\n";
+$internalText .= "Nombre:       $name\n";
+$internalText .= "Empresa:      $company\n";
+$internalText .= "Cargo:        $role\n";
+$internalText .= "Correo:       $email\n";
+$internalText .= "Teléfono:     $phone\n";
+$internalText .= "Trabajadores: $workers\n";
+if ($service) $internalText .= "Servicio:     $service\n";
+$internalText .= "\nCómo podemos ayudar:\n$message\n";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // EMAIL 2 — Confirmación al cliente (con footer design.png)
 // ══════════════════════════════════════════════════════════════════════════════
 $serviceRowClient = $service
-    ? '<p style="margin:4px 0;color:#555;font-size:15px;">Servicio de interés: <strong>' . htmlspecialchars($service) . '</strong></p>'
+    ? '<p style="margin:4px 0;color:#555;font-size:15px;">Servicio de interés: <strong>' . $h($service) . '</strong></p>'
     : '';
 
 $clientHtml = <<<HTML
@@ -197,17 +235,18 @@ $clientHtml = <<<HTML
           <tr>
             <td style="padding:36px 30px 28px;">
               <h1 style="margin:0 0 12px;color:#0a0a0a;font-size:22px;font-weight:700;">
-                ¡Gracias por contactarnos, {$name}!
+                ¡Gracias por contactarnos, {$nameH}!
               </h1>
               <p style="margin:0 0 20px;color:#555;font-size:15px;line-height:1.7;">
-                Hemos recibido tu consulta correctamente. Nos pondremos en contacto contigo a la brevedad para entregarte más información.
+                Hemos recibido tu solicitud de cotización. Nos pondremos en contacto contigo a la brevedad con una propuesta para tu empresa.
               </p>
 
               <!-- Resumen -->
               <div style="background:#f9f9f9;border-left:4px solid #7fc742;border-radius:6px;padding:16px 20px;margin-bottom:24px;">
-                <p style="margin:0 0 6px;color:#0a0a0a;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Resumen de tu consulta</p>
-                <p style="margin:4px 0;color:#555;font-size:15px;">Nombre: <strong>{$name}</strong></p>
-                <p style="margin:4px 0;color:#555;font-size:15px;">Email: <strong>{$email}</strong></p>
+                <p style="margin:0 0 6px;color:#0a0a0a;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Resumen de tu solicitud</p>
+                <p style="margin:4px 0;color:#555;font-size:15px;">Nombre: <strong>{$nameH}</strong></p>
+                <p style="margin:4px 0;color:#555;font-size:15px;">Empresa: <strong>{$companyH}</strong></p>
+                <p style="margin:4px 0;color:#555;font-size:15px;">Correo: <strong>{$emailH}</strong></p>
                 {$serviceRowClient}
               </div>
 
@@ -240,20 +279,20 @@ $clientHtml = <<<HTML
 HTML;
 
 $clientText  = "¡Gracias por contactarnos, $name!\n\n";
-$clientText .= "Hemos recibido tu consulta y nos pondremos en contacto contigo a la brevedad.\n\n";
+$clientText .= "Hemos recibido tu solicitud de cotización para $company y nos pondremos en contacto contigo a la brevedad.\n\n";
 if ($service) $clientText .= "Servicio de interés: $service\n\n";
 $clientText .= "--\n";
 $clientText .= "Felipe Reyes Montecinos | Fundador\n";
 $clientText .= "Ki-Nexus · Movimiento que nos une\n";
-$clientText .= "+569 63691898 | felipe.reyes@ki-nexus.cl";
+$clientText .= "+569 63691898 | contacto@ki-nexus.cl";
 
 // ── Modo desarrollo: solo log ──────────────────────────────────────────────
 $isLocal = in_array(@$_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1']);
 if ($isLocal) {
     $logFile = __DIR__ . '/contact.log';
     $entry = '[' . date('c') . '] ' . json_encode([
-        'name' => $name, 'email' => $email, 'phone' => $phone,
-        'service' => $service, 'message' => $message
+        'name' => $name, 'company' => $company, 'role' => $role, 'email' => $email,
+        'phone' => $phone, 'workers' => $workers, 'service' => $service, 'message' => $message
     ]) . "\n";
     @file_put_contents($logFile, $entry, FILE_APPEND);
     echo json_encode([ 'success' => true, 'message' => 'Modo desarrollo: la consulta fue registrada en contact.log' ]);
@@ -261,24 +300,23 @@ if ($isLocal) {
 }
 
 // ── Enviar ambos correos ───────────────────────────────────────────────────
-$sentFelipe = sendHtmlMail(
-    $felipeEmail,
-    $name, $felipeEmail,
-    'Consulta desde web - Ki-Nexus',
-    $felipeHtml, $felipeText
-    // Sin imagen
+// Aviso interno: al responder, la respuesta va directo al cliente.
+$sentInternal = sendHtmlMail(
+    $notifyEmail, $notifyEmail, $email,
+    'Cotización empresa: ' . $company . ' | Ki-Nexus',
+    $internalHtml, $internalText
 );
 
+// Confirmación al cliente: al responder, llega al correo de avisos.
 $sentClient = sendHtmlMail(
-    $email,
-    'Ki-Nexus', $felipeEmail,
-    '¡Gracias por contactarnos! - Ki-Nexus',
+    $email, $notifyEmail, $notifyEmail,
+    '¡Recibimos tu solicitud de cotización! - Ki-Nexus',
     $clientHtml, $clientText,
-    $imageData, $imageCid  // Con footer
+    $imageData, $imageCid
 );
 
-if ($sentFelipe) {
-    echo json_encode([ 'success' => true, 'message' => 'Tu consulta fue enviada correctamente.' ]);
+if ($sentInternal) {
+    echo json_encode([ 'success' => true, 'message' => 'Tu solicitud de cotización fue enviada correctamente. Te enviamos una copia a tu correo.' ]);
 } else {
     http_response_code(500);
     echo json_encode([ 'success' => false, 'message' => 'Ocurrió un error al enviar el correo.' ]);

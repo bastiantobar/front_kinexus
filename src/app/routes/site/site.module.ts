@@ -40,8 +40,8 @@ const routes: Routes = [
       },
       {
         path: 'contacto', component: ContactoComponent, data: {
-          title: 'Contacto: cotiza o reserva un diagnóstico' + SUFIJO,
-          description: 'Cotiza pausas activas para tu empresa o reserva un diagnóstico de kinesiología laboral con Ki-Nexus.'
+          title: 'Contacto: cotiza para tu empresa o agenda kinesiología a domicilio' + SUFIJO,
+          description: 'Cotiza pausas activas y ergonomía laboral para tu empresa, o reserva una atención de kinesiología a domicilio con Ki-Nexus.'
         }
       },
     ]

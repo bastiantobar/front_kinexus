@@ -1,8 +1,8 @@
 <section class="kx-page-head">
   <div class="kx-container">
     <p class="kx-eyebrow">Contacto</p>
-    <h1 class="kx-page-title">Cotiza o reserva un diagnóstico</h1>
-    <p class="kx-lead">Cuéntanos sobre tu equipo o tu caso y te enviamos una propuesta a medida.</p>
+    <h1 class="kx-page-title">Cotiza para tu empresa o agenda a domicilio</h1>
+    <p class="kx-lead">Empresas: cuéntanos sobre tu equipo y te enviamos una propuesta a medida. Personas: reserva tu atención de kinesiología en tu hogar.</p>
   </div>
 </section>
 
@@ -13,7 +13,7 @@
       <p class="kx-muted">Potenciamos el bienestar laboral y el rendimiento a través de la kinesiología basada en evidencia.</p>
       <ul class="kx-contact__list">
         <li><a [href]="whatsAppUrl" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> +{{ whatsAppNumber }}</a></li>
-        <li><a href="mailto:felipe.reyes@ki-nexus.cl"><i class="fa fa-envelope" aria-hidden="true"></i> felipe.reyes@ki-nexus.cl</a></li>
+        <li><a class="kx-email" href="mailto:contacto@ki-nexus.cl"><i class="fa fa-envelope" aria-hidden="true"></i> contacto@ki-nexus.cl</a></li>
         <li><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Atención en todo Chile</li>
       </ul>
       <span class="kx-accent-bar" aria-hidden="true"></span>
@@ -22,57 +22,37 @@
     <div class="kx-card kx-contact__forms">
       <div class="kx-tabs" role="tablist">
         <button type="button" role="tab" [attr.aria-selected]="selectedForm === 'email'"
-          [class.is-active]="selectedForm === 'email'" (click)="selectedForm = 'email'">Cotización</button>
+          [class.is-active]="selectedForm === 'email'" (click)="selectedForm = 'email'">Cotización empresas</button>
         <button type="button" role="tab" [attr.aria-selected]="selectedForm === 'presencial'"
-          [class.is-active]="selectedForm === 'presencial'" (click)="selectedForm = 'presencial'">Reservar diagnóstico</button>
+          [class.is-active]="selectedForm === 'presencial'" (click)="selectedForm = 'presencial'">Atención a domicilio</button>
       </div>
 
-      <!-- Cotización por email. Se oculta con [hidden] (no *ngIf) para conservar intlTelInput. -->
+      <!-- Cotización para empresas. Se oculta con [hidden] (no *ngIf) para conservar intlTelInput. -->
       <form [hidden]="selectedForm !== 'email'" class="kx-form" (submit)="submitContact($event)" ngNativeValidate>
+        <p class="kx-form__intro">Formulario de cotización para empresas.</p>
+        <!-- Servicio desde el botón "Cotizar" de cada servicio (no se muestra) -->
+        <input *ngIf="servicioElegido" type="hidden" name="service" [value]="servicioElegido">
         <div class="kx-form__grid">
           <label class="kx-field">Nombre *
             <input type="text" name="name" placeholder="Nombre completo" autocomplete="name" required>
           </label>
-          <label class="kx-field">Correo electrónico *
+          <label class="kx-field">Nombre de la empresa *
+            <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
+          </label>
+          <label class="kx-field">Cargo *
+            <input type="text" name="role" placeholder="Tu cargo" autocomplete="organization-title" required>
+          </label>
+          <label class="kx-field">Correo de contacto *
             <input type="email" name="email" placeholder="ejemplo@empresa.com" autocomplete="email" required>
           </label>
           <label class="kx-field">Teléfono *
             <input type="tel" #phoneInput name="phone" autocomplete="tel" required>
           </label>
-          <label class="kx-field">Servicio de interés *
-            <select name="service" [(ngModel)]="servicioElegido" required>
-              <option value="" disabled>Seleccione un servicio</option>
-              <optgroup label="Para empresas">
-                <option *ngFor="let s of serviciosEmpresas" [value]="s.title">{{ s.name }}</option>
-              </optgroup>
-              <optgroup label="Para personas">
-                <option *ngFor="let s of serviciosPersonas" [value]="s.title">{{ s.name }}</option>
-              </optgroup>
-            </select>
+          <label class="kx-field">Número aproximado de trabajadores *
+            <input type="number" name="workers" placeholder="Ej: 50" min="1" required>
           </label>
-          <label class="kx-field">Región *
-            <select name="region" required>
-              <option value="" disabled selected>Seleccione una región</option>
-              <option *ngFor="let r of regiones" [value]="r[0]">{{ r[1] }}</option>
-            </select>
-          </label>
-          <!-- Datos de empresa: no aplican a servicios para personas (*ngIf los saca del form y de la validación). -->
-          <ng-container *ngIf="!esServicioPersonas">
-            <label class="kx-field">Empresa *
-              <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
-            </label>
-            <label class="kx-field">Cargo *
-              <input type="text" name="role" placeholder="Tu cargo" autocomplete="organization-title" required>
-            </label>
-            <label class="kx-field">Número de sucursales *
-              <input type="number" name="branches" placeholder="Ej: 3" min="1" required>
-            </label>
-            <label class="kx-field">Trabajadores *
-              <input type="number" name="workers" placeholder="Ej: 50" min="1" required>
-            </label>
-          </ng-container>
-          <label class="kx-field kx-field--full">¿Cómo te podemos ayudar? (opcional)
-            <textarea name="message" rows="4" [placeholder]="esServicioPersonas ? 'Cuéntanos brevemente tu caso y tu comuna...' : 'Cuéntanos brevemente qué necesita tu equipo...'"></textarea>
+          <label class="kx-field kx-field--full">Cuéntanos cómo podemos ayudarte
+            <textarea name="message" rows="4" placeholder="Cuéntanos brevemente qué necesita tu equipo..."></textarea>
           </label>
         </div>
         <div class="kx-form__actions">
@@ -84,14 +64,18 @@
         </div>
       </form>
 
-      <!-- Reserva de diagnóstico -->
+      <!-- Reserva de atención a domicilio (personas) -->
       <form [hidden]="selectedForm !== 'presencial'" class="kx-form" (submit)="submitReservation($event)" ngNativeValidate>
+        <p class="kx-form__intro">Reserva de diagnóstico para personas: un kinesiólogo de Ki-Nexus te atiende en tu domicilio.</p>
         <div class="kx-form__grid">
-          <label class="kx-field">Empresa *
-            <input type="text" name="company" placeholder="Nombre de la empresa" autocomplete="organization" required>
+          <label class="kx-field">Nombre *
+            <input type="text" name="name" placeholder="Nombre completo" autocomplete="name" required>
           </label>
           <label class="kx-field">Correo electrónico *
-            <input type="email" name="email" placeholder="ejemplo@empresa.com" autocomplete="email" required>
+            <input type="email" name="email" placeholder="ejemplo@correo.com" autocomplete="email" required>
+          </label>
+          <label class="kx-field">Teléfono *
+            <input type="tel" name="phone" placeholder="+56 9 1234 5678" autocomplete="tel" required>
           </label>
           <label class="kx-field">Región *
             <select name="region" required>
@@ -99,19 +83,19 @@
               <option *ngFor="let r of regiones" [value]="r[0]">{{ r[1] }}</option>
             </select>
           </label>
-          <label class="kx-field">Ciudad *
-            <input type="text" name="city" placeholder="Ciudad" autocomplete="address-level2" required>
+          <label class="kx-field">Comuna *
+            <input type="text" name="city" placeholder="Comuna" autocomplete="address-level2" required>
           </label>
-          <label class="kx-field kx-field--full">Dirección *
-            <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Dirección completa"
+          <label class="kx-field kx-field--full">Dirección de la atención *
+            <input type="text" name="address" [(ngModel)]="reservationAddress" placeholder="Calle, número, depto."
               autocomplete="street-address" required>
           </label>
           <div class="kx-field--full kx-map" *ngIf="reservationAddress">
             <iframe title="Vista previa de la dirección" loading="lazy" [src]="getMapUrl()"></iframe>
           </div>
-          <label class="kx-field kx-field--full">Descripción *
+          <label class="kx-field kx-field--full">Motivo de consulta *
             <textarea name="description" rows="4" required
-              placeholder="Describe brevemente el propósito del diagnóstico o alguna consulta adicional..."></textarea>
+              placeholder="Cuéntanos brevemente qué te pasa o qué necesitas trabajar..."></textarea>
           </label>
 
           <div class="kx-field">

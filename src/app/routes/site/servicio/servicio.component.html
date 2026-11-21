@@ -33,9 +33,6 @@
           <h2 class="kx-h3">Cotiza este servicio</h2>
           <p class="kx-muted">Te respondemos con una propuesta según el tamaño y la ubicación de tu equipo.</p>
           <a class="kx-btn kx-btn--accent kx-btn--block" routerLink="/contacto" [queryParams]="{ servicio: s.slug }">Cotizar</a>
-          <a class="kx-btn kx-btn--outline kx-btn--block" routerLink="/contacto" [queryParams]="{ form: 'diagnostico' }">
-            Reservar diagnóstico
-          </a>
         </div>
         <div class="kx-card" *ngIf="s.audiencia === 'personas'">
           <h2 class="kx-h3">Solicita una atención</h2>
