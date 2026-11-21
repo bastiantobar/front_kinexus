@@ -35,52 +35,49 @@ export class PresentationContentService {
       id: 'vitality',
       audiencia: 'empresas',
       slug: 'vitality-pausas-activas',
-      name: 'Vitality',
+      name: 'Vitality · Bienestar y movimiento',
       seoTitle: 'Pausas activas para empresas: programa Vitality | Ki-Nexus',
       title: 'KI-NEXUS: VITALITY',
       image: 'assets/kinexus/servicios/vitality.jpg',
-      brief: 'Transforma la fatiga acumulada en energía disponible con nuestro ciclo intensivo de pausas activas. enfoque clínico / mediciones reales / bajo roce y alto impacto',
-      description: 'Es nuestra intervención intensiva de 5-8 semanas diseñada para equipos que buscan un cambio real en su dinámica diaria. No se trata solo de pausas activas; es un programa transformador.',
-      fullInfo: 'A través de sesiones presenciales estratégicas, transformamos la fatiga acumulada en energía disponible, midiendo el progreso desde el primer día hasta el cierre de resultados.',
+      brief: 'Transforma la fatiga acumulada en energía disponible y mide los resultados.',
+      description: 'Ki-Nexus Vitality es un programa que combina pausas activas, educación y seguimiento, con actividades adaptadas a las necesidades y objetivos de cada empresa.',
+      fullInfo: 'Enfoque clínico, mediciones reales, bajo roce y alto impacto.',
       features: [
         'Sesión de Onboarding y Diagnóstico',
         'Ciclo de Entrenamiento Presencial',
-        'Cápsulas de Continuidad',
         'Reunión de Entrega de Resultados (KPI Report)'
-      ]
-    },
-    {
-      id: 'cbe',
-      audiencia: 'empresas',
-      slug: 'check-up-biomecanico',
-      name: 'Check Up Biomecánico',
-      seoTitle: 'Ergonomía laboral: Check Up Biomecánico Express | Ki-Nexus',
-      title: 'KI-NEXUS: CHECK UP BIOMECÁNICO EXPRESS (CBE)',
-      image: 'assets/kinexus/servicios/check-up-biomecanico.jpg',
-      brief: 'Evaluación biomecánica individual en el puesto real para detectar riesgos ergonómicos al instante.',
-      description: 'Asesoría ideal para eventos de bienestar, ferias de salud interna o eventos de captación. Es una jornada de evaluaciones individuales en donde el especialista realiza un reconocimiento postural completo.',
-      fullInfo: 'Ideal para obtener un mapa de calor sobre la salud de tu equipo y activa soluciones de bienestar personalizadas.',
-      whyChoose: [
-        'Sesión de poco tiempo de interrupción de la jornada laboral',
-        'Genera impacto inmediato en la experiencia del trabajador',
-        'Disminuye los riesgos de lesiones'
       ]
     },
     {
       id: 'focus',
       audiencia: 'empresas',
       slug: 'focus-time',
-      name: 'Focus Time',
-      seoTitle: 'Taller de ergonomía cognitiva y manejo del estrés: Focus Time | Ki-Nexus',
+      name: 'Focus Time · Charlas y workshops',
+      seoTitle: 'Charlas y workshops de ergonomía y manejo del estrés: Focus Time | Ki-Nexus',
       title: 'KI-NEXUS: FOCUS TIME',
       image: 'assets/kinexus/servicios/focus-time.jpg',
-      brief: 'Optimiza el rendimiento de tu equipo con nuestra jornada de capacitación teórico práctica orientada al desarrollo de herramientas sobre ergonomía cognitiva y manejo del estrés.',
-      description: 'Vive una sesión de alto impacto para equipos de tecnología, equipos creativos, grupos de alta demanda laboral observando pantallas o gerencias con alta carga de estrés.',
-      fullInfo: 'Un taller teórico-práctico de una sola sesión de alto impacto (2 horas) que le entregará herramientas prácticas a tu equipo.',
+      brief: 'Vive una sesión de alto impacto mediante un taller teórico-práctico.',
+      description: 'Educamos y entregamos herramientas a tu equipo para promover una mejor gestión del estrés, la inclusión y un mejor clima laboral.',
       content: [
-        'Ciencia del estrés',
-        'Técnicas de neuro-activación',
-        'Higiene de columna y visión para trabajadores digitales'
+        'Prevención de trastornos musculoesqueléticos',
+        'Neuroergonomía',
+        'Inclusión'
+      ]
+    },
+    {
+      id: 'cbe',
+      audiencia: 'empresas',
+      slug: 'check-up-biomecanico',
+      name: 'Check Up Biomecánico Express (CBE)',
+      seoTitle: 'Ergonomía laboral: Check Up Biomecánico Express | Ki-Nexus',
+      title: 'KI-NEXUS: CHECK UP BIOMECÁNICO EXPRESS (CBE)',
+      image: 'assets/kinexus/servicios/check-up-biomecanico.jpg',
+      brief: 'Evita multas y cumple la normativa vigente desde la ergonomía.',
+      description: 'Una jornada de evaluaciones individuales en la que el especialista evalúa cada puesto de trabajo. Así obtienes un mapa de calor de tu equipo y puedes activar soluciones a tiempo.',
+      whyChoose: [
+        'Genera un impacto inmediato en la experiencia del trabajador',
+        'Disminuye los riesgos de lesiones',
+        'Cumple con el rol preventivo exigido por el DS 44'
       ]
     },
     {
