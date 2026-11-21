@@ -29,8 +29,6 @@ export class ContactoComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   services: KinexusService[] = this.content.getServices();
-  serviciosEmpresas = this.content.getServices('empresas');
-  serviciosPersonas = this.content.getServices('personas');
   servicioElegido = '';
   selectedForm: 'email' | 'presencial' = 'email';
   whatsAppUrl = this.content.getWhatsAppUrl();
@@ -60,11 +58,13 @@ export class ContactoComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // ?form=diagnostico abre la reserva; ?servicio=<slug> preselecciona el servicio.
+    // ?form=diagnostico o un servicio para personas abren la reserva a domicilio;
+    // ?servicio=<slug> de empresas abre la cotización con ese servicio.
     this.sub = this.route.queryParamMap.subscribe(q => {
-      this.selectedForm = q.get('form') === 'diagnostico' ? 'presencial' : 'email';
       const s = this.content.getService(q.get('servicio') || '');
-      this.servicioElegido = s ? s.title : '';
+      const personas = q.get('form') === 'diagnostico' || (!!s && s.audiencia === 'personas');
+      this.selectedForm = personas ? 'presencial' : 'email';
+      this.servicioElegido = s && s.audiencia === 'empresas' ? s.title : '';
     });
 
     this.http.get('availability.php').subscribe({
@@ -94,11 +94,6 @@ export class ContactoComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
     this.iti?.destroy();
-  }
-
-  get esServicioPersonas(): boolean {
-    const s = this.services.find(o => o.title === this.servicioElegido);
-    return !!s && s.audiencia === 'personas';
   }
 
   submitContact(e: Event) {
